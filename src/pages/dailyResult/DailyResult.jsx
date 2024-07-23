@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import LeftResult from "./LeftResults";
+import LeftResult from "./LeftResult";
 import RightResult from "./RightResult";
 function DailyResult() {
   return (
@@ -16,7 +16,7 @@ function DailyResult() {
 
 export default DailyResult;
 
-const MainTop = styled.div``;
+const MainTopContainer = styled.div``;
 const MainResultContainer = styled.section`
   display: flex;
 `;

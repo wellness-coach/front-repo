@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
-import centerimg from "../assets/img/loginCenterImg.png";
-import googleimg from "../assets/img/googleImg.png";
-import naverimg from "../assets/img/naverImg.png";
+import centerimg from "../../assets/img/loginCenterImg.png";
+import googleimg from "../../assets/img/googleImg.png";
+import naverimg from "../../assets/img/naverImg.png";
 
 function Login() {
   const [user, setUser] = useState(null);
@@ -15,20 +15,19 @@ function Login() {
   }, []);
 
   const onNaverLogin = () => {
-    window.location.href = `${BASE_URL}/oauth2/authorization/naver`;
+    window.location.href = `${BASE_URL}/login/oauth2/code/naver`;
   };
 
   const onGoogleLogin = () => {
-    window.location.href = `${BASE_URL}/oauth2/authorization/google`;
+    window.location.href = `${BASE_URL}/login/oauth2/code/google`;
   };
 
   const checkAuthStatus = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/api/test/login`, {
+      const res = await axios.get(`${BASE_URL}/login`, {
         withCredentials: true,
       });
       setUser(res.data.user); // 사용자 정보를 상태로 저장
-      alert(JSON.stringify(res.data)); // 인증 상태를 팝업으로 표시
     } catch (error) {
       alert(`An error occurred: ${error.message}`); // 에러 메시지를 팝업으로 표시
     }
