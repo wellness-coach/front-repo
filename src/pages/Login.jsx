@@ -17,8 +17,14 @@ function Login() {
             </ServiceIntroSc>
 
             <LoginForm>
-              <LoginToNaver src={naverimg} alt="네이버이미지" />
-              <LoginToGoogle src={googleimg} alt="구글이미지" />
+              <LoginToNaver>
+                <NaverImg src={naverimg} alt="네이버이미지" />
+                <LoginM>네이버로 로그인</LoginM>
+              </LoginToNaver>
+              <LoginToGoogle>
+                <GoogleImg src={googleimg} alt="구글이미지" />
+                <LoginM>구글로 로그인</LoginM>
+              </LoginToGoogle>
             </LoginForm>
           </LoginTop>
         </LoginSc>
@@ -43,32 +49,32 @@ const LoginPg = styled.section`
 
 // 메인 이미지
 const LoginCenterImg = styled.img`
-  width: 79em;
-  height: 50em;
+  width: 79rem;
+  height: 50rem;
 
-  border-radius: 4em 0em 0em 4em;
-  margin-right: 0em;
+  border-radius: 4rem 0rem 0rem 4rem;
+  margin-right: 0rem;
 `;
 
 // 서비스 설명 섹션
 const LoginTop = styled.section``;
 const ServiceIntroSc = styled.section`
-  margin-bottom: 3.8em;
+  margin-bottom: 3.8rem;
   /* background-color: blue; */
 `;
 const SmallServiceM = styled.p`
-  font-size: 2.5em;
+  font-size: 2.5rem;
   font-weight: 700;
   color: gray;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
 `;
 const ServiceName = styled.p`
-  font-size: 5em;
+  font-size: 5rem;
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
 `;
 const BigServiceM = styled.p`
-  font-size: 5em;
+  font-size: 5rem;
   font-weight: 700;
 `;
 
@@ -83,20 +89,45 @@ const LoginSc = styled.section`
 `;
 const LoginForm = styled.div`
   display: flex;
-  width: 150px;
-  justify-content: space-between;
+  flex-direction: column;
+  /* width: 150px; */
+
   /* background-color: blue; */
 `;
-
-const LoginToNaver = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
-  cursor: pointer;
+const LoginM = styled.p`
+  font-size: 1.7rem;
+  font-weight: 600;
 `;
-const LoginToGoogle = styled.img`
-  width: 50px;
-  height: 50px;
+const LoginToNaver = styled.div`
+  background-color: #45b649;
+  width: 35.6rem;
+  height: 4.4rem;
+  border-radius: 1.5rem;
+  padding-left: 0.8rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.2rem;
+`;
+const LoginToGoogle = styled.div`
+  background-color: #fff;
+  width: 35.6rem;
+  height: 4.4rem;
+  border-radius: 1.5rem;
+  padding-left: 0.8rem;
+  display: flex;
+  align-items: center;
+`;
+const NaverImg = styled.img`
+  width: 30px;
+  height: 30px;
   border-radius: 10px;
   cursor: pointer;
+  margin: 0.6rem;
+`;
+const GoogleImg = styled.img`
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  margin: 0.6rem;
 `;
