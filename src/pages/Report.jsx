@@ -17,3 +17,6 @@ function Report() {
 export default Report;
 
 const MainTop = styled.div``;
+const MainReportSc = styled.section`
+  display: flex;
+`;
