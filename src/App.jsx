@@ -1,13 +1,13 @@
 import "./reset.css";
 // import router from "./Router";
 // import { RouterProvider } from "react-router-dom";
-// import Report from "./pages/Report";
-import Login from "./pages/Login";
+import Report from "./pages/dailyResult/Daily";
+// import Login from "./pages/login/Login";
 function App() {
   return (
     <>
-      {/* <Report /> */}
-      <Login />
+      <Report />
+      {/* <Login /> */}
       {/* <RouterProvider router={router} /> */}
     </>
   );
