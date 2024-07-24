@@ -1,13 +1,181 @@
+/* 달력 버튼 스타일 */
 .calendar-button {
-  background-color: blue; /* 파란색 배경 */
-  color: white; /* 흰색 텍스트 */
-  border: none; /* 테두리 제거 */
-  padding: 10px 20px; /* 패딩 */
-  font-size: 16px; /* 폰트 크기 */
-  border-radius: 4px; /* 모서리 둥글게 */
-  cursor: pointer; /* 커서 포인터 */
+  background-color: #9a0606;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
 }
 
-.calendar-button:hover {
-  background-color: darkblue; /* 호버 시 더 진한 파란색 */
+/* 달력 전체 크기 스타일 */
+.react-datepicker {
+  width: 31rem;
+}
+
+/* 달력 헤더 스타일 */
+.react-datepicker__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background-color: white;
+  border-bottom: none;
+  width: 31rem;
+  box-sizing: border-box; /* 패딩과 테두리를 포함한 너비 계산 */
+}
+
+/* 헤더 상단 부분 스타일 */
+.react-datepicker__header-top {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  /* background-color: yellow; */
+}
+
+/* 헤더 내부 스타일 */
+.react-datepicker__header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2rem;
+  /* background-color: blue; */
+  /* width: 100%; 내부 너비를 100%로 설정 */
+}
+
+/* 내비게이션 버튼 스타일 */
+.react-datepicker__navigation--previous,
+.react-datepicker__navigation--next {
+  background: white;
+  border: none;
+  color: black; /* 텍스트 색상 검은색 */
+  cursor: pointer;
+  font-size: 2rem; /* 폰트 크기 조정 */
+  font-weight: 700;
+  position: relative; /* 상대 위치 */
+}
+
+/* 내비게이션 버튼 화살표 스타일 */
+.react-datepicker__navigation--previous::before,
+.react-datepicker__navigation--next::before {
+  content: "";
+  display: inline-block;
+  border: solid black;
+  border-width: 0 0.4rem 0.4rem 0;
+  padding: 0.5rem;
+}
+
+.react-datepicker__navigation--previous::before {
+  transform: rotate(135deg); /* 왼쪽 화살표 */
+}
+
+.react-datepicker__navigation--next::before {
+  transform: rotate(-45deg); /* 오른쪽 화살표 */
+}
+
+/* 내비게이션 버튼 컨테이너 스타일 */
+.react-datepicker__navigation-container {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  /* background-color: red; */
+}
+
+/* 현재 월 스타일 */
+.react-datepicker__current-month {
+  font-size: 2.2rem;
+  margin: 0 auto;
+  color: black;
+  text-align: center;
+  flex-grow: 1; /* 공간을 채우도록 설정 */
+}
+
+/* 요일 이름 스타일 */
+.react-datepicker__day-names {
+  /* background-color: green; */
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7일을 균등한 칸으로 나누기 */
+  gap: 0;
+  border-bottom: none;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 1rem;
+  padding: 0 1rem;
+}
+
+/* 요일 스타일 */
+.react-datepicker__day-name {
+  color: gray;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-left: 1.1rem;
+}
+
+/* 날짜 스타일 */
+.react-datepicker__day {
+  color: black;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  font-weight: 700;
+  width: 3rem;
+  height: 3rem;
+  margin: 0.35rem;
+  position: relative;
+}
+
+/* 날짜 텍스트 중앙 정렬 */
+.react-datepicker__day span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 날짜 hover 상태 스타일 */
+.react-datepicker__day:hover {
+  background-color: pink;
+  border-radius: 50%;
+}
+
+/* 선택된 날짜 hover 상태 스타일 */
+.react-datepicker__day--selected:hover {
+  background-color: purple;
+  border-radius: 50%;
+  color: white;
+}
+
+/* 일요일 스타일 */
+.react-datepicker__day--sunday,
+.react-datepicker__day-name--sunday {
+  color: red !important;
+}
+
+/* 토요일 스타일 */
+.react-datepicker__day--saturday,
+.react-datepicker__day-name--saturday {
+  color: blue !important;
+}
+
+/* 선택된 날짜 스타일 */
+.react-datepicker__day--selected {
+  background-color: gray;
+  border-radius: 50%;
+  color: white;
+}
+
+/* 다른 월의 날짜 스타일 - 투명 */
+.react-datepicker__day--outside-month {
+  color: transparent;
+  background-color: transparent;
+}
+
+.date-picker-container {
+  display: flex; /* Flexbox 사용 */
+  align-items: center; /* 아이콘과 날짜를 수직으로 중앙 정렬 */
 }

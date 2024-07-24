@@ -15,11 +15,11 @@ function Login() {
   }, []);
 
   const onNaverLogin = () => {
-    window.location.href = `${BASE_URL}/login/oauth2/code/naver`;
+    window.location.href = `${BASE_URL}/oauth2/authorization/naver`;
   };
 
   const onGoogleLogin = () => {
-    window.location.href = `${BASE_URL}/login/oauth2/code/google`;
+    window.location.href = `${BASE_URL}/oauth2/authorization/google`;
   };
 
   const checkAuthStatus = async () => {
