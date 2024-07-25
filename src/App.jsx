@@ -3,12 +3,14 @@ import "./reset.css";
 // import { RouterProvider } from "react-router-dom";
 import DailyResult from "./pages/dailyResult/DailyResult";
 import LeftResult from "./pages/dailyResult/LeftResult";
+import RightResult from "./pages/dailyResult/RightResult";
 // import Login from "./pages/login/Login";
 function App() {
   return (
     <>
       {/* <DailyResult /> */}
-      <LeftResult />
+      {/* <LeftResult /> */}
+      <RightResult />
       {/* <Login /> */}
       {/* <RouterProvider router={router} /> */}
     </>
