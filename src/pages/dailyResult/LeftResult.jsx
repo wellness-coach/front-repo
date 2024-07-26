@@ -7,6 +7,7 @@ import styled from "styled-components";
 import "./calStyle.css";
 import calendaricon from "../../assets/img/calendar.png";
 import speedometerimg from "../../assets/img/speedometer.png";
+
 function LeftResult() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [open, setOpen] = useState(false); // DatePicker 열림 상태
@@ -36,7 +37,7 @@ function LeftResult() {
 
   return (
     <>
-      <LeftResultWrapper>
+      <LeftResultContainer>
         <CalendarWrapper>
           <CalendarContainer>
             <ResultName>ㅇㅇ님의 일별 리포트 분석</ResultName>
@@ -104,7 +105,9 @@ function LeftResult() {
             <SpeedImg src={speedometerimg} alt="속도계 이미지" />
             <SpeedLevelContainer>
               <SpeedDateContainer>
-                <SpeedDate>07월 21일</SpeedDate>
+                <SpeedDate>
+                  {format(selectedDate, "MM월 dd일", { locale: koLocale })}
+                </SpeedDate>
                 <SpeedDateM>건강 진단 결과</SpeedDateM>
               </SpeedDateContainer>
 
@@ -115,7 +118,9 @@ function LeftResult() {
             <MemoTitle>나의 메모</MemoTitle>
             <MemoDetailContainer>
               <MemoDetailTopContainer>
-                <MemoDate>07.21</MemoDate>
+                <MemoDate>
+                  {format(selectedDate, "MM.dd", { locale: koLocale })}
+                </MemoDate>
                 <MemoDetail>오늘은~~</MemoDetail>
               </MemoDetailTopContainer>
 
@@ -123,15 +128,18 @@ function LeftResult() {
             </MemoDetailContainer>
           </MemoContainer>
         </SpeedAndMemoContainer>
-      </LeftResultWrapper>
+      </LeftResultContainer>
     </>
   );
 }
 
 export default LeftResult;
-const LeftResultWrapper = styled.section`
+const LeftResultContainer = styled.section`
   display: flex;
   flex-direction: column;
+
+  width: 50%;
+  padding-top: 8rem;
 `;
 
 // 달력 섹션

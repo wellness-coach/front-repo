@@ -8,9 +8,9 @@ import RightResult from "./pages/dailyResult/RightResult";
 function App() {
   return (
     <>
-      {/* <DailyResult /> */}
+      <DailyResult />
       {/* <LeftResult /> */}
-      <RightResult />
+      {/* <RightResult /> */}
       {/* <Login /> */}
       {/* <RouterProvider router={router} /> */}
     </>

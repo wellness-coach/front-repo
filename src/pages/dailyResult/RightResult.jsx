@@ -5,6 +5,7 @@ import sirenicon_1 from "../../assets/img/siren.png";
 import sirenicon_2 from "../../assets/img/siren.png";
 import sirenicon_3 from "../../assets/img/siren.png";
 import sirenicon_4 from "../../assets/img/siren.png";
+
 function RightResult() {
   return (
     <>
@@ -126,6 +127,14 @@ function RightResult() {
 }
 
 export default RightResult;
+const MenuResultContainer = styled.div`
+  width: 50%;
+  padding-top: 16.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 //공통
 const LevelIcon = styled.img`
@@ -148,7 +157,6 @@ const Score = styled.div`
   font-weight: 700;
 `;
 // 아침, 점심, 저녁
-const MenuResultContainer = styled.div``;
 
 const ResultDetailContainer = styled.div`
   width: 60.6rem;
@@ -200,6 +208,7 @@ const SolutionDetail = styled.div`
   height: 5rem;
   font-size: 1.2rem;
   font-weight: 500;
+  line-height: 1.6rem;
 `;
 
 // 간식 섹션
@@ -207,9 +216,9 @@ const ServeMenuResultContainer = styled.div`
   display: flex;
 `;
 const SnackResultContainer = styled.div`
-  width: 349px;
-  height: 152px;
-  border-radius: 16px;
+  width: 35.5rem;
+  height: 15.2rem;
+  border-radius: 1.6rem;
   background: #d9d9d9;
   display: flex;
   flex-direction: row;
@@ -251,6 +260,7 @@ const SnackSolutionDetail = styled.p`
   width: 22rem;
   font-size: 12px;
   font-weight: 500;
+  line-height: 1.6rem;
 `;
 
 // 음료 섹션
@@ -266,14 +276,15 @@ const DrinkResultContainer = styled.div`
 `;
 const DrinkFoodResultDetailContainer = styled.div``;
 const DrinkDetailTopContainer = styled.div`
-  width: 11rem;
+  width: 9rem;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 1rem;
 `;
 const DrinkSolutionDetail = styled.div`
-  width: 11rem;
+  width: 9rem;
   font-size: 12px;
   font-weight: 500;
+  line-height: 1.6rem;
 `;

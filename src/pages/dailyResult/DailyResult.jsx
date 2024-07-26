@@ -16,7 +16,14 @@ function DailyResult() {
 
 export default DailyResult;
 
-const MainTopContainer = styled.div``;
+const MainTopContainer = styled.div`
+  height: 9rem;
+  background-color: aqua;
+`;
 const MainResultContainer = styled.section`
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 `;
