@@ -20,15 +20,13 @@ function LeftResult() {
     return weekdays[date.getDay()];
   };
 
-  // 날짜 포맷 함수
   const formatDate = (date) => {
     return format(date, `yyyy. MM. dd (${getShortDay(date)})`, {
       locale: koLocale,
     });
   };
 
-  // 아이콘 클릭 시 DatePicker 열기
-  const handleStarClick = () => {
+  const handleCalendarClick = () => {
     setOpen(!open);
     if (!open) {
       datePickerRef.current?.setOpen(true);
@@ -42,21 +40,20 @@ function LeftResult() {
           <CalendarContainer>
             <ResultName>ㅇㅇ님의 일별 리포트 분석</ResultName>
             <div className="date-picker-container">
-              <button onClick={handleStarClick} ref={buttonRef} className="calendar-button">
+              <button onClick={handleCalendarClick} ref={buttonRef} className="calendar-button">
                 <CalendarIcon src={calendaricon} alt="달력아이콘" />
               </button>
 
-              {/* DatePicker 컴포넌트 */}
               <DatePicker
                 ref={datePickerRef}
                 selected={selectedDate}
                 onChange={(date) => setSelectedDate(date)}
-                dateFormat="yyyy. MM. dd (EEEE)" // 날짜 포맷
-                customInput={<CustomDateInput>{formatDate(selectedDate)}</CustomDateInput>} // 커스텀 입력
-                open={open} // DatePicker의 열림 상태
-                onClickOutside={() => setOpen(false)} // 외부 클릭 시 닫기
-                onCalendarClose={() => setOpen(false)} // 달력 닫힐 때 상태 변경
-                locale={koLocale} // 한글 로케일 설정
+                dateFormat="yyyy. MM. dd (EEEE)"
+                customInput={<CustomDateInput>{formatDate(selectedDate)}</CustomDateInput>}
+                open={open}
+                onClickOutside={() => setOpen(false)}
+                onCalendarClose={() => setOpen(false)}
+                locale={koLocale}
                 renderCustomHeader={({
                   date,
                   decreaseMonth,
