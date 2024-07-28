@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
     a{
@@ -19,7 +19,7 @@ const GlobalStyles = createGlobalStyle`
     body{
         line-height: 1;
         font-family: 'Noto Sans KR', sans-serif;
-        background-color: #F6F9F0;
+        background-color: #ffffff;
     }
     ol, ul{
         list-style: none;
@@ -29,6 +29,6 @@ const GlobalStyles = createGlobalStyle`
         background: transparent;
         cursor: pointer;
     }
-`
+`;
 
 export default GlobalStyles;
