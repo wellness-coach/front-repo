@@ -5,6 +5,7 @@ import MainPage from './pages/MainPage/MainPage';
 import DietTest from './pages/DietTest/DietTest';
 import TestResult from './pages/TestResult/TestResult';
 import DailyResult from './pages/DailyResult/DailyResult';
+import Loading from './pages/Loading/Loading'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: '/daily_result',
         element: <DailyResult />,
+      },
+      {
+        path: '/loading',
+        element: <Loading />,
       },
     ],
   },
