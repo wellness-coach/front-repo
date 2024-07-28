@@ -2,28 +2,32 @@ import React from 'react';
 import styled from 'styled-components';
 import LeftResult from './LeftResult';
 import RightResult from './RightResult';
+import DailyResultHeader from './DailyResultHeader';
 function DailyResult() {
   return (
     <>
-      <MainTopContainer></MainTopContainer>
-      <MainResultContainer>
-        <LeftResult />
-        <RightResult />
-      </MainResultContainer>
+      <DailyResultContainer>
+        <DailyResultHeader />
+        <MainResultContainer>
+          <LeftResult />
+          <RightResult />
+        </MainResultContainer>
+      </DailyResultContainer>
     </>
   );
 }
 
 export default DailyResult;
 
-const MainTopContainer = styled.div`
-  height: 9rem;
-  background-color: aqua;
+const DailyResultContainer = styled.section`
+  display: flex;
+  flex-direction: column;
 `;
+
 const MainResultContainer = styled.section`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
-  height: 80vh;
+  height: 100%;
 `;

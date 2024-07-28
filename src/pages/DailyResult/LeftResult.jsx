@@ -5,14 +5,14 @@ import { format } from 'date-fns';
 import { ko as koLocale, sr } from 'date-fns/locale';
 import styled from 'styled-components';
 import './calStyle.css';
-import calendaricon from '../../assets/img/calendar.png';
+import calendaricon from '../../assets/img/Calendar.png';
 import speedometerimg from '../../assets/img/speedometer.png';
 
 function LeftResult() {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [open, setOpen] = useState(false); // DatePicker 열림 상태
-  const datePickerRef = useRef(null); // DatePicker의 ref
-  const buttonRef = useRef(null); // 버튼의 ref
+  const [open, setOpen] = useState(false);
+  const datePickerRef = useRef(null);
+  const buttonRef = useRef(null);
 
   // 요일 축약형 변환 함수
   const getShortDay = (date) => {
@@ -22,7 +22,7 @@ function LeftResult() {
 
   // 날짜 포맷 함수
   const formatDate = (date) => {
-    return format(date, `yyyy년 MM월 dd일 (${getShortDay(date)})`, {
+    return format(date, `yyyy. MM. dd (${getShortDay(date)})`, {
       locale: koLocale,
     });
   };
@@ -31,7 +31,7 @@ function LeftResult() {
   const handleStarClick = () => {
     setOpen(!open);
     if (!open) {
-      datePickerRef.current?.setOpen(true); // DatePicker 열기
+      datePickerRef.current?.setOpen(true);
     }
   };
 
@@ -51,7 +51,7 @@ function LeftResult() {
                 ref={datePickerRef}
                 selected={selectedDate}
                 onChange={(date) => setSelectedDate(date)}
-                dateFormat="yyyy년 MM월 dd일 (EEEE)" // 날짜 포맷
+                dateFormat="yyyy. MM. dd (EEEE)" // 날짜 포맷
                 customInput={<CustomDateInput>{formatDate(selectedDate)}</CustomDateInput>} // 커스텀 입력
                 open={open} // DatePicker의 열림 상태
                 onClickOutside={() => setOpen(false)} // 외부 클릭 시 닫기
@@ -99,7 +99,7 @@ function LeftResult() {
             <SpeedImg src={speedometerimg} alt="속도계 이미지" />
             <SpeedLevelContainer>
               <SpeedDateContainer>
-                <SpeedDate>{format(selectedDate, 'MM월 dd일', { locale: koLocale })}</SpeedDate>
+                <SpeedDate>{format(selectedDate, 'yyyy년 M월 d일', { locale: koLocale })}</SpeedDate>{' '}
                 <SpeedDateM>건강 진단 결과</SpeedDateM>
               </SpeedDateContainer>
 
@@ -129,7 +129,7 @@ const LeftResultContainer = styled.section`
   flex-direction: column;
 
   width: 50%;
-  padding-top: 8rem;
+  padding-top: 6rem;
 `;
 
 // 달력 섹션
@@ -146,16 +146,16 @@ const CalendarContainer = styled.section`
 `;
 const ResultName = styled.p`
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: 500;
   margin-bottom: 1rem;
 `;
 const CalendarIcon = styled.img`
-  width: 3rem;
-  height: 3rem;
+  width: 4.6rem;
+  height: 4.4remzz;
 `;
 
 const CustomDateInput = styled.span`
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   font-weight: 700;
   padding: 0.5rem;
   border-radius: 0.4rem;
@@ -199,6 +199,7 @@ const SpeedLevelContainer = styled.div`
 const SpeedDateContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: end;
   gap: 0.5rem;
   margin-right: 2rem;
 `;
@@ -257,7 +258,9 @@ const MemoDetail = styled.p`
   font-size: 1.8rem;
   font-weight: 400;
   width: 35rem;
-  height: 12rem;
+  height: 14rem;
+  background-color: red;
+  line-height: 2rem;
 `;
 const MemoMoreButton = styled.div`
   width: 7.6rem;
