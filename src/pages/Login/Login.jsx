@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-import centerimg from '../../assets/img/loginCenterImg.png';
 import googleimg from '../../assets/img/googleImg.png';
 import naverimg from '../../assets/img/naverImg.png';
+import logoimg from '../../assets/img/LoginLogo.png';
+import backgroundimg from '../../assets/img/LoginBackground.png';
 
 function Login() {
   const [user, setUser] = useState(null);
@@ -38,9 +39,8 @@ function Login() {
       <LoginWrapper>
         <LoginTopContainer>
           <ServiceIntroContainer>
-            <SmallServiceM>작은 서비스 설명 문구</SmallServiceM>
-            <ServiceName>Wellness coach</ServiceName>
-            <BigServiceM>서비스 설명 문구</BigServiceM>
+            <SmallServiceM>당신의 노화를 돌보는</SmallServiceM>
+            <LogoImg src={logoimg} alt="로고 이미지" />
           </ServiceIntroContainer>
 
           <LoginFormContainer>
@@ -65,8 +65,6 @@ function Login() {
           </LoginFormContainer>
         </LoginTopContainer>
       </LoginWrapper>
-
-      <LoginCenterImg src={centerimg} alt="메인 이미지" />
     </LoginContainer>
   );
 }
@@ -75,16 +73,11 @@ export default Login;
 
 const LoginContainer = styled.section`
   display: flex;
-  background-color: #e2e2e2;
+  background-image: url(${backgroundimg});
+  background-size: cover;
   height: 100vh;
   align-items: center;
   justify-content: space-between;
-`;
-
-const LoginCenterImg = styled.img`
-  width: 79rem;
-  height: 50rem;
-  border-radius: 4rem 0rem 0rem 4rem;
 `;
 
 const LoginTopContainer = styled.section``;
@@ -96,19 +89,14 @@ const ServiceIntroContainer = styled.section`
 const SmallServiceM = styled.p`
   font-size: 2.5rem;
   font-weight: 700;
-  color: gray;
-  margin-bottom: 0.5rem;
+  color: #5f553e;
+  margin-bottom: -0.5rem;
 `;
 
-const ServiceName = styled.p`
-  font-size: 5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-`;
-
-const BigServiceM = styled.p`
-  font-size: 5rem;
-  font-weight: 700;
+const LogoImg = styled.img`
+  width: 42rem;
+  height: 18.5rem;
+  margin-bottom: -1rem;
 `;
 
 const LoginWrapper = styled.section`
@@ -134,7 +122,6 @@ const LoginToNaverContainer = styled.button`
   width: 35.6rem;
   height: 4.4rem;
   border-radius: 1.5rem;
-  padding-left: 0.8rem;
   display: flex;
   align-items: center;
   margin-bottom: 1.2rem;
@@ -146,22 +133,19 @@ const LoginToGoogleContainer = styled.button`
   width: 35.6rem;
   height: 4.4rem;
   border-radius: 1.5rem;
-  padding-left: 0.8rem;
   display: flex;
   align-items: center;
   cursor: pointer;
 `;
 
 const NaverImg = styled.img`
-  width: 3rem;
-  height: 3rem;
-  border-radius: 1rem;
-  margin: 0.6rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin: 1rem 1.5rem 1rem 2.1rem;
 `;
 
 const GoogleImg = styled.img`
-  width: 3rem;
-  height: 3rem;
-  border-radius: 1rem;
-  margin: 0.6rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  margin: 1rem 1.2rem 1rem 1.9rem;
 `;
