@@ -2,19 +2,23 @@ import React, { useState, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { format } from 'date-fns';
-import { ko as koLocale, sr } from 'date-fns/locale';
+import { ko as koLocale } from 'date-fns/locale';
 import styled from 'styled-components';
 import './calStyle.css';
 import calendaricon from '../../assets/img/Calendar.png';
 import speedometerimg from '../../assets/img/speedometer.png';
+import MemoModal from './MemoModal';
 
 function LeftResult() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const datePickerRef = useRef(null);
   const buttonRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 요일 축약형 변환 함수
+  const memoContent = `오늘은 연어 포케를 사먹었는데 현미밥의 식감이 매우 좋았다~ 다음엔 메밀면으로 바꿔서 먹어봐도 좋을 것 같다. 
+그리고 점심을 건강하게 먹어서 저녁은 그냥 마라탕 먹었다..ㅎ 저칼로리 마라탕 소스가 있다는건 처음 알았는데 그걸로 한번 만들어봐야겠다 ㅎ.ㅎ 저칼로리 마라탕 소스가 있다는건 처음 알았는데 그걸로 한번 만들어봐야겠다 ㅎ.ㅎ`;
+
   const getShortDay = (date) => {
     const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
     return weekdays[date.getDay()];
@@ -33,6 +37,10 @@ function LeftResult() {
     }
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       <LeftResultContainer>
@@ -43,7 +51,6 @@ function LeftResult() {
               <button onClick={handleCalendarClick} ref={buttonRef} className="calendar-button">
                 <CalendarIcon src={calendaricon} alt="달력아이콘" />
               </button>
-
               <DatePicker
                 ref={datePickerRef}
                 selected={selectedDate}
@@ -99,8 +106,7 @@ function LeftResult() {
                 <SpeedDate>{format(selectedDate, 'yyyy년 M월 d일', { locale: koLocale })}</SpeedDate>{' '}
                 <SpeedDateM>건강 진단 결과</SpeedDateM>
               </SpeedDateContainer>
-
-              <SpeedLevel>ㅇㅇ단계</SpeedLevel>
+              <SpeedLevel>유의 단계</SpeedLevel>
             </SpeedLevelContainer>
           </SpeedometerContainer>
           <MemoContainer>
@@ -108,15 +114,14 @@ function LeftResult() {
             <MemoDetailContainer>
               <MemoDetailTopContainer>
                 <MemoDate>{format(selectedDate, 'MM.dd', { locale: koLocale })}</MemoDate>
-                <MemoDetail>
-                  오늘은 연어 포케를 사먹었는데 현미밥의 식감이 매우 좋았다~ 다음엔 메밀면으로 바꿔서 먹어봐도 좋을 것
-                  같다. 그리고 점심을 건강하게 먹어서 저녁은 그냥 마라탕 먹었다..ㅎ 저칼로리 마라탕 소스가 있다는건 처음
-                  알았는데 그걸로 한번 만들어봐야겠다 ㅎ.ㅎ 저칼로리 마라탕 소스가 있다는건 처음 알았는데 그걸로 한번
-                  만들어봐야겠다 ㅎ.ㅎ
-                </MemoDetail>
+                <MemoDetail>{memoContent}</MemoDetail>
               </MemoDetailTopContainer>
-
-              <MemoMoreButton>더보기</MemoMoreButton>
+              <div>
+                <MemoMoreButton onClick={openModal}>더보기</MemoMoreButton>
+                {isModalOpen && (
+                  <MemoModal setIsModalOpen={setIsModalOpen} selectedDate={selectedDate} memoContent={memoContent} />
+                )}
+              </div>
             </MemoDetailContainer>
           </MemoContainer>
         </SpeedAndMemoContainer>
@@ -126,10 +131,10 @@ function LeftResult() {
 }
 
 export default LeftResult;
+
 const LeftResultContainer = styled.section`
   display: flex;
   flex-direction: column;
-
   width: 50%;
   padding-top: 6rem;
 `;
@@ -144,7 +149,6 @@ const CalendarContainer = styled.section`
   margin-bottom: 6rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 `;
 const ResultName = styled.p`
   font-size: 2.5rem;
@@ -153,7 +157,7 @@ const ResultName = styled.p`
 `;
 const CalendarIcon = styled.img`
   width: 4.6rem;
-  height: 4.4remzz;
+  height: 4.4rem;
 `;
 
 const CustomDateInput = styled.span`
@@ -193,9 +197,8 @@ const SpeedLevelContainer = styled.div`
   justify-content: left;
   padding-left: 2.4rem;
   margin-top: 1rem;
-
   background: linear-gradient(157deg, #fff 43.17%, rgba(153, 153, 153, 0.3) 381.72%);
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(25px);
 `;
 const SpeedDateContainer = styled.div`
@@ -204,6 +207,7 @@ const SpeedDateContainer = styled.div`
   align-items: end;
   gap: 0.5rem;
   margin-right: 2rem;
+  width: 11rem;
 `;
 const SpeedDate = styled.p`
   font-size: 1.5rem;
@@ -264,7 +268,6 @@ const MemoDetail = styled.p`
   line-height: 2rem;
   position: relative;
   overflow: hidden;
-
   &::after {
     content: '';
     position: absolute;
