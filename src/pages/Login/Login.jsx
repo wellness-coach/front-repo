@@ -57,8 +57,8 @@ function Login() {
                 </LoginToNaverContainer>
 
                 <LoginToGoogleContainer onClick={onGoogleLogin}>
-                  <GoogleImg src={googleimg} alt="구글 로그인" />
-                  <LoginM>구글로 로그인</LoginM>
+                  <GoogleImg src={googleimg} alt="구글 계정으로 로그인" />
+                  <LoginM>구글 계정으로 로그인</LoginM>
                 </LoginToGoogleContainer>
               </>
             )}
