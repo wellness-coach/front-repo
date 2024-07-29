@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import WellnessCoachTitle from '../../assets/img/WellnessCoachTitle.png';
 import LogoPicture from '../../assets/img/LogoPicture.png';
@@ -46,11 +47,11 @@ const LogoutButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: space-around;
+  cursor: pointer;
 `;
 
 const LogoutText = styled.p`
   color: #5f553e;
-  /* font-family: 'Noto Sans KR'; */
   font-size: 1.8rem;
   font-style: normal;
   font-weight: 500;

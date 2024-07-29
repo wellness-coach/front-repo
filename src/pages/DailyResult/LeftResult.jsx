@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { format } from 'date-fns';
@@ -15,6 +15,8 @@ function LeftResult() {
   const datePickerRef = useRef(null);
   const buttonRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMemoOverflow, setIsMemoOverflow] = useState(false);
+  const memoRef = useRef(null);
 
   const memoContent = `오늘은 연어 포케를 사먹었는데 현미밥의 식감이 매우 좋았다~ 다음엔 메밀면으로 바꿔서 먹어봐도 좋을 것 같다. 
 그리고 점심을 건강하게 먹어서 저녁은 그냥 마라탕 먹었다..ㅎ 저칼로리 마라탕 소스가 있다는건 처음 알았는데 그걸로 한번 만들어봐야겠다 ㅎ.ㅎ 저칼로리 마라탕 소스가 있다는건 처음 알았는데 그걸로 한번 만들어봐야겠다 ㅎ.ㅎ`;
@@ -40,6 +42,12 @@ function LeftResult() {
   const openModal = () => {
     setIsModalOpen(true);
   };
+
+  useEffect(() => {
+    if (memoRef.current) {
+      setIsMemoOverflow(memoRef.current.scrollHeight > memoRef.current.clientHeight);
+    }
+  }, [memoContent]);
 
   return (
     <>
@@ -114,14 +122,18 @@ function LeftResult() {
             <MemoDetailContainer>
               <MemoDetailTopContainer>
                 <MemoDate>{format(selectedDate, 'MM.dd', { locale: koLocale })}</MemoDate>
-                <MemoDetail>{memoContent}</MemoDetail>
+                <MemoDetail ref={memoRef} isOverflow={isMemoOverflow}>
+                  {memoContent}
+                </MemoDetail>
               </MemoDetailTopContainer>
-              <div>
-                <MemoMoreButton onClick={openModal}>더보기</MemoMoreButton>
-                {isModalOpen && (
-                  <MemoModal setIsModalOpen={setIsModalOpen} selectedDate={selectedDate} memoContent={memoContent} />
-                )}
-              </div>
+              {isMemoOverflow && (
+                <div>
+                  <MemoMoreButton onClick={openModal}>더보기</MemoMoreButton>
+                  {isModalOpen && (
+                    <MemoModal setIsModalOpen={setIsModalOpen} selectedDate={selectedDate} memoContent={memoContent} />
+                  )}
+                </div>
+              )}
             </MemoDetailContainer>
           </MemoContainer>
         </SpeedAndMemoContainer>
@@ -207,7 +219,7 @@ const SpeedDateContainer = styled.div`
   align-items: end;
   gap: 0.5rem;
   margin-right: 2rem;
-  width: 11rem;
+  width: 12em;
 `;
 const SpeedDate = styled.p`
   font-size: 1.5rem;
@@ -242,7 +254,7 @@ const MemoDetailContainer = styled.div`
   height: 22.2rem;
   border-radius: 15px;
   background: #f8f8f8;
-  border: 0.746px solid #aaa;
+  /* border: 0.746px solid #aaa; */
   padding: 1.5rem;
   margin-top: 1rem;
   display: flex;
@@ -265,19 +277,23 @@ const MemoDetail = styled.p`
   font-weight: 400;
   width: 35rem;
   height: 14rem;
-  line-height: 2rem;
+  line-height: 2.5rem;
   position: relative;
   overflow: hidden;
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 30%, #f8f8f8 100%);
-    pointer-events: none;
-  }
+  ${({ isOverflow }) =>
+    isOverflow &&
+    `
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 30%, #f8f8f8 100%);
+      pointer-events: none;
+    }
+  `}
 `;
 
 const MemoMoreButton = styled.div`
