@@ -114,7 +114,8 @@ const MovingBar = styled.div`
   height: 100%;
   border-radius: 3rem;
   background: #e47f69;
-  animation: ${moveRight} 6s forwards;
+  animation: ${moveRight} 20s forwards;
+  animation-timing-function: linear;
 `;
 
 const MentContainer = styled.div`
