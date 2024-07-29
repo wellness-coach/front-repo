@@ -88,9 +88,11 @@ const MemoDate = styled.p`
 
 const MemoDetail = styled.div`
   color: black;
-  width: 63rem;
+  width: 50rem;
   height: 46rem;
   margin-top: 4.6rem;
   font-size: 1.5rem;
   font-weight: 400;
+  line-height: 2.5rem;
+  overflow-y: auto;
 `;
