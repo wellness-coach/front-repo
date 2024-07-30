@@ -8,7 +8,7 @@ function DailyResultHeader() {
   return (
     <DietTestHeaderWrapper>
       <DietTestHeaderContainer>
-        <LogoPictureImg src={LogoPicture} alt="로그 그림" />
+        <LogoPictureImg src={LogoPicture} alt="로고 그림" />
         <WellnessCoachTitleImg src={WellnessCoachTitle} alt="타이틀" />
         <LogoutButton>
           <LogoutText>로그아웃</LogoutText>

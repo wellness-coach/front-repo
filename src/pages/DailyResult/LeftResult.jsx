@@ -5,9 +5,12 @@ import { format } from 'date-fns';
 import { ko as koLocale } from 'date-fns/locale';
 import styled from 'styled-components';
 import './calStyle.css';
-import calendaricon from '../../assets/img/Calendar.png';
-import speedometerimg from '../../assets/img/speedometer.png';
 import MemoModal from './MemoModal';
+// img
+import calendaricon from '../../assets/img/Calendar.png';
+import speedgreen from '../../assets/img/SpeedGreen.png';
+import speedyellow from '../../assets/img/SpeedYellow.png';
+import speedred from '../../assets/img/SpeedRed.png';
 
 function LeftResult() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -108,7 +111,7 @@ function LeftResult() {
         </CalendarWrapper>
         <SpeedAndMemoContainer>
           <SpeedometerContainer>
-            <SpeedImg src={speedometerimg} alt="속도계 이미지" />
+            <SpeedImg src={speedgreen} alt="속도계 이미지" />
             <SpeedLevelContainer>
               <SpeedDateContainer>
                 <SpeedDate>{format(selectedDate, 'yyyy년 M월 d일', { locale: koLocale })}</SpeedDate>{' '}
