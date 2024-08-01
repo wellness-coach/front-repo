@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import * as jwtDecode from 'jwt-decode';
 
 import googleimg from '../../assets/img/googleImg.png';
 import naverimg from '../../assets/img/naverImg.png';
@@ -10,6 +13,7 @@ import backgroundimg from '../../assets/img/LoginBackground.png';
 function Login() {
   const [user, setUser] = useState(null);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const history = useNavigate();
 
   useEffect(() => {
     checkAuthStatus();
@@ -29,6 +33,12 @@ function Login() {
         withCredentials: true,
       });
       setUser(res.data.user);
+      const token = Cookies.get('Authorization');
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.userId;
+        history.push(`/main?userId=${userId}`);
+      }
     } catch (error) {
       alert(`An error occurred: ${error.message}`);
     }
@@ -46,7 +56,6 @@ function Login() {
           <LoginFormContainer>
             {user ? (
               <div>
-                {/* 메인페이지로 이동 - 수정 */}
                 <p>Welcome, {user.name}!</p>
               </div>
             ) : (
