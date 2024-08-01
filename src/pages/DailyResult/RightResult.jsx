@@ -26,13 +26,10 @@ const data = {
     { menuName: '시리얼', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '시리얼은~~~' },
     { menuName: '라면', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '라면은~~~' },
   ],
-  LUNCH: [
-    { score: 1 },
-    { menuName: '햄버거', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '햄버거는~~' },
-  ],
-  DINNER: [{ score: 9 }, { menuName: '피자', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '피자는~~' }],
-  SNACK: [{ score: 5 }, { menuName: '과자', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '과자는~~' }],
-  DRINK: [{ score: 9 }, { menuName: '콜라', sugar: 1, solution: '콜라는~~' }],
+  LUNCH: [],
+  DINNER: [{ score: 10 }, { menuName: '피자', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '피자는~~' }],
+  SNACK: [{ score: 10 }, { menuName: '과자', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '과자는~~' }],
+  DRINK: [{ score: 5 }, { menuName: '콜라', sugar: 1, solution: '콜라는~~' }],
 };
 
 const processMealData = (mealData) => {
@@ -61,16 +58,19 @@ const processMealData = (mealData) => {
 
 const getIconForMealType = (mealType, score) => {
   if (mealType === 'BREAKFAST' || mealType === 'LUNCH' || mealType === 'DINNER') {
+    if (score === undefined) return mealgray;
     if (score >= 7) return mealgreen;
     if (score >= 4) return mealyellow;
     return mealred;
   }
   if (mealType === 'SNACK') {
+    if (score === undefined) return snackgray;
     if (score >= 7) return snackgreen;
     if (score >= 4) return snackyellow;
     return snackred;
   }
   if (mealType === 'DRINK') {
+    if (score === undefined) return drinkgray;
     if (score >= 7) return drinkgreen;
     if (score >= 4) return drinkyellow;
     return drinkred;
@@ -79,9 +79,16 @@ const getIconForMealType = (mealType, score) => {
 };
 
 const getColorForScore = (score) => {
-  if (score >= 7) return '#5AC451';
-  if (score >= 4) return '#FFD700';
-  return '#FF5656';
+  if (score >= 7) return '#78A55A';
+  if (score >= 4) return '#D8C317';
+  return '#F15C5C';
+};
+
+const renderDrinkSolutionMessage = (score) => {
+  if (score === undefined) return '물을 자주 마셔보세요! 건강을 위한 좋은 습관입니다 :)';
+  if (score >= 7) return '당 섭취를 줄이는데 좋은 음료예요.';
+  if (score >= 4) return '건강한 음료와 번갈아 마셔보세요.';
+  return '당분 섭취를 줄이기 위해 무가당 음료를 선택하세요.';
 };
 
 const Siren = ({ type, data }) => {
@@ -115,8 +122,9 @@ const renderSolutions = (solutions) =>
   solutions.map((solution, index) => <SolutionDetail key={index}>{solution}</SolutionDetail>);
 
 const MealSection = ({ mealType, timeName }) => {
-  const mealData = processMealData(data[mealType]);
-  const score = data[mealType][0].score;
+  const mealData = data[mealType];
+  const processedMealData = processMealData(mealData);
+  const score = mealData[0]?.score; // Use optional chaining for safety
 
   return (
     <ResultDetailContainer>
@@ -126,18 +134,31 @@ const MealSection = ({ mealType, timeName }) => {
       </LevelLeftContainer>
       <FoodResultDetailContainer>
         <DetailTopContainer>
-          {renderSirens(mealData)}
-          <Score score={score}>{score}점</Score>
+          {score === undefined ? null : renderSirens(processedMealData)}
+          {score === undefined ? <Score score={0}></Score> : <Score score={score}>{score}점</Score>}
         </DetailTopContainer>
-        <MealSolutionDetail>{renderSolutions(mealData.solutions)}</MealSolutionDetail>
+        <MealSolutionDetail>
+          {score === undefined ? (
+            <DefaultSolutionMessage>
+              {mealType === 'SNACK'
+                ? '간식을 줄이는 노력 덕분에 더욱 건강해지고 있어요 :)'
+                : mealType === 'DRINK'
+                  ? '물을 자주 마셔보세요! 건강을 위한 좋은 습관입니다 :)'
+                  : '식사를 안하셨네요 :) 식사를 자주 거르면 신체에 필요한 에너지를 공급받지 못해 집중력이 떨어지고 신체 능력이 저하될 수 있어요. 끼니를 거른 뒤에는 균형있는 식사를 통해 영양분을 보충해주세요!'}
+            </DefaultSolutionMessage>
+          ) : (
+            renderSolutions(processedMealData.solutions)
+          )}
+        </MealSolutionDetail>
       </FoodResultDetailContainer>
     </ResultDetailContainer>
   );
 };
 
 const SnackSection = ({ snackData }) => {
-  const mealData = processMealData(snackData);
-  const score = snackData[0].score;
+  const mealData = snackData;
+  const processedMealData = processMealData(mealData);
+  const score = mealData[0]?.score;
 
   return (
     <SnackResultContainer>
@@ -147,18 +168,25 @@ const SnackSection = ({ snackData }) => {
       </ServeLevelLeftContainer>
       <SnackFoodResultDetailContainer>
         <SnackDetailTopContainer>
-          {renderSirens(mealData)}
-          <Score score={score}>{score}점</Score>
+          {score === undefined ? null : renderSirens(processedMealData)}
+          {score === undefined ? <Score score={0}>-</Score> : <Score score={score}>{score}점</Score>}
         </SnackDetailTopContainer>
-        <SnackSolutionDetail>{renderSolutions(mealData.solutions)}</SnackSolutionDetail>
+        <SnackSolutionDetail>
+          {score === undefined ? (
+            <DefaultSolutionMessage>'간식을 줄이는 노력 덕분에 더욱 건강해지고 있어요 :)'</DefaultSolutionMessage>
+          ) : (
+            renderSolutions(processedMealData.solutions)
+          )}
+        </SnackSolutionDetail>
       </SnackFoodResultDetailContainer>
     </SnackResultContainer>
   );
 };
 
 const DrinkSection = ({ drinkData }) => {
-  const mealData = processMealData(drinkData);
-  const score = drinkData[0].score;
+  const mealData = drinkData;
+  const processedMealData = processMealData(mealData);
+  const score = mealData[0]?.score;
 
   return (
     <DrinkResultContainer>
@@ -168,30 +196,30 @@ const DrinkSection = ({ drinkData }) => {
       </ServeLevelLeftContainer>
       <DrinkFoodResultDetailContainer>
         <DrinkDetailTopContainer>
-          {renderSirens(mealData)}
-          <Score score={score}>{score}점</Score>
+          {score === undefined ? null : renderSirens(processedMealData)}
+          {score === undefined ? <Score score={0}>-</Score> : <Score score={score}>{score}점</Score>}
         </DrinkDetailTopContainer>
-        <DrinkSolutionDetail>{renderSolutions(mealData.solutions)}</DrinkSolutionDetail>
+        <DrinkSolutionDetail>
+          <DefaultSolutionMessage>{renderDrinkSolutionMessage(score)}</DefaultSolutionMessage>
+        </DrinkSolutionDetail>
       </DrinkFoodResultDetailContainer>
     </DrinkResultContainer>
   );
 };
 
-function RightResult() {
-  return (
-    <MenuResultContainer>
-      <MealSections>
-        <MealSection mealType="BREAKFAST" timeName="아침" />
-        <MealSection mealType="LUNCH" timeName="점심" />
-        <MealSection mealType="DINNER" timeName="저녁" />
-      </MealSections>
-      <ServeMenuResultContainer>
-        <SnackSection snackData={data.SNACK} />
-        <DrinkSection drinkData={data.DRINK} />
-      </ServeMenuResultContainer>
-    </MenuResultContainer>
-  );
-}
+const RightResult = () => (
+  <MenuResultContainer>
+    <MealSections>
+      <MealSection mealType="BREAKFAST" timeName="아침" />
+      <MealSection mealType="LUNCH" timeName="점심" />
+      <MealSection mealType="DINNER" timeName="저녁" />
+    </MealSections>
+    <ServeMenuResultContainer>
+      <SnackSection snackData={data.SNACK} />
+      <DrinkSection drinkData={data.DRINK} />
+    </ServeMenuResultContainer>
+  </MenuResultContainer>
+);
 
 export default RightResult;
 
@@ -204,10 +232,12 @@ const MenuResultContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 const LevelIcon = styled.img`
   width: 9rem;
   height: 9rem;
 `;
+
 const Score = styled.div`
   font-size: 2.5rem;
   font-weight: 600;
@@ -215,10 +245,12 @@ const Score = styled.div`
   text-align: center;
   color: ${(props) => getColorForScore(props.score)};
 `;
+
 const SirensContainer = styled.div`
   padding-top: 0.8rem;
   display: flex;
 `;
+
 const SirenContainer = styled.div`
   position: relative;
   display: flex;
@@ -226,15 +258,19 @@ const SirenContainer = styled.div`
   align-items: center;
   width: 4rem;
   margin: 0.3rem;
+  cursor: pointer;
 `;
+
 const SirenIcon = styled.img`
   width: 2.5rem;
 `;
+
 const SirenName = styled.p`
   text-align: center;
   font-size: 1rem;
   font-weight: 700;
 `;
+
 const Tooltip = styled.div`
   position: absolute;
   bottom: 100%;
@@ -246,6 +282,7 @@ const Tooltip = styled.div`
   border-radius: 0.5rem;
   white-space: nowrap;
 `;
+
 const TooltipItem = styled.div`
   text-align: center;
   font-size: 1.5rem;
@@ -254,11 +291,16 @@ const TooltipItem = styled.div`
   white-space: nowrap;
   margin: 0.5rem;
 `;
+
 const SolutionDetail = styled.div`
   font-size: 1.2rem;
   font-weight: 500;
   line-height: 1.6rem;
   color: black;
+`;
+
+const DefaultSolutionMessage = styled(SolutionDetail)`
+  color: #000000;
 `;
 
 // 아침, 점심, 저녁
@@ -279,6 +321,7 @@ const ResultDetailContainer = styled.div`
   align-items: center;
   margin-bottom: 1rem;
 `;
+
 const TimeName = styled.p`
   background-color: #fff;
   width: 10.8rem;
@@ -289,8 +332,9 @@ const TimeName = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.3rem;
+  padding: 1rem;
 `;
+
 const LevelLeftContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -301,9 +345,11 @@ const LevelLeftContainer = styled.div`
   border-right: 1px solid #9f9f9f;
   margin-left: 0.7rem;
 `;
+
 const FoodResultDetailContainer = styled.div`
   margin-left: 1.6rem;
 `;
+
 const DetailTopContainer = styled.div`
   width: 40rem;
   display: flex;
@@ -311,6 +357,7 @@ const DetailTopContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 1rem;
 `;
+
 const MealSolutionDetail = styled.div`
   width: 40rem;
   height: 5rem;
@@ -327,6 +374,7 @@ const ServeLevelLeftContainer = styled.div`
   margin-left: 0.7rem;
   margin-right: 1.2rem;
 `;
+
 const ServeTimeName = styled.div`
   background-color: #fff;
   width: 7.7rem;
@@ -337,18 +385,21 @@ const ServeTimeName = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.3rem;
+  padding: 1rem;
 `;
+
 const ServeMenuResultContainer = styled.div`
   display: flex;
 `;
+
 const SnackDetailTopContainer = styled.div`
-  width: 23rem;
+  width: 24rem;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 1rem;
 `;
+
 const SnackResultContainer = styled.div`
   width: 35.5rem;
   height: 15.2rem;
@@ -361,9 +412,12 @@ const SnackResultContainer = styled.div`
   align-items: center;
   margin-right: 1rem;
 `;
+
 const SnackSolutionDetail = styled.div`
   width: 22rem;
+  height: 5rem;
 `;
+
 const SnackFoodResultDetailContainer = styled.div``;
 
 // 음료
@@ -379,14 +433,18 @@ const DrinkResultContainer = styled.div`
   align-items: center;
   margin-bottom: 1rem;
 `;
+
 const DrinkDetailTopContainer = styled.div`
-  width: 9rem;
+  width: 10rem;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 1rem;
 `;
+
 const DrinkSolutionDetail = styled.div`
   width: 9rem;
+  height: 5rem;
 `;
+
 const DrinkFoodResultDetailContainer = styled.div``;
