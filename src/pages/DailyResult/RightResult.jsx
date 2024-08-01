@@ -24,6 +24,7 @@ const data = {
     { score: 8 },
     { menuName: '소금빵', sugar: 1, grain: 0, redmeat: 1, carbohydrate: 1, solution: '소금빵은~~' },
     { menuName: '시리얼', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '시리얼은~~~' },
+    { menuName: '라면', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '라면은~~~' },
   ],
   LUNCH: [
     { score: 1 },
@@ -31,7 +32,7 @@ const data = {
   ],
   DINNER: [{ score: 9 }, { menuName: '피자', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '피자는~~' }],
   SNACK: [{ score: 5 }, { menuName: '과자', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '과자는~~' }],
-  DRINK: [{ score: 9 }, { menuName: '콜라', sugar: 1, solution: '음료는~~' }],
+  DRINK: [{ score: 9 }, { menuName: '콜라', sugar: 1, solution: '콜라는~~' }],
 };
 
 const processMealData = (mealData) => {
@@ -90,7 +91,13 @@ const Siren = ({ type, data }) => {
     <SirenContainer onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
       <SirenIcon src={sirenicon} alt={`${type} 사이렌 아이콘`} />
       <SirenName>{type}</SirenName>
-      {showTooltip && <Tooltip>{data.join(', ')}</Tooltip>}
+      {showTooltip && (
+        <Tooltip>
+          {data.map((item, index) => (
+            <TooltipItem key={index}>{item}</TooltipItem>
+          ))}
+        </Tooltip>
+      )}
     </SirenContainer>
   );
 };
@@ -203,7 +210,8 @@ const LevelIcon = styled.img`
 `;
 const Score = styled.div`
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: 600;
+  line-height: 3rem;
   text-align: center;
   color: ${(props) => getColorForScore(props.score)};
 `;
@@ -232,12 +240,19 @@ const Tooltip = styled.div`
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #333;
-  color: #fff;
+  background-color: #f4f2f2;
+  color: black;
   padding: 0.5rem;
   border-radius: 0.5rem;
   white-space: nowrap;
-  font-size: 0.9rem;
+`;
+const TooltipItem = styled.div`
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  white-space: nowrap;
+  margin: 0.5rem;
 `;
 const SolutionDetail = styled.div`
   font-size: 1.2rem;
@@ -255,7 +270,7 @@ const MealSections = styled.div`
 const ResultDetailContainer = styled.div`
   width: 60.6rem;
   height: 15.2rem;
-  border-radius: 1%.6rem;
+  border-radius: 1.6rem;
   background: #f4f1da;
   box-shadow: 0rem 0.4rem 0.4rem 0rem rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(2.5rem);
