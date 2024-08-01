@@ -1,37 +1,71 @@
 import styled from 'styled-components';
+import MainBackground from '../../assets/MainPageAssets/MainBackground.png';
+import MainLogo from '../../assets/MainPageAssets/MainLogo.png';
+import Logout from '../../assets/MainPageAssets/Logout.png';
+import AngleBracket from '../../assets/MainPageAssets/AngleBracket.png';
+import LowSpeed from '../../assets/MainPageAssets/LowSpeed.png';
+import MiddleSpeed from '../../assets/MainPageAssets/MiddleSpeed.png';
+import HighSpeed from '../../assets/MainPageAssets/HighSpeed.png';
+import NoSpeed from '../../assets/MainPageAssets/NoSpeed.png';
+import { useState } from 'react';
 
 function MainHeader() {
+  const [speed, setSpeed] = useState(1);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const renderSpeedometer = () => {
+    switch (speed) {
+      case 1:
+        return <Speedometer src={NoSpeed} alt="노화 속도계 - No Speed" />;
+      case 2:
+        return <Speedometer src={LowSpeed} alt="노화 속도계 - Low Speed" />;
+      case 3:
+        return <Speedometer src={MiddleSpeed} alt="노화 속도계 - Medium Speed" />;
+      case 4:
+        return <Speedometer src={HighSpeed} alt="노화 속도계 - High Speed" />;
+      default:
+        return <Speedometer src={NoSpeed} alt="노화 속도계 - Default" />;
+    }
+  };
+
   return (
     <MainHeaderWrapper>
       <MainHeaderContainer>
         <TitleContainer>
-          <MainTitle>Wellness Coach</MainTitle>
-          <UserActionContainer>
-            <LogOutBtn>로그아웃</LogOutBtn>
-            <VerticalLine></VerticalLine>
-            <MyPageBtn>마이페이지</MyPageBtn>
-          </UserActionContainer>
+          <MainLogoImg src={MainLogo} alt="메인페이지 로고" />
+          <LogoutBtn>
+            <LogoutText>로그아웃</LogoutText>
+            <LogoutImg src={Logout} alt="로그아웃" />
+          </LogoutBtn>
         </TitleContainer>
 
         <UserInfoContainer>
-          <InfoContainer_left>
-            <Speedometer alt="speedometer"></Speedometer>
-            <LevelBar>
-              <LevelLabel>
-                지난주
-                <br />
-                건강 진단
-              </LevelLabel>
-              <Level>00단계</Level>
-            </LevelBar>
-            {/* <GoToReportButton>일별 리포트 보러가기</GoToReportButton> */}
+          <InfoContainer_left onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+            {renderSpeedometer()}
+            <>
+              {!isHovered ? (
+                <LevelBar>
+                  <LevelLabel>
+                    지난주
+                    <br />
+                    건강 진단
+                  </LevelLabel>
+                  <Level>??단계</Level>
+                </LevelBar>
+              ) : (
+                <GoToReport>일별 리포트 보러가기</GoToReport>
+              )}
+            </>
           </InfoContainer_left>
           <InfoContainer_right>
             <MainText>
-              안녕하세요! patrick님 <br /> 오늘은 어떤 하루를 보내셨나요?
+              안녕하세요! patrick님 <br /> 오늘도 건강한 하루를 보내셨나요?
             </MainText>
             <GoToTestButton>
-              <p>오늘의 식단 진단하기</p><p>&gt;</p>
+              <p>오늘의 식단 진단하기</p>
+              <p>
+                <AngleBracketImg src={AngleBracket} alt="꺽쇠" />
+              </p>
             </GoToTestButton>
           </InfoContainer_right>
         </UserInfoContainer>
@@ -44,87 +78,85 @@ export default MainHeader;
 
 const MainHeaderWrapper = styled.div`
   width: 100%;
-  background-color: #d9d9d9;
-  padding: 3.2rem 6.1rem 7.6rem 6.1rem;
+  background-image: url(${MainBackground});
+  background-size: cover;
+  // 수평 스크롤바 생기는 문제 해결
+  overflow-x: hidden;
 `;
 
 const MainHeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin-top: 2.7rem;
+  margin-bottom: 7.6rem;
 `;
 // 로고&마이페이지
 
 const TitleContainer = styled.div`
   width: 100%;
-  border-bottom: 1px solid black;
-  position: relative;
-  padding-bottom: 1rem;
-`;
-
-const MainTitle = styled.h2`
-  color: #000;
-  font-family: 'Inter', sans-serif;
-  font-size: 4rem;
-  line-height: normal;
-  font-style: normal;
-  font-weight: 600;
-  text-align: center;
-`;
-
-const UserActionContainer = styled.div`
-  position: absolute;
-  top: 1rem;
-  left: 110rem;
-  width: 24.5rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  width: 135.4rem;
 `;
 
-const LogOutBtn = styled.button`
-  font-size: 2rem;
+const MainLogoImg = styled.img`
+  width: 19.5rem;
+  height: 8.5rem;
+`;
+
+const LogoutBtn = styled.button`
+  width: 14.5rem;
+  height: 4rem;
+  border-radius: 30px;
+  border: 3px solid #f4f1da;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+`;
+
+const LogoutText = styled.p`
+  color: #5f553e;
+  font-size: 1.8rem;
   font-style: normal;
   font-weight: 500;
+  line-height: normal;
 `;
 
-const VerticalLine = styled.div`
-  border-left: 1px solid #4f4f4f;
-  height: 2.24rem;
-`;
-
-const MyPageBtn = styled.button`
-  font-size: 2rem;
-  font-style: normal;
-  font-weight: 500;
+const LogoutImg = styled.img`
+  width: 3rem;
+  height: 3rem;
 `;
 
 // 유저 정보 창
 const UserInfoContainer = styled.div`
-  width: 100%;
-  margin-top: 7.67rem;
-  padding: 0rem 32.4rem 0rem 14.3rem;
+  width: 102rem;
+  margin-top: 5.5rem;
   display: flex;
-  justify-content: space-between;
+  align-items: flex-end;
   height: 25.4rem;
 `;
 
 const InfoContainer_left = styled.div`
   width: 38.6rem;
-  height: 100%;
+  margin-right: 7.7rem;
 `;
 
-const Speedometer = styled.div`
+const Speedometer = styled.img`
   width: 100%;
-  height: 18rem;
-  background-color: aliceblue;
+  height: 18.2rem;
 `;
 
-const LevelBar = styled.div`
+const LevelBar = styled.button`
   width: 100%;
   height: 6.7rem;
-  border-radius: 2rem;
+  border-radius: 20px;
   margin-top: 1rem;
-  background: #fff;
+  background: linear-gradient(157deg, #fff 43.17%, rgba(153, 153, 153, 0.3) 381.72%);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(25px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,9 +164,8 @@ const LevelBar = styled.div`
 `;
 
 const LevelLabel = styled.span`
-  color: #000;
+  color: #5f553e;
   text-align: center;
-  font-family: 'Inter', sans-serif;
   font-size: 1.5rem;
   font-style: normal;
   font-weight: 600;
@@ -144,17 +175,31 @@ const LevelLabel = styled.span`
 const Level = styled.span`
   color: #000;
   text-align: center;
-  font-family: 'Inter', sans-serif;
   font-size: 3.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+`;
+
+const GoToReport = styled.p`
+  width: 100%;
+  height: 6.7rem;
+  border-radius: 20px;
+  margin-top: 1rem;
+  background: linear-gradient(157deg, #a5c67e 43.17%, rgba(153, 153, 153, 0.3) 381.72%);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(25px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #272727;
+  font-size: 3rem;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 `;
 
-// const GoToReportButton = styled.button``;
-
 const InfoContainer_right = styled.div`
-  width: 46rem;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -162,9 +207,9 @@ const InfoContainer_right = styled.div`
 `;
 
 const MainText = styled.p`
-  color: #000;
-  font-family: 'Inter', sans-serif;
-  font-size: 3rem;
+  color: #5c4b29;
+  font-family: 'Noto Sans KR';
+  font-size: 4rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -173,11 +218,11 @@ const MainText = styled.p`
 const GoToTestButton = styled.button`
   width: 33.7rem;
   height: 6.4rem;
-  border-radius: 2.3rem;
+  border-radius: 23px;
   border: 6px solid #fff;
   margin-top: 2.4rem;
-  background: #adb88f;
-  box-shadow: 5.714px 5.714px 4.571px 0px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(180deg, #e68167 -71.09%, rgba(218, 90, 57, 0.46) 175.78%);
+  box-shadow: 5.714px 5.714px 4.571px 0px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -185,10 +230,15 @@ const GoToTestButton = styled.button`
 
   & p {
     color: #000;
-  font-family: 'Inter', sans-serif;
-  font-size: 2.2rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
+    font-size: 2.2rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
   }
+`;
+
+const AngleBracketImg = styled.img`
+  width: 3rem;
+  height: 3rem;
+  padding-top: 0.6rem;
 `;

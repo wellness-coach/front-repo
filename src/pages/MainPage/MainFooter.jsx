@@ -1,10 +1,29 @@
 import styled from 'styled-components';
-import EmptyBookmarkImg from '../../assets/EmptyBookmark.png';
-import FullBookmarkImg from '../../assets/FullBookmark.png'
-import ThumbsUpImg from '../../assets/ThumbsUp.png';
-import RightArrowImg from '../../assets/RightArrow.png';
+import EmptyBookmarkImg from '../../assets/MainPageAssets/EmptyBookmark.png';
+import FullBookmarkImg from '../../assets/MainPageAssets/FullBookmark.png';
+import ThumbsUpImg from '../../assets/MainPageAssets/ThumbsUp.png';
+import RightArrowImg from '../../assets/MainPageAssets/RightArrow.png';
+import TipBlackLeft from '../../assets/MainPageAssets/TipBlackLeft.png';
+import TipBlackRight from '../../assets/MainPageAssets/TipBlackRight.png';
+import TipGrayLeft from '../../assets/MainPageAssets/TipGrayLeft.png';
+import TipGrayRight from '../../assets/MainPageAssets/TipGrayRight.png';
+import Tips from '../../assets/Tips.json';
+import { useState } from 'react';
 
-function MainFooter() {
+function MainFooter({ onOpenTip }) {
+  const [renderedTipId, setRenderedTipId] = useState(0);
+
+  const handleGoToLeftTip = () => {
+    if (renderedTipId > 0) setRenderedTipId(renderedTipId - 1);
+  };
+
+  const handleGoToRightTip = () => {
+    if (renderedTipId < Tips.length - 2) setRenderedTipId(renderedTipId + 1);
+  };
+
+  console.log(Tips);
+  console.log(renderedTipId);
+
   return (
     <MainFooterWrapper>
       <MainFooterContainer>
@@ -12,36 +31,36 @@ function MainFooter() {
           <TipListHeader>
             <ControlText>저속 노화 관련 소식을 확인하세요</ControlText>
             <ControlActionContainer>
-              <NavigateBtn>&lt;</NavigateBtn>
-              <NavigateBtn>&gt;</NavigateBtn>
+              <NavigateImg
+                onClick={handleGoToLeftTip}
+                src={renderedTipId === 0 ? TipGrayLeft : TipBlackLeft}
+                alt="팁 왼쪽 네비게이션"
+              />
+              <NavigateImg
+                onClick={handleGoToRightTip}
+                src={renderedTipId === Tips.length - 2 ? TipGrayRight : TipBlackRight}
+                alt="팁 오른쪽 네비게이션"
+              />
             </ControlActionContainer>
           </TipListHeader>
           <TipListBody>
-            <TipBox>
-              <img src="" alt="" />
-              <RecipeText>저속 노화 레시피</RecipeText>
-              <TipTitle>노화 예방에 효과적인 바질을 이용한 샐러드</TipTitle>
+            <TipBox key={renderedTipId} onClick={() => onOpenTip(renderedTipId)}>
+              <TipImage src={`${Tips[renderedTipId].tipImgSrc}`} alt="팁 이미지" />
+              <RecipeText>{Tips[renderedTipId].category}</RecipeText>
+              <TipTitle>{Tips[renderedTipId].title}</TipTitle>
               <DetailText>
                 <span>자세히 보기</span>
                 <img src={RightArrowImg} alt="자세히 보기" />
               </DetailText>
-              <HelpfulTextBox>
-                <span>도움 되었어요</span>
-                <img src={ThumbsUpImg} alt="좋아요 버튼" />
-              </HelpfulTextBox>
             </TipBox>
-            <TipBox>
-              <img src="" alt="" />
-              <RecipeText>저속 노화 레시피</RecipeText>
-              <TipTitle>노화 예방에 효과적인 바질을 이용한 샐러드 밀키트</TipTitle>
+            <TipBox key={renderedTipId + 1} onClick={() => onOpenTip(renderedTipId + 1)}>
+              <TipImage src={`${Tips[renderedTipId + 1].tipImgSrc}`} alt="팁 이미지" />
+              <RecipeText>{Tips[renderedTipId + 1].category}</RecipeText>
+              <TipTitle>{Tips[renderedTipId + 1].title}</TipTitle>
               <DetailText>
                 <span>자세히 보기</span>
                 <img src={RightArrowImg} alt="자세히 보기" />
               </DetailText>
-              <HelpfulTextBox>
-                <span>도움 되었어요</span>
-                <img src={ThumbsUpImg} alt="좋아요 버튼" />
-              </HelpfulTextBox>
             </TipBox>
           </TipListBody>
         </TipListContainer>
@@ -55,33 +74,24 @@ function MainFooter() {
             <ListItemContainer>
               <ListItem>
                 <ItemProductName>제품1</ItemProductName>
-                <ItemScrap>
-                  <img src={EmptyBookmarkImg} alt="북마크" />
-                </ItemScrap>
+                <ItemScrap src={FullBookmarkImg} alt="북마크" />
               </ListItem>
               <ListItem>
                 <ItemProductName>제품1</ItemProductName>
-                <ItemScrap>
-                  <img src={EmptyBookmarkImg} alt="북마크" />
-                </ItemScrap>
+                <ItemScrap src={EmptyBookmarkImg} alt="북마크" />
               </ListItem>
               <ListItem>
                 <ItemProductName>제품1</ItemProductName>
-                <ItemScrap>
-                  <img src={EmptyBookmarkImg} alt="북마크" />
-                </ItemScrap>
+                <ItemScrap src={EmptyBookmarkImg} alt="북마크" />
               </ListItem>
               <ListItem>
                 <ItemProductName>제품1</ItemProductName>
-                <ItemScrap>
-                  <img src={EmptyBookmarkImg} alt="북마크" />
-                </ItemScrap>
+                <ItemScrap src={FullBookmarkImg} alt="북마크" />
               </ListItem>
               <ListItem>
                 <ItemProductName>제품1</ItemProductName>
-                <ItemScrap>
-                  <img src={FullBookmarkImg} alt="북마크" />
-                </ItemScrap>
+
+                <ItemScrap src={FullBookmarkImg} alt="북마크" />
               </ListItem>
             </ListItemContainer>
           </RecommendationListBody>
@@ -104,13 +114,14 @@ const MainFooterWrapper = styled.div`
 const MainFooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 110.7rem;
+  padding-bottom: 6rem;
 `;
 
 const TipListContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 66.6rem;
+  margin-right: 3rem;
 `;
 
 const TipListHeader = styled.div`
@@ -122,7 +133,6 @@ const TipListHeader = styled.div`
 
 const ControlText = styled.p`
   color: #000;
-  font-family: 'Inter', sans-serif;
   font-size: 2.2rem;
   font-style: normal;
   font-weight: 800;
@@ -130,18 +140,22 @@ const ControlText = styled.p`
 `;
 
 const ControlActionContainer = styled.div`
-  margin-right: 2.14rem;
-  width: 7.66rem;
+  width: 6.6rem;
+  margin-right: 2.2rem;
+  display: flex;
+  justify-content: space-between;
 `;
 
-const NavigateBtn = styled.button``;
+const NavigateImg = styled.img`
+  width: 3rem;
+  height: 3rem;
+`;
 
 const TipListBody = styled.div`
   width: 66.6rem;
   height: 32.6rem;
   display: flex;
   justify-content: space-between;
-  background-color: antiquewhite;
 `;
 
 const TipBox = styled.div`
@@ -149,33 +163,49 @@ const TipBox = styled.div`
   height: 100%;
   position: relative;
   border-radius: 18px;
-  background-color: aquamarine;
+`;
+
+const TipImage = styled.img`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  filter: brightness(0.4); 
+  backdrop-filter: blur(5px); 
+
+  &:hover {
+    filter: brightness(0.8); 
+  }
 `;
 
 const RecipeText = styled.p`
   position: absolute;
   top: 3.1rem;
   left: 2.82rem;
-  color: black;
-  font-family: 'Inter', sans-serif;
+  color: #ffffff;
   font-size: 1.5rem;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
+  z-index: 1;
 `;
 
 const TipTitle = styled.p`
   position: absolute;
   top: 6.01rem;
   left: 2.82rem;
-  color: black;
-  font-family: 'Inter', sans-serif;
+  color: #ffffff;
   font-size: 2rem;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
   width: 25rem;
   height: 10rem;
+  overflow: hidden;
+  word-wrap: break-word;
+  z-index: 1;
 `;
 
 const DetailText = styled.p`
@@ -186,10 +216,10 @@ const DetailText = styled.p`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 1;
 
   & span {
     color: #fff;
-    font-family: 'Inter', sans-serif;
     font-size: 1.5rem;
     font-style: normal;
     font-weight: 800;
@@ -209,10 +239,10 @@ const HelpfulTextBox = styled.p`
   align-items: center;
   justify-content: space-around;
   padding: 0rem 1rem;
+  z-index: 1;
 
   & span {
     color: #fff;
-    font-family: 'Inter', sans-serif;
     font-size: 1.5rem;
     font-style: normal;
     font-weight: 800;
@@ -229,7 +259,6 @@ const RecommendationListContainer = styled.div`
 const RecommendationListHeader = styled.p`
   width: 100%;
   color: #171717;
-  font-family: 'Inter', sans-serif;
   font-size: 2.2rem;
   font-style: normal;
   font-weight: 800;
@@ -258,19 +287,17 @@ const ListLabel = styled.div`
 const LabelProductName = styled.span`
   color: #000;
   text-align: center;
-  font-family: 'Inter', sans-serif;
   font-size: 2rem;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   margin-left: 5.1rem;
-  margin-right: 16.6rem;
+  margin-right: 18.6rem;
 `;
 
 const LabelScrap = styled.span`
   color: #000;
   text-align: center;
-  font-family: 'Inter', sans-serif;
   font-size: 2rem;
   font-style: normal;
   font-weight: 600;
@@ -288,8 +315,8 @@ const ListItemContainer = styled.ul`
 `;
 
 const ListItem = styled.li`
-  width: 36.7rem;
-  height: 6.4rem;
+  width: 100%;
+  min-height: 6.4rem;
   border-radius: 10px;
   background: #fff;
   margin-bottom: 1.2rem;
@@ -298,10 +325,9 @@ const ListItem = styled.li`
   justify-content: space-between;
 `;
 
-const ItemProductName = styled.span`
+const ItemProductName = styled.p`
   color: #000;
   text-align: center;
-  font-family: 'Inter', sans-serif;
   font-size: 1.8rem;
   font-style: normal;
   font-weight: 500;
@@ -310,6 +336,8 @@ const ItemProductName = styled.span`
   max-width: 15rem;
 `;
 
-const ItemScrap = styled.span`
+const ItemScrap = styled.img`
   margin-right: 4rem;
+  width: 3rem;
+  height: 5rem;
 `;
