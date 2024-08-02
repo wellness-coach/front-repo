@@ -23,7 +23,7 @@ function LeftResult() {
 
   const data = {
     userId: '홍길동',
-    todayAgingType: 'CAUTION', // PROPER, CAUTION, DANGER
+    todayAgingType: 'DANGER', // PROPER, CAUTION, DANGER
     memo: '맛있었다!!!',
     meals: {
       DINNER: [
