@@ -13,7 +13,7 @@ import backgroundimg from '../../assets/img/LoginBackground.png';
 function Login() {
   const [user, setUser] = useState(null);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     checkAuthStatus();
@@ -37,7 +37,8 @@ function Login() {
       if (token) {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.userId;
-        history.push(`/main?userId=${userId}`);
+        localStorage.setItem('userId', userId);
+        navigate('/main');
       }
     } catch (error) {
       alert(`An error occurred: ${error.message}`);
