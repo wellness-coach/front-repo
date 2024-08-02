@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import * as jwtDecode from 'jwt-decode';
 
-import googleimg from '../../assets/img/googleImg.png';
-import naverimg from '../../assets/img/naverImg.png';
-import logoimg from '../../assets/img/LoginLogo.png';
-import backgroundimg from '../../assets/img/LoginBackground.png';
+import googleimg from '../../assets/LoginImg/googleImg.png';
+import naverimg from '../../assets/LoginImg/naverImg.png';
+import logoimg from '../../assets/LoginImg/LoginLogo.png';
+import backgroundimg from '../../assets/LoginImg/LoginBackground.png';
 
 function Login() {
   const [user, setUser] = useState(null);
