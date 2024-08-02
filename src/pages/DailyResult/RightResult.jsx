@@ -142,7 +142,7 @@ const getIconForMealType = (mealType, score) => {
     if (score >= 4) return drinkyellow;
     return drinkred;
   }
-  return mealgray; // default icon
+  return mealgray;
 };
 
 const getColorForScore = (score) => {
@@ -191,7 +191,7 @@ const renderSolutions = (solutions) =>
 const MealSection = ({ mealType, timeName }) => {
   const mealData = data.meals[mealType];
   const processedMealData = processMealData(mealData);
-  const score = mealData[0]?.score; // Use optional chaining for safety
+  const score = mealData[0]?.score;
 
   return (
     <ResultDetailContainer>
@@ -202,12 +202,17 @@ const MealSection = ({ mealType, timeName }) => {
       <FoodResultDetailContainer>
         <DetailTopContainer>
           {score === undefined ? null : renderSirens(processedMealData)}
-          <Score score={score}>{score === undefined ? '-' : `${score}점`}</Score>
+          <Score score={score}>{score === undefined ? '' : `${score}점`}</Score>
         </DetailTopContainer>
         <MealSolutionDetail>
-          {mealData[1]?.solution
-            ? renderSolutions([mealData[1].solution])
-            : '식사를 안하셨네요 :)  식사를 자주 거르면 신체에 필요한 에너지를 공급받지 못해 집중력이 떨어지고 신체 능력이 저하될 수 있어요. 끼니를 거른 뒤에는 균형있는 식사를 통해 영양분을 보충해주세요! '}
+          {mealData[1]?.solution ? (
+            renderSolutions([mealData[1].solution])
+          ) : (
+            <SolutionDetail>
+              '식사를 안하셨네요 :) 식사를 자주 거르면 신체에 필요한 에너지를 공급받지 못해 집중력이 떨어지고 신체
+              능력이 저하될 수 있어요. 끼니를 거른 뒤에는 균형있는 식사를 통해 영양분을 보충해주세요! '
+            </SolutionDetail>
+          )}
         </MealSolutionDetail>
       </FoodResultDetailContainer>
     </ResultDetailContainer>
@@ -230,9 +235,11 @@ const SnackSection = ({ snackData }) => {
           <Score score={score}>{score === undefined ? '' : `${score}점`}</Score>
         </SnackDetailTopContainer>
         <SnackSolutionDetail>
-          {snackData[1]?.solution
-            ? renderSolutions([snackData[1].solution])
-            : '간식을 줄이는 노력 덕분에 더욱 건강해지고 있어요 :)'}
+          {snackData[1]?.solution ? (
+            renderSolutions([snackData[1].solution])
+          ) : (
+            <SolutionDetail>간식을 줄이는 노력 덕분에 더욱 건강해지고 있어요 :)</SolutionDetail>
+          )}
         </SnackSolutionDetail>
       </SnackFoodResultDetailContainer>
     </SnackResultContainer>
@@ -255,7 +262,7 @@ const DrinkSection = ({ drinkData }) => {
           <Score score={score}>{score === undefined ? '' : `${score}점`}</Score>
         </DrinkDetailTopContainer>
         <DrinkSolutionDetail>
-          {drinkData[1]?.solution ? renderSolutions([drinkData[1].solution]) : renderDrinkSolutionMessage(score)}
+          <SolutionDetail>{renderDrinkSolutionMessage(score)}</SolutionDetail>
         </DrinkSolutionDetail>
       </DrinkFoodResultDetailContainer>
     </DrinkResultContainer>
@@ -331,7 +338,9 @@ const Tooltip = styled.div`
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #f4f2f2;
+  background-color: rgba(255, 233, 116, 0.5);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  backdrop-filter: blur(20px);
   color: black;
   padding: 0.5rem;
   border-radius: 0.5rem;
@@ -354,9 +363,9 @@ const SolutionDetail = styled.div`
   color: black;
 `;
 
-const DefaultSolutionMessage = styled(SolutionDetail)`
-  color: #000000;
-`;
+// const DefaultSolutionMessage = styled(SolutionDetail)`
+//   color: #000000;
+// `;
 
 // 아침, 점심, 저녁
 const MealSections = styled.div`
