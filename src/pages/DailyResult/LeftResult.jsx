@@ -21,8 +21,85 @@ function LeftResult() {
   const [isMemoOverflow, setIsMemoOverflow] = useState(false);
   const memoRef = useRef(null);
 
-  const memoContent = `오늘은 연어 포케를 사먹었는데 현미밥의 식감이 매우 좋았다~ 다음엔 메밀면으로 바꿔서 먹어봐도 좋을 것 같다. 
-그리고 점심을 건강하게 먹어서 저녁은 그냥 마라탕 먹었다..ㅎ 저칼로리 마라탕 소스가 있다는건 처음 알았는데 그걸로 한번 만들어봐야겠다 ㅎ.ㅎ 저칼로리 마라탕 소스가 있다는건 처음 알았는데 그걸로 한번 만들어봐야겠다 ㅎ.ㅎ`;
+  const data = {
+    userId: '홍길동',
+    todayAgingType: 'CAUTION', // PROPER, CAUTION, DANGER
+    memo: '맛있었다!!!',
+    meals: {
+      DINNER: [
+        {
+          score: 8,
+        },
+        {
+          menuName: '우삼겹숙주찜',
+          solution: '우삼겹숙주찜은 저속노화에 도움이 되는 음식입니다. ...',
+        },
+      ],
+      BREAKFAST: [
+        {
+          score: 5,
+        },
+        {
+          menuName: '초밥',
+          solution: '초밥의 경우, 흰쌀밥 대신 현미밥이나 퀴노아를 사용하면 ...',
+        },
+      ],
+      SNACK: [],
+      LUNCH: [
+        {
+          score: 2,
+        },
+        {
+          menuName: '조각케이크',
+          solution: '조각케이크는 가속노화 음식이므로, 가속노화를 줄이기 위해 ...',
+        },
+      ],
+      DRINK: [
+        {
+          score: 6,
+        },
+        {
+          menuName: '밀크티',
+          solution: '당 섭취를 줄이고, 항산화 식품을 섭취하세요.',
+        },
+      ],
+    },
+  };
+
+  const getSpeedLevelInfo = (agingType) => {
+    switch (agingType) {
+      case 'PROPER':
+        return {
+          text: '저속 단계',
+          color: 'green',
+          imgSrc: speedgreen,
+        };
+      case 'CAUTION':
+        return {
+          text: '유의 단계',
+          color: 'yellow',
+          imgSrc: speedyellow,
+        };
+      case 'DANGER':
+        return {
+          text: '가속 단계',
+          color: 'red',
+          imgSrc: speedred,
+        };
+      default:
+        return {
+          text: '정보 없음',
+          color: 'gray',
+          imgSrc: null,
+        };
+    }
+  };
+
+  const speedLevelInfo = getSpeedLevelInfo(data.todayAgingType);
+
+  const memoContent = data.memo;
+
+  const userId = data.userId;
 
   const getShortDay = (date) => {
     const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
@@ -57,7 +134,7 @@ function LeftResult() {
       <LeftResultContainer>
         <CalendarWrapper>
           <CalendarContainer>
-            <ResultName>ㅇㅇ님의 일별 리포트 분석</ResultName>
+            <ResultName>{userId}님의 일별 리포트 분석</ResultName>
             <div className="date-picker-container">
               <button onClick={handleCalendarClick} ref={buttonRef} className="calendar-button">
                 <CalendarIcon src={calendaricon} alt="달력아이콘" />
@@ -111,13 +188,13 @@ function LeftResult() {
         </CalendarWrapper>
         <SpeedAndMemoContainer>
           <SpeedometerContainer>
-            <SpeedImg src={speedgreen} alt="속도계 이미지" />
+            <SpeedImg src={speedLevelInfo.imgSrc} alt="속도계 이미지" />
             <SpeedLevelContainer>
               <SpeedDateContainer>
                 <SpeedDate>{format(selectedDate, 'yyyy년 M월 d일', { locale: koLocale })}</SpeedDate>{' '}
                 <SpeedDateM>건강 진단 결과</SpeedDateM>
               </SpeedDateContainer>
-              <SpeedLevel>유의 단계</SpeedLevel>
+              <SpeedLevel color={speedLevelInfo.color}>{speedLevelInfo.text}</SpeedLevel>
             </SpeedLevelContainer>
           </SpeedometerContainer>
           <MemoContainer>
@@ -203,6 +280,7 @@ const SpeedImg = styled.img`
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   backdrop-filter: blur(30px);
 `;
+
 const SpeedLevelContainer = styled.div`
   width: 38.6rem;
   height: 6.7rem;
@@ -216,6 +294,7 @@ const SpeedLevelContainer = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(25px);
 `;
+
 const SpeedDateContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -224,17 +303,22 @@ const SpeedDateContainer = styled.div`
   margin-right: 2rem;
   width: 12em;
 `;
+
 const SpeedDate = styled.p`
   font-size: 1.5rem;
   font-weight: 600;
 `;
+
 const SpeedDateM = styled.p`
   font-size: 1.5rem;
   font-weight: 600;
 `;
+
 const SpeedLevel = styled.p`
   font-size: 3.5rem;
   font-weight: 700;
+  color: ${({ color }) =>
+    color === 'green' ? '#68B248' : color === 'yellow' ? '#D8C317' : color === 'red' ? '#D35F4F' : '#6c757d'};
 `;
 
 // 메모 섹션
@@ -247,34 +331,38 @@ const MemoContainer = styled.div`
   margin-top: 4rem;
   border: 1px solid #aaa;
 `;
+
 const MemoTitle = styled.p`
   font-size: 2rem;
   font-weight: 600;
   margin-left: 1rem;
 `;
+
 const MemoDetailContainer = styled.div`
   width: 40.5rem;
   height: 22.2rem;
   border-radius: 15px;
   background: #f8f8f8;
-  /* border: 0.746px solid #aaa; */
   padding: 1.5rem;
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
   align-items: end;
 `;
+
 const MemoDetailTopContainer = styled.div`
   width: 36rem;
   height: 15rem;
   margin-bottom: 2rem;
 `;
+
 const MemoDate = styled.p`
   color: #bcbdbf;
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
 `;
+
 const MemoDetail = styled.p`
   font-size: 1.5rem;
   font-weight: 400;

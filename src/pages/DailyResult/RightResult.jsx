@@ -19,22 +19,89 @@ import snackgray from '../../assets/img/SnackGray.png';
 
 import sirenicon from '../../assets/img/siren.png';
 
+// 데이터 샘플
 const data = {
-  BREAKFAST: [
-    { score: 8 },
-    { menuName: '소금빵', sugar: 1, grain: 0, redmeat: 1, carbohydrate: 1, solution: '소금빵은~~' },
-    { menuName: '시리얼', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '시리얼은~~~' },
-    { menuName: '라면', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '라면은~~~' },
-  ],
-  LUNCH: [],
-  DINNER: [{ score: 10 }, { menuName: '피자', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '피자는~~' }],
-  SNACK: [{ score: 10 }, { menuName: '과자', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '과자는~~' }],
-  DRINK: [{ score: 5 }, { menuName: '콜라', sugar: 1, solution: '콜라는~~' }],
+  userId: 2,
+  date: '2024-08-01',
+  memo: '맛있었다!!!',
+  recentAgingType: 'CAUTION',
+  todayAgingType: 'CAUTION',
+  meals: {
+    DINNER: [
+      { score: 8 },
+      {
+        menuName: '우삼겹숙주찜',
+        sugar: false,
+        grain: false,
+        redmeat: true,
+        carbohydrate: false,
+        solution:
+          '우삼겹숙주찜은 저속노화에 도움이 되는 음식입니다. 이 음식은 숙주나물의 높은 항산화 성분과 우삼겹의 단백질이 결합되어 체내 염증을 줄이고 세포 재생을 촉진합니다. 저속노화를 더욱 촉진시키기 위해서는 신선한 숙주나물을 사용하고, 우삼겹의 지방을 적절히 제거하여 조리하는 것이 좋습니다. 또한, 조리 시 과도한 소금이나 소스를 피하고, 신선한 허브나 레몬즙을 활용해 맛을 더하는 것이 좋습니다.',
+        productResponse: null,
+      },
+    ],
+    BREAKFAST: [
+      { score: 5 },
+      {
+        menuName: '초밥',
+        sugar: false,
+        grain: true,
+        redmeat: false,
+        carbohydrate: true,
+        solution:
+          '초밥의 경우, 흰쌀밥 대신 현미밥이나 퀴노아를 사용하면 가속노화를 줄일 수 있습니다. 또한, 생선 대신 아보카도, 두부, 채소 등을 활용한 비건 초밥을 만들어보세요.',
+        productResponse: {
+          productId: 82,
+          targetProductName: '참치',
+          productName: '연어',
+          productLink: 'https://smartstore.naver.com/main/products/5621442966',
+          scrap: false,
+        },
+      },
+    ],
+    SNACK: [],
+    LUNCH: [
+      { score: 2 },
+      {
+        menuName: '조각케이크',
+        sugar: true,
+        grain: true,
+        redmeat: false,
+        carbohydrate: true,
+        solution:
+          '조각케이크는 가속노화 음식이므로, 가속노화를 줄이기 위해 설탕을 대체할 수 있는 스테비아나 에리스리톨 같은 천연 감미료를 사용하고, 흰 밀가루 대신 아몬드 가루나 코코넛 가루를 사용하는 것이 좋습니다. 또한, 버터 대신 아보카도 오일이나 코코넛 오일을 사용해보세요.',
+        productResponse: {
+          productId: 83,
+          targetProductName: '설탕',
+          productName: '블루베리',
+          productLink: 'https://smartstore.naver.com/main/products/343387698',
+          scrap: false,
+        },
+      },
+    ],
+    DRINK: [
+      { score: 5 },
+      {
+        menuName: '밀크티',
+        sugar: false,
+        solution: '당 섭취를 줄이고, 항산화 식품을 섭취하세요.',
+        productResponse: {
+          productId: 84,
+          targetProductName: '우유',
+          productName: '아몬드 우유',
+          productLink: 'https://smartstore.naver.com/main/products/8894224469',
+          scrap: false,
+        },
+      },
+    ],
+  },
 };
 
+// 헬퍼 함수
 const processMealData = (mealData) => {
-  if (!Array.isArray(mealData) || mealData.length < 2)
+  if (!Array.isArray(mealData) || mealData.length < 2) {
     return { sugar: [], grain: [], redmeat: [], carbohydrate: [], solutions: [] };
+  }
 
   const result = {
     sugar: [],
@@ -122,7 +189,7 @@ const renderSolutions = (solutions) =>
   solutions.map((solution, index) => <SolutionDetail key={index}>{solution}</SolutionDetail>);
 
 const MealSection = ({ mealType, timeName }) => {
-  const mealData = data[mealType];
+  const mealData = data.meals[mealType];
   const processedMealData = processMealData(mealData);
   const score = mealData[0]?.score; // Use optional chaining for safety
 
@@ -135,20 +202,12 @@ const MealSection = ({ mealType, timeName }) => {
       <FoodResultDetailContainer>
         <DetailTopContainer>
           {score === undefined ? null : renderSirens(processedMealData)}
-          {score === undefined ? <Score score={0}></Score> : <Score score={score}>{score}점</Score>}
+          <Score score={score}>{score === undefined ? '-' : `${score}점`}</Score>
         </DetailTopContainer>
         <MealSolutionDetail>
-          {score === undefined ? (
-            <DefaultSolutionMessage>
-              {mealType === 'SNACK'
-                ? '간식을 줄이는 노력 덕분에 더욱 건강해지고 있어요 :)'
-                : mealType === 'DRINK'
-                  ? '물을 자주 마셔보세요! 건강을 위한 좋은 습관입니다 :)'
-                  : '식사를 안하셨네요 :) 식사를 자주 거르면 신체에 필요한 에너지를 공급받지 못해 집중력이 떨어지고 신체 능력이 저하될 수 있어요. 끼니를 거른 뒤에는 균형있는 식사를 통해 영양분을 보충해주세요!'}
-            </DefaultSolutionMessage>
-          ) : (
-            renderSolutions(processedMealData.solutions)
-          )}
+          {mealData[1]?.solution
+            ? renderSolutions([mealData[1].solution])
+            : '식사를 안하셨네요 :)  식사를 자주 거르면 신체에 필요한 에너지를 공급받지 못해 집중력이 떨어지고 신체 능력이 저하될 수 있어요. 끼니를 거른 뒤에는 균형있는 식사를 통해 영양분을 보충해주세요! '}
         </MealSolutionDetail>
       </FoodResultDetailContainer>
     </ResultDetailContainer>
@@ -156,9 +215,8 @@ const MealSection = ({ mealType, timeName }) => {
 };
 
 const SnackSection = ({ snackData }) => {
-  const mealData = snackData;
-  const processedMealData = processMealData(mealData);
-  const score = mealData[0]?.score;
+  const processedSnackData = processMealData(snackData);
+  const score = snackData[0]?.score;
 
   return (
     <SnackResultContainer>
@@ -168,15 +226,13 @@ const SnackSection = ({ snackData }) => {
       </ServeLevelLeftContainer>
       <SnackFoodResultDetailContainer>
         <SnackDetailTopContainer>
-          {score === undefined ? null : renderSirens(processedMealData)}
-          {score === undefined ? <Score score={0}>-</Score> : <Score score={score}>{score}점</Score>}
+          {score === undefined ? null : renderSirens(processedSnackData)}
+          <Score score={score}>{score === undefined ? '' : `${score}점`}</Score>
         </SnackDetailTopContainer>
         <SnackSolutionDetail>
-          {score === undefined ? (
-            <DefaultSolutionMessage>'간식을 줄이는 노력 덕분에 더욱 건강해지고 있어요 :)'</DefaultSolutionMessage>
-          ) : (
-            renderSolutions(processedMealData.solutions)
-          )}
+          {snackData[1]?.solution
+            ? renderSolutions([snackData[1].solution])
+            : '간식을 줄이는 노력 덕분에 더욱 건강해지고 있어요 :)'}
         </SnackSolutionDetail>
       </SnackFoodResultDetailContainer>
     </SnackResultContainer>
@@ -184,9 +240,8 @@ const SnackSection = ({ snackData }) => {
 };
 
 const DrinkSection = ({ drinkData }) => {
-  const mealData = drinkData;
-  const processedMealData = processMealData(mealData);
-  const score = mealData[0]?.score;
+  const processedDrinkData = processMealData(drinkData);
+  const score = drinkData[0]?.score;
 
   return (
     <DrinkResultContainer>
@@ -196,11 +251,11 @@ const DrinkSection = ({ drinkData }) => {
       </ServeLevelLeftContainer>
       <DrinkFoodResultDetailContainer>
         <DrinkDetailTopContainer>
-          {score === undefined ? null : renderSirens(processedMealData)}
-          {score === undefined ? <Score score={0}>-</Score> : <Score score={score}>{score}점</Score>}
+          {score === undefined ? null : renderSirens(processedDrinkData)}
+          <Score score={score}>{score === undefined ? '' : `${score}점`}</Score>
         </DrinkDetailTopContainer>
         <DrinkSolutionDetail>
-          <DefaultSolutionMessage>{renderDrinkSolutionMessage(score)}</DefaultSolutionMessage>
+          {drinkData[1]?.solution ? renderSolutions([drinkData[1].solution]) : renderDrinkSolutionMessage(score)}
         </DrinkSolutionDetail>
       </DrinkFoodResultDetailContainer>
     </DrinkResultContainer>
@@ -215,15 +270,15 @@ const RightResult = () => (
       <MealSection mealType="DINNER" timeName="저녁" />
     </MealSections>
     <ServeMenuResultContainer>
-      <SnackSection snackData={data.SNACK} />
-      <DrinkSection drinkData={data.DRINK} />
+      <SnackSection snackData={data.meals.SNACK} />
+      <DrinkSection drinkData={data.meals.DRINK} />
     </ServeMenuResultContainer>
   </MenuResultContainer>
 );
 
 export default RightResult;
 
-// 공통
+// 스타일링
 const MenuResultContainer = styled.div`
   width: 50%;
   padding-top: 16.5rem;
@@ -361,6 +416,7 @@ const DetailTopContainer = styled.div`
 const MealSolutionDetail = styled.div`
   width: 40rem;
   height: 5rem;
+  overflow-y: auto;
 `;
 
 // 간식
