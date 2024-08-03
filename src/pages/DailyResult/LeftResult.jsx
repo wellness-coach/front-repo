@@ -3,13 +3,12 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { format } from 'date-fns';
 import { ko as koLocale } from 'date-fns/locale';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import UserInfoContext from '../../store/UserInfoCtx';
+
 import './calStyle.css';
 import MemoModal from './MemoModal';
-import UserInfoContext from '../../store/UserInfoCtx';
 import speednull from '../../assets/img/SpeedNull.png';
-
-// img
 import calendaricon from '../../assets/img/Calendar.png';
 import speedgreen from '../../assets/img/SpeedGreen.png';
 import speedyellow from '../../assets/img/SpeedYellow.png';
@@ -29,34 +28,20 @@ function LeftResult({ data, date, setDate }) {
     color: 'gray',
     imgSrc: speednull,
   };
+
   const getSpeedLevelInfo = (agingType) => {
     switch (agingType) {
       case 'PROPER':
-        return {
-          text: '저속 단계',
-          color: 'green',
-          imgSrc: speedgreen,
-        };
+        return { text: '저속 단계', color: 'green', imgSrc: speedgreen };
       case 'CAUTION':
-        return {
-          text: '유의 단계',
-          color: 'yellow',
-          imgSrc: speedyellow,
-        };
+        return { text: '유의 단계', color: 'yellow', imgSrc: speedyellow };
       case 'DANGER':
-        return {
-          text: '가속 단계',
-          color: 'red',
-          imgSrc: speedred,
-        };
+        return { text: '가속 단계', color: 'red', imgSrc: speedred };
       default:
-        return {
-          text: '? ? 단계',
-          color: 'gray',
-          imgSrc: speednull,
-        };
+        return defaultSpeedLevelInfo;
     }
   };
+
   const speedLevelInfo = data ? getSpeedLevelInfo(data.todayAgingType) : defaultSpeedLevelInfo;
   const memoContent = data ? data.memo : '';
 
@@ -65,22 +50,14 @@ function LeftResult({ data, date, setDate }) {
     return weekdays[date.getDay()];
   };
 
-  const formatDate = (date) => {
-    return format(date, `yyyy. MM. dd (${getShortDay(date)})`, {
-      locale: koLocale,
-    });
-  };
+  const formatDate = (date) => format(date, `yyyy. MM. dd (${getShortDay(date)})`, { locale: koLocale });
 
   const handleCalendarClick = () => {
     setOpen(!open);
-    if (!open) {
-      datePickerRef.current?.setOpen(true);
-    }
+    if (!open) datePickerRef.current?.setOpen(true);
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+  const openModal = () => setIsModalOpen(true);
 
   useEffect(() => {
     if (memoRef.current) {
@@ -328,20 +305,21 @@ const MemoDetail = styled.p`
   line-height: 2.5rem;
   position: relative;
   overflow: hidden;
-  ${({ isOverflow }) =>
-    isOverflow &&
-    `
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 30%, #f8f8f8 100%);
-      pointer-events: none;
-    }
-  `}
+
+  ${(props) =>
+    props.isOverflow &&
+    css`
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 30%, #f8f8f8 100%);
+        pointer-events: none;
+      }
+    `}
 `;
 
 const MemoMoreButton = styled.div`
