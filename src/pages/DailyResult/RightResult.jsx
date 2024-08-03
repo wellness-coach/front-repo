@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-// 이미지 import
+// img
 import mealred from '../../assets/img/MealRed.png';
 import mealyellow from '../../assets/img/MealYellow.png';
 import mealgreen from '../../assets/img/MealGreen.png';
@@ -190,7 +190,14 @@ const DrinkSection = ({ drinkData }) => {
   );
 };
 
-const RightResult = () => (
+const RightResult = ({ data }) => {
+  if (!data) {
+    return (
+      <MenuResultContainer>
+        <SolutionDetail>검사를 하지 않았습니다.</SolutionDetail>
+      </MenuResultContainer>
+    );
+  }
   <MenuResultContainer>
     <MealSections>
       <MealSection mealType="BREAKFAST" timeName="아침" />
@@ -201,9 +208,8 @@ const RightResult = () => (
       <SnackSection snackData={data.meals.SNACK} />
       <DrinkSection drinkData={data.meals.DRINK} />
     </ServeMenuResultContainer>
-  </MenuResultContainer>
-);
-
+  </MenuResultContainer>;
+};
 export default RightResult;
 
 // 스타일링
