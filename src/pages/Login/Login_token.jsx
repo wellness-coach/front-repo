@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // useNavigate 훅을 사용합니다
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import * as jwtDecode from 'jwt-decode';
 
 import googleimg from '../../assets/img/googleImg.png';
 import naverimg from '../../assets/img/naverImg.png';
@@ -9,9 +11,9 @@ import logoimg from '../../assets/img/LoginLogo.png';
 import backgroundimg from '../../assets/img/LoginBackground.png';
 
 function Login() {
-  const [userId, setUserId] = useState(null);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(['Authorization']);
 
   useEffect(() => {
     checkAuthStatus();
@@ -30,14 +32,24 @@ function Login() {
       const res = await axios.get(`${BASE_URL}/login`, {
         withCredentials: true,
       });
+      const token = res.data.token;
+      if (token) {
+        setCookie('Authorization', token, {
+          path: '/',
+          sameSite: 'None',
+          secure: false, // 배포 시 true로 변경
+        });
 
-      if (res.data.userId) {
-        setUserId(res.data.userId);
+        // 디코딩 및 디버깅
+        const decoded = jwtDecode(token);
+        console.log('Decoded Token:', decoded); // 디코딩된 토큰 출력
+        const userId = decoded.sub;
+        console.log('User ID:', userId); // 추출된 userId 출력
 
-        navigate(`/main/userId=${res.data.userId}`);
+        navigate(`/main/${userId}`);
       }
     } catch (error) {
-      alert(`er: ${error.message}`);
+      alert(`An error occurred: ${error.message}`);
     }
   };
 
@@ -51,21 +63,15 @@ function Login() {
           </ServiceIntroContainer>
 
           <LoginFormContainer>
-            {!userId ? (
-              <>
-                <LoginToNaverContainer onClick={onNaverLogin}>
-                  <NaverImg src={naverimg} alt="네이버 로그인" />
-                  <LoginM>네이버로 로그인</LoginM>
-                </LoginToNaverContainer>
+            <LoginToNaverContainer onClick={onNaverLogin}>
+              <NaverImg src={naverimg} alt="네이버 로그인" />
+              <LoginM>네이버로 로그인</LoginM>
+            </LoginToNaverContainer>
 
-                <LoginToGoogleContainer onClick={onGoogleLogin}>
-                  <GoogleImg src={googleimg} alt="구글 계정으로 로그인" />
-                  <LoginM>구글 계정으로 로그인</LoginM>
-                </LoginToGoogleContainer>
-              </>
-            ) : (
-              <p>환영합니다!</p>
-            )}
+            <LoginToGoogleContainer onClick={onGoogleLogin}>
+              <GoogleImg src={googleimg} alt="구글 계정으로 로그인" />
+              <LoginM>구글 계정으로 로그인</LoginM>
+            </LoginToGoogleContainer>
           </LoginFormContainer>
         </LoginTopContainer>
       </LoginWrapper>
@@ -74,10 +80,6 @@ function Login() {
 }
 
 export default Login;
-
-// 스타일 컴포넌트는 변경 없음
-
-// Styled components remain unchanged
 
 const LoginContainer = styled.section`
   display: flex;

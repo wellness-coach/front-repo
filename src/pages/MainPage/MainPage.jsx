@@ -1,24 +1,29 @@
+// MainPage.js
 import React, { useEffect, useState } from 'react';
 
-function Main() {
-  const [userId, setUserId] = useState(null);
+function MainPage() {
+  const [userId, setUserId] = useState(null); // 초기값을 null로 설정
 
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
-      setUserId(storedUserId);
+      setUserId(storedUserId); // localStorage에서 읽은 userId를 상태로 설정
     } else {
-      // 사용자 ID가 없으면 로그인 페이지로 리디렉션
-      navigate('/login');
+      // userId가 없는 경우 처리
+      console.log('No userId found in localStorage');
     }
   }, []);
 
+  if (userId === null) {
+    return <p>Loading...</p>; // userId가 아직 설정되지 않았을 때 로딩 상태 표시
+  }
+
   return (
     <div>
-      <h1>Welcome to the Main Page</h1>
-      {userId && <p>Your User ID: {userId}</p>}
+      <h1>Main Page</h1>
+      <p>Welcome User {userId}!</p> {/* userId를 화면에 표시 */}
     </div>
   );
 }
 
-export default Main;
+export default MainPage;
