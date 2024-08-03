@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 // 이미지 import
-import mealred from '../../assets/img/MealRed.png';
-import mealyellow from '../../assets/img/MealYellow.png';
-import mealgreen from '../../assets/img/MealGreen.png';
-import mealgray from '../../assets/img/MealGray.png';
+import mealred from '../../assets/TestResultAssets/MealRed.png';
+import mealyellow from '../../assets/TestResultAssets/MealYellow.png';
+import mealgreen from '../../assets/TestResultAssets/MealGreen.png';
+import mealgray from '../../assets/TestResultAssets/MealGray.png';
 
-import drinkred from '../../assets/img/DrinkRed.png';
-import drinkyellow from '../../assets/img/DrinkYellow.png';
-import drinkgreen from '../../assets/img/DrinkGreen.png';
-import drinkgray from '../../assets/img/DrinkGray.png';
+import drinkred from '../../assets/TestResultAssets/DrinkRed.png';
+import drinkyellow from '../../assets/TestResultAssets/DrinkYellow.png';
+import drinkgreen from '../../assets/TestResultAssets/DrinkGreen.png';
+import drinkgray from '../../assets/TestResultAssets/DrinkGray.png';
 
-import snackred from '../../assets/img/SnackRed.png';
-import snackyellow from '../../assets/img/SnackYellow.png';
-import snackgreen from '../../assets/img/SnackGreen.png';
-import snackgray from '../../assets/img/SnackGray.png';
+import snackred from '../../assets/TestResultAssets/SnackRed.png';
+import snackyellow from '../../assets/TestResultAssets/SnackYellow.png';
+import snackgreen from '../../assets/TestResultAssets/SnackGreen.png';
+import snackgray from '../../assets/TestResultAssets/SnackGray.png';
 
-import sirenicon from '../../assets/img/siren.png';
+import sirenicon from '../../assets/TestResultAssets/SirenIcon.png';
 
 // 데이터 샘플
 const data = {
