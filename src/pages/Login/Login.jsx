@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -8,7 +8,6 @@ import logoimg from '../../assets/img/LoginLogo.png';
 import backgroundimg from '../../assets/img/LoginBackground.png';
 
 function Login() {
-  const [userId, setUserId] = useState(null);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
@@ -29,7 +28,7 @@ function Login() {
         withCredentials: true,
       });
     } catch (error) {
-      alert(`er: ${error.message}`);
+      alert(`error: ${error.message}`);
     }
   };
 
@@ -43,21 +42,15 @@ function Login() {
           </ServiceIntroContainer>
 
           <LoginFormContainer>
-            {!userId ? (
-              <>
-                <LoginToNaverContainer onClick={onNaverLogin}>
-                  <NaverImg src={naverimg} alt="네이버 로그인" />
-                  <LoginM>네이버로 로그인</LoginM>
-                </LoginToNaverContainer>
+            <LoginToNaverContainer onClick={onNaverLogin}>
+              <NaverImg src={naverimg} alt="네이버 로그인" />
+              <LoginM>네이버로 로그인</LoginM>
+            </LoginToNaverContainer>
 
-                <LoginToGoogleContainer onClick={onGoogleLogin}>
-                  <GoogleImg src={googleimg} alt="구글 계정으로 로그인" />
-                  <LoginM>구글 계정으로 로그인</LoginM>
-                </LoginToGoogleContainer>
-              </>
-            ) : (
-              <p>환영합니다!</p>
-            )}
+            <LoginToGoogleContainer onClick={onGoogleLogin}>
+              <GoogleImg src={googleimg} alt="구글 계정으로 로그인" />
+              <LoginM>구글 계정으로 로그인</LoginM>
+            </LoginToGoogleContainer>
           </LoginFormContainer>
         </LoginTopContainer>
       </LoginWrapper>
