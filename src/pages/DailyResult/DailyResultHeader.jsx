@@ -1,16 +1,22 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import WellnessCoachTitle from '../../assets/img/WellnessCoachTitle.png';
 import LogoPicture from '../../assets/img/LogoPicture.png';
 import Logout from '../../assets/img/Logout.png';
 
 function DailyResultHeader() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    navigate('/');
+  };
+
   return (
     <DietTestHeaderWrapper>
       <DietTestHeaderContainer>
         <LogoPictureImg src={LogoPicture} alt="로고 그림" />
         <WellnessCoachTitleImg src={WellnessCoachTitle} alt="타이틀" />
-        <LogoutButton>
+        <LogoutButton onClick={handleLogout}>
           <LogoutText>로그아웃</LogoutText>
           <LogoutImg src={Logout} alt="로그아웃" />
         </LogoutButton>
