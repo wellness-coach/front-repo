@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // useNavigate 훅을 사용합니다
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -11,7 +10,6 @@ import backgroundimg from '../../assets/img/LoginBackground.png';
 function Login() {
   const [userId, setUserId] = useState(null);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const navigate = useNavigate();
 
   useEffect(() => {
     checkAuthStatus();
@@ -30,12 +28,6 @@ function Login() {
       const res = await axios.get(`${BASE_URL}/login`, {
         withCredentials: true,
       });
-
-      if (res.data.userId) {
-        setUserId(res.data.userId);
-
-        navigate(`/main/userId=${res.data.userId}`);
-      }
     } catch (error) {
       alert(`er: ${error.message}`);
     }
@@ -74,10 +66,6 @@ function Login() {
 }
 
 export default Login;
-
-// 스타일 컴포넌트는 변경 없음
-
-// Styled components remain unchanged
 
 const LoginContainer = styled.section`
   display: flex;
