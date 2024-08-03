@@ -1,12 +1,15 @@
 import GlobalStyles from './GlobalStyles';
 import './reset.css';
 import { Outlet } from 'react-router-dom';
+import { UserInfoContextProvider } from './store/UserInfoCtx';
 
 function App() {
   return (
     <>
-      <GlobalStyles />
-      <Outlet />
+      <UserInfoContextProvider>
+        <GlobalStyles />
+        <Outlet />
+      </UserInfoContextProvider>
     </>
   );
 }

@@ -7,9 +7,13 @@ import LowSpeed from '../../assets/MainPageAssets/LowSpeed.png';
 import MiddleSpeed from '../../assets/MainPageAssets/MiddleSpeed.png';
 import HighSpeed from '../../assets/MainPageAssets/HighSpeed.png';
 import NoSpeed from '../../assets/MainPageAssets/NoSpeed.png';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import UserInfoContext from '../../store/UserInfoCtx';
 
 function MainHeader({ data }) {
+  const navigate = useNavigate();
+  const { userInfo } = useContext(UserInfoContext);
   const [isHovered, setIsHovered] = useState(false);
 
   const renderSpeedometer = () => {
@@ -30,21 +34,23 @@ function MainHeader({ data }) {
   };
 
   const translateLevel = () => {
-    if (!data) return "??";
-    
+    if (!data) return '??';
+
     switch (data.lastWeekAgingType) {
       case '':
-        return "??";
+        return '??';
       case 'PROPER':
-        return "저속"
+        return '저속';
       case 'CAUTION':
-        return "유의";
+        return '유의';
       case 'DANGER':
-        return "가속";
+        return '가속';
       default:
-        return "??";
+        return '??';
     }
-  }
+  };
+
+  console.log(userInfo.userName);
 
   return (
     <MainHeaderWrapper>
@@ -58,7 +64,7 @@ function MainHeader({ data }) {
         </TitleContainer>
 
         <UserInfoContainer>
-          <InfoContainer_left onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+          <InfoContainer_left onClick={() => navigate('/daily_result')} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
             {renderSpeedometer()}
             <>
               {!isHovered ? (
@@ -77,9 +83,9 @@ function MainHeader({ data }) {
           </InfoContainer_left>
           <InfoContainer_right>
             <MainText>
-              안녕하세요! patrick님 <br /> 오늘도 건강한 하루를 보내셨나요?
+              안녕하세요! {userInfo.userName}님 <br /> 오늘도 건강한 하루를 보내셨나요?
             </MainText>
-            <GoToTestButton>
+            <GoToTestButton onClick={() => navigate('/test')}>
               <p>오늘의 식단 진단하기</p>
               <p>
                 <AngleBracketImg src={AngleBracket} alt="꺽쇠" />
@@ -192,13 +198,13 @@ const LevelLabel = styled.span`
 
 const Level = styled.span`
   color: ${(props) => {
-      if (props.level === 'PROPER') return '#78A55A';
-      if (props.level === 'CAUTION') return '#D8C317';
-      if (props.level === 'DANGER') return '#D35F4F';
-      else {
-        return '#000';
-      }
-    }};
+    if (props.level === 'PROPER') return '#78A55A';
+    if (props.level === 'CAUTION') return '#D8C317';
+    if (props.level === 'DANGER') return '#D35F4F';
+    else {
+      return '#000';
+    }
+  }};
   text-align: center;
   font-size: 3.5rem;
   font-style: normal;

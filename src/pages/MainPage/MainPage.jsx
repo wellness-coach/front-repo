@@ -7,12 +7,14 @@ import Tips from '../../assets/Tips.json';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import UserInfoContext from '../../store/UserInfoCtx';
 
 function MainPage() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-
   const { userId } = useParams();
+  const {userInfo, updateUserInfo} = useContext(UserInfoContext);
+
   const date = new Date().toISOString().split('T')[0];
   const [fetchedData, setFetchedData] = useState();
 
@@ -33,89 +35,26 @@ function MainPage() {
     return content.split('\n').map((line, index) => <ContentParagraph key={index}>{line}</ContentParagraph>);
   };
 
-  const getMainPageData = () => {
-    
-
+  const getMainPageData = async () => {
     try {
-      // const response = axios.get(`${BASE_URL}/mainPage`, {
-      //   params: {
-      //     userId,
-      //     date,
-      //   },
-      // });
-      const response = {
-        lastWeekAgingType: 'PROPER',
-        checkupStatus: "COMPLETED",
-        // products: [
-        //     {
-        //         "productId": 55,
-        //         "targetProductName": "버터",
-        //         "productName": "올리브 오일",
-        //         "productLink": "https://smartstore.naver.com/main/products/5561899023",
-        //         "scrap": true
-        //     },
-        //     {
-        //         "productId": 56,
-        //         "targetProductName": "숙주나물",
-        //         "productName": "브로콜리",
-        //         "productLink": "https://smartstore.naver.com/main/products/5997500234",
-        //         "scrap": false
-        //     },
-        //     {
-        //         "productId": 57,
-        //         "targetProductName": "돼지고기",
-        //         "productName": "닭가슴살",
-        //         "productLink": "https://smartstore.naver.com/main/products/5018452493",
-        //         "scrap": false
-        //     },
-        //     {
-        //         "productId": 78,
-        //         "targetProductName": "설탕",
-        //         "productName": "호두",
-        //         "productLink": "https://smartstore.naver.com/main/products/4998235909",
-        //         "scrap": false
-        //     },
-        //     {
-        //         "productId": 79,
-        //         "targetProductName": "치즈",
-        //         "productName": "아보카도",
-        //         "productLink": "https://smartstore.naver.com/main/products/4349833565",
-        //         "scrap": false
-        //     },
-        //     {
-        //         "productId": 80,
-        //         "targetProductName": "초콜릿",
-        //         "productName": "카카오닙스",
-        //         "productLink": "https://smartstore.naver.com/main/products/2765087494",
-        //         "scrap": false
-        //     },
-        //     {
-        //         "productId": 81,
-        //         "targetProductName": "우유",
-        //         "productName": "아몬드 우유",
-        //         "productLink": "https://smartstore.naver.com/main/products/8894224469",
-        //         "scrap": false
-        //     },
-        //     {
-        //         "productId": 85,
-        //         "targetProductName": "우유",
-        //         "productName": "아몬드 우유",
-        //         "productLink": "https://smartstore.naver.com/main/products/8894224469",
-        //         "scrap": false
-        //     }
-        // ]
-    }
+      const response = await axios.get(`${BASE_URL}/mainPage`, {
+        params: {
+          userId,
+          date,
+        },
+      });
+      
       setFetchedData(response);
-    } catch (error ){
+      updateUserInfo(userId, response.data.name);
+      
+    } catch (error) {
       console.log('Error fetching main page data:', error);
     }
   };
 
-  
-
-  useEffect(()=> {
+  useEffect(() => {
     getMainPageData();
-  }, [])
+  }, []);
 
   console.log(fetchedData);
 
@@ -135,7 +74,7 @@ function MainPage() {
         </Modal>
       )}
       <MainContainer>
-        <MainHeader data={fetchedData}/>
+        <MainHeader data={fetchedData} />
         <MainFooter onOpenTip={handleOpenModal} />
       </MainContainer>
     </>

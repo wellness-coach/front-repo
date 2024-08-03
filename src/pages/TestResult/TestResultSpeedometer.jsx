@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import InfoButton from '../../assets/img/InfoButton.png';
-import TestInfoBox from '../../assets/img/TestInfoBox.png';
-import LowSpeed from '../../assets/img/LowSpeed.png';
-import MiddleSpeed from '../../assets/img/MiddleSpeed.png';
-import HighSpeed from '../../assets/img/HighSpeed.png';
-import NoSpeed from '../../assets/img/NoSpeed.png';
-import BottomArrow from '../../assets/img/BottomArrow.png'
+import InfoButton from '../../assets/TestResultAssets/InfoButton.png';
+import TestInfoBox from '../../assets/TestResultAssets/TestInfoBox.png';
+import LowSpeed from '../../assets/TestResultAssets/LowSpeed.png';
+import MiddleSpeed from '../../assets/TestResultAssets/MiddleSpeed.png';
+import HighSpeed from '../../assets/TestResultAssets/HighSpeed.png';
+import NoSpeed from '../../assets/TestResultAssets/NoSpeed.png';
+import BottomArrow from '../../assets/TestResultAssets/BottomArrow.png'
 import { useState } from 'react';
 
 function TestResultSpeedometer() {

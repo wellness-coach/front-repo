@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import BodyTests from './BodyTests';
-import InfoButton from '../../assets/InfoButton.png';
-import TestInfoBox from '../../assets/TestInfoBox.png';
+import InfoButton from '../../assets/DietTestAssets/InfoButton.png';
+import TestInfoBox from '../../assets/DietTestAssets/TestInfoBox.png';
 import { useState } from 'react';
 
 function DietTestBody() {

@@ -1,14 +1,17 @@
 import styled from 'styled-components';
-import WellnessCoachTitle from '../../assets/WellnessCoachTitle.png';
-import LogoPicture from '../../assets/LogoPicture.png';
-import Logout from '../../assets/Logout.png';
+import WellnessCoachTitle from '../../assets/DietTestAssets/WellnessCoachTitle.png';
+import LogoPicture from '../../assets/DietTestAssets/LogoPicture.png';
+import Logout from '../../assets/DietTestAssets/Logout.png';
+import { useNavigate } from 'react-router-dom';
 
 function DietTestHeader() {
+
+  const navigate = useNavigate();
   return (
     <DietTestHeaderWrapper>
       <DietTestHeaderContainer>
         <LogoPictureImg src={LogoPicture} alt="로그 그림" />
-        <WellnessCoachTitleImg src={WellnessCoachTitle} alt="타이틀" />
+        <WellnessCoachTitleImg src={WellnessCoachTitle} alt="타이틀" onClick={() => navigate('/main/:userId')} />
         <LogoutButton>
           <LogoutText>로그아웃</LogoutText>
           <LogoutImg src={Logout} alt="로그아웃" />
@@ -34,7 +37,7 @@ const DietTestHeaderContainer = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   padding-bottom: 1.3rem;
-  width: 136.2rem;      
+  width: 136.2rem;
 `;
 
 const LogoutButton = styled.button`

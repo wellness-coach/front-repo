@@ -1,20 +1,20 @@
-import MealRed from '../../assets/img/MealRed.png';
-import MealYellow from '../../assets/img/MealYellow.png';
-import MealGreen from '../../assets/img/MealGreen.png';
-import MealGray from '../../assets/img/MealGray.png';
+import MealRed from '../../assets/TestResultAssets/MealRed.png';
+import MealYellow from '../../assets/TestResultAssets/MealYellow.png';
+import MealGreen from '../../assets/TestResultAssets/MealGreen.png';
+import MealGray from '../../assets/TestResultAssets/MealGray.png';
 
-import DrinkRed from '../../assets/img/DrinkRed.png';
-import DrinkYellow from '../../assets/img/DrinkYellow.png';
-import DrinkGreen from '../../assets/img/DrinkGreen.png';
-import DrinkGray from '../../assets/img/DrinkGray.png';
+import DrinkRed from '../../assets/TestResultAssets/DrinkRed.png';
+import DrinkYellow from '../../assets/TestResultAssets/DrinkYellow.png';
+import DrinkGreen from '../../assets/TestResultAssets/DrinkGreen.png';
+import DrinkGray from '../../assets/TestResultAssets/DrinkGray.png';
 
-import SnackRed from '../../assets/img/SnackRed.png';
-import SnackYellow from '../../assets/img/SnackYellow.png';
-import SnackGreen from '../../assets/img/SnackGreen.png';
-import SnackGray from '../../assets/img/SnackGray.png';
+import SnackRed from '../../assets/TestResultAssets/SnackRed.png';
+import SnackYellow from '../../assets/TestResultAssets/SnackYellow.png';
+import SnackGreen from '../../assets/TestResultAssets/SnackGreen.png';
+import SnackGray from '../../assets/TestResultAssets/SnackGray.png';
 
-import SirenIcon from '../../assets/img/SirenIcon.png';
-import OffSirenIcon from '../../assets/img/OffSirenIcon.png';
+import SirenIcon from '../../assets/TestResultAssets/SirenIcon.png';
+import OffSirenIcon from '../../assets/TestResultAssets/OffSirenIcon.png';
 import styled from 'styled-components';
 import React, { useState } from 'react';
 

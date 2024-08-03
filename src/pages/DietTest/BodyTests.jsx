@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import PlusImg from '../../assets/Plus.png';
-import Minus from '../../assets/Minus.png';
-import Meal from '../../assets/Meal.png';
-import SnackAndDrink from '../../assets/SnackAndDrink.png';
-import Memo from '../../assets/Memo.png';
+import PlusImg from '../../assets/DietTestAssets/Plus.png';
+import Minus from '../../assets/DietTestAssets/Minus.png';
+import Meal from '../../assets/DietTestAssets/Meal.png';
+import SnackAndDrink from '../../assets/DietTestAssets/SnackAndDrink.png';
+import Memo from '../../assets/DietTestAssets/Memo.png';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -63,7 +63,6 @@ function BodyTests() {
             <MealImg src={Meal} alt="식사" />
             <TestCategoryText>식사</TestCategoryText>
           </TestCategory>
-          <CheckCircle></CheckCircle>
         </BoxHeader>
         <BoxBody>
           <QuestionText>Q1. 오늘 먹은 음식을 적어주세요.</QuestionText>
@@ -132,7 +131,6 @@ function BodyTests() {
             <SnackAndDrinkImg src={SnackAndDrink} alt="간식 및 음료" />
             <TestCategoryText>간식 및 음료</TestCategoryText>
           </TestCategory>
-          <CheckCircle></CheckCircle>
         </BoxHeader>
         <BoxBody>
           <QuestionText>Q2. 오늘 먹은 간식과 음료를 적어주세요.</QuestionText>
@@ -183,7 +181,6 @@ function BodyTests() {
             <MemoImg src={Memo} alt="메모" />
             <TestCategoryText>메모</TestCategoryText>
           </TestCategory>
-          <CheckCircle></CheckCircle>
         </BoxHeader>
         <BoxBody>
           <QuestionText>Q3. 오늘의 식단에 대해 남기고 싶은 말을 자유롭게 적어주세요.</QuestionText>

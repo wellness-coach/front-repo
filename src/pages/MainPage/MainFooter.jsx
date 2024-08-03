@@ -21,9 +21,6 @@ function MainFooter({ onOpenTip }) {
     if (renderedTipId < Tips.length - 2) setRenderedTipId(renderedTipId + 1);
   };
 
-  console.log(Tips);
-  console.log(renderedTipId);
-
   return (
     <MainFooterWrapper>
       <MainFooterContainer>

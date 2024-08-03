@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import WellnessCoachTitle from '../../assets/img/WellnessCoachTitle.png';
-import LogoPicture from '../../assets/img/LogoPicture.png';
-import Logout from '../../assets/img/Logout.png';
+import WellnessCoachTitle from '../../assets/TestResultAssets/WellnessCoachTitle.png';
+import LogoPicture from '../../assets/TestResultAssets/LogoPicture.png';
+import Logout from '../../assets/TestResultAssets/Logout.png';
 
 function TestResultHeader() {
   return (

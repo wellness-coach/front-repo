@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 
 import googleimg from '../../assets/LoginImg/googleImg.png';
 import naverimg from '../../assets/LoginImg/naverImg.png';
@@ -10,14 +8,11 @@ import logoimg from '../../assets/LoginImg/LoginLogo.png';
 import backgroundimg from '../../assets/LoginImg/LoginBackground.png';
 
 function Login() {
-  const [user, setUser] = useState(null);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(['Authorization']);
 
   useEffect(() => {
     checkAuthStatus();
-  }, [cookies]);
+  }, []);
 
   const onNaverLogin = () => {
     window.location.href = `${BASE_URL}/oauth2/authorization/naver`;
@@ -25,7 +20,6 @@ function Login() {
 
   const onGoogleLogin = () => {
     window.location.href = `${BASE_URL}/oauth2/authorization/google`;
-    setCookie('Authorization', token, { path: '/' });
   };
 
   const checkAuthStatus = async () => {
@@ -33,16 +27,9 @@ function Login() {
       const res = await axios.get(`${BASE_URL}/login`, {
         withCredentials: true,
       });
-      setUser(res.data.user);
-      const token = res.data.token;
-      const userId = res.data.userId; // Assuming userId is returned from the server
-      console.log(token);
-      console.log(userId);
-      if (token && userId) {
-        navigate(`/main/${userId}`); // Redirect to MainPage with userId
-      }
+      console.log(res);
     } catch (error) {
-      alert(`An error occurred: ${error.message}`);
+      alert(`error: ${error.message}`);
     }
   };
 
@@ -56,23 +43,15 @@ function Login() {
           </ServiceIntroContainer>
 
           <LoginFormContainer>
-            {user ? (
-              <div>
-                <p>Welcome, {user.name}!</p>
-              </div>
-            ) : (
-              <>
-                <LoginToNaverContainer onClick={onNaverLogin}>
-                  <NaverImg src={naverimg} alt="네이버 로그인" />
-                  <LoginM>네이버로 로그인</LoginM>
-                </LoginToNaverContainer>
+            <LoginToNaverContainer onClick={onNaverLogin}>
+              <NaverImg src={naverimg} alt="네이버 로그인" />
+              <LoginM>네이버로 로그인</LoginM>
+            </LoginToNaverContainer>
 
-                <LoginToGoogleContainer onClick={onGoogleLogin}>
-                  <GoogleImg src={googleimg} alt="구글 계정으로 로그인" />
-                  <LoginM>구글 계정으로 로그인</LoginM>
-                </LoginToGoogleContainer>
-              </>
-            )}
+            <LoginToGoogleContainer onClick={onGoogleLogin}>
+              <GoogleImg src={googleimg} alt="구글 계정으로 로그인" />
+              <LoginM>구글 계정으로 로그인</LoginM>
+            </LoginToGoogleContainer>
           </LoginFormContainer>
         </LoginTopContainer>
       </LoginWrapper>
@@ -160,3 +139,5 @@ const GoogleImg = styled.img`
   height: 2.1rem;
   margin: 1rem 1.2rem 1rem 1.9rem;
 `;
+
+
