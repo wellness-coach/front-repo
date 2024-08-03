@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import * as jwtDecode from 'jwt-decode';
+import { useCookies } from 'react-cookie';
 
 import googleimg from '../../assets/LoginImg/googleImg.png';
 import naverimg from '../../assets/LoginImg/naverImg.png';
@@ -13,11 +12,12 @@ import backgroundimg from '../../assets/LoginImg/LoginBackground.png';
 function Login() {
   const [user, setUser] = useState(null);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const history = useNavigate();
+  const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(['Authorization']);
 
   useEffect(() => {
     checkAuthStatus();
-  }, []);
+  }, [cookies]);
 
   const onNaverLogin = () => {
     window.location.href = `${BASE_URL}/oauth2/authorization/naver`;
@@ -25,6 +25,7 @@ function Login() {
 
   const onGoogleLogin = () => {
     window.location.href = `${BASE_URL}/oauth2/authorization/google`;
+    setCookie('Authorization', token, { path: '/' });
   };
 
   const checkAuthStatus = async () => {
@@ -33,11 +34,12 @@ function Login() {
         withCredentials: true,
       });
       setUser(res.data.user);
-      const token = Cookies.get('Authorization');
-      if (token) {
-        const decodedToken = jwtDecode(token);
-        const userId = decodedToken.userId;
-        history.push(`/main?userId=${userId}`);
+      const token = res.data.token;
+      const userId = res.data.userId; // Assuming userId is returned from the server
+      console.log(token);
+      console.log(userId);
+      if (token && userId) {
+        navigate(`/main/${userId}`); // Redirect to MainPage with userId
       }
     } catch (error) {
       alert(`An error occurred: ${error.message}`);

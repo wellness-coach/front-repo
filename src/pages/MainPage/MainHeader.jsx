@@ -9,24 +9,42 @@ import HighSpeed from '../../assets/MainPageAssets/HighSpeed.png';
 import NoSpeed from '../../assets/MainPageAssets/NoSpeed.png';
 import { useState } from 'react';
 
-function MainHeader() {
-  const [speed, setSpeed] = useState(1);
+function MainHeader({ data }) {
   const [isHovered, setIsHovered] = useState(false);
 
   const renderSpeedometer = () => {
-    switch (speed) {
-      case 1:
+    if (!data) return <Speedometer src={NoSpeed} alt="노화 속도계 - No Speed" />;
+
+    switch (data.lastWeekAgingType) {
+      case '':
         return <Speedometer src={NoSpeed} alt="노화 속도계 - No Speed" />;
-      case 2:
+      case 'PROPER':
         return <Speedometer src={LowSpeed} alt="노화 속도계 - Low Speed" />;
-      case 3:
+      case 'CAUTION':
         return <Speedometer src={MiddleSpeed} alt="노화 속도계 - Medium Speed" />;
-      case 4:
+      case 'DANGER':
         return <Speedometer src={HighSpeed} alt="노화 속도계 - High Speed" />;
       default:
         return <Speedometer src={NoSpeed} alt="노화 속도계 - Default" />;
     }
   };
+
+  const translateLevel = () => {
+    if (!data) return "??";
+    
+    switch (data.lastWeekAgingType) {
+      case '':
+        return "??";
+      case 'PROPER':
+        return "저속"
+      case 'CAUTION':
+        return "유의";
+      case 'DANGER':
+        return "가속";
+      default:
+        return "??";
+    }
+  }
 
   return (
     <MainHeaderWrapper>
@@ -50,7 +68,7 @@ function MainHeader() {
                     <br />
                     건강 진단
                   </LevelLabel>
-                  <Level>??단계</Level>
+                  <Level level={data ? data.lastWeekAgingType : ''}>{translateLevel()} 단계</Level>
                 </LevelBar>
               ) : (
                 <GoToReport>일별 리포트 보러가기</GoToReport>
@@ -173,7 +191,14 @@ const LevelLabel = styled.span`
 `;
 
 const Level = styled.span`
-  color: #000;
+  color: ${(props) => {
+      if (props.level === 'PROPER') return '#78A55A';
+      if (props.level === 'CAUTION') return '#D8C317';
+      if (props.level === 'DANGER') return '#D35F4F';
+      else {
+        return '#000';
+      }
+    }};
   text-align: center;
   font-size: 3.5rem;
   font-style: normal;
