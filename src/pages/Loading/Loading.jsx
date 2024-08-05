@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import greenicon from '../../assets/img/GreenIcon.png';
-import yellowicon from '../../assets/img/YellowIcon.png';
-import redicon from '../../assets/img/RedIcon.png';
-import shadowicon from '../../assets/img/Shadow.png';
+import greenicon from '../../assets/LoadingAssets/GreenIcon.png';
+import yellowicon from '../../assets/LoadingAssets/YellowIcon.png';
+import redicon from '../../assets/LoadingAssets/RedIcon.png';
+import shadowicon from '../../assets/LoadingAssets/Shadow.png';
+import UserInfoContext from '../../store/UserInfoCtx';
 
 function Loading() {
+  const { userInfo } = useContext(UserInfoContext);
+
   return (
     <>
       <LoadingContainer>
@@ -27,7 +30,7 @@ function Loading() {
         </BarContainer>
         <MentContainer>
           <NameM>
-            <GreenSpan>홍길동님의 하루</GreenSpan>를 분석하는 중입니다
+            <GreenSpan>{userInfo.userName}님의 하루</GreenSpan>를 분석하는 중입니다
           </NameM>
           <WaitM>조금만 기다려주세요 :)</WaitM>
         </MentContainer>

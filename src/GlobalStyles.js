@@ -18,8 +18,8 @@ const GlobalStyles = createGlobalStyle`
     }
     body{
         line-height: 1;
+        background-color: #Ffffff;
         font-family: 'Noto Sans KR', sans-serif;
-        background-color: #ffffff;
     }
     ol, ul{
         list-style: none;
