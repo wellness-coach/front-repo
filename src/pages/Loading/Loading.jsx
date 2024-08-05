@@ -8,7 +8,6 @@ import UserInfoContext from '../../store/UserInfoCtx';
 
 function Loading() {
   const { userInfo } = useContext(UserInfoContext);
-
   return (
     <>
       <LoadingContainer>
