@@ -137,7 +137,7 @@ function LeftResult({ data, date, setDate }) {
           <MemoDetailContainer>
             <MemoDetailTopContainer>
               <MemoDate>{format(date, 'MM.dd', { locale: koLocale })}</MemoDate>
-              <MemoDetail ref={memoRef} isoverflow={isMemoOverflow ? true : undefined}>
+              <MemoDetail ref={memoRef} isoverflow="false">
                 {memoContent}
               </MemoDetail>
             </MemoDetailTopContainer>
@@ -306,8 +306,8 @@ const MemoDetail = styled.p`
   position: relative;
   overflow: hidden;
 
-  ${(props) =>
-    props.isoverflow &&
+  ${(isoverflow) =>
+    isoverflow &&
     css`
       &::after {
         content: '';
