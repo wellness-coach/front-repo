@@ -17,8 +17,7 @@ function TestResult() {
   const date = new Date().toISOString().split('T')[0];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [renderedData, setRenderedData] = useState();
-
+  const [renderedData, setRenderedData] = useState(null);
   const [currentMealType, setCurrentMealType] = useState('');
 
   const handleCloseModal = () => {
@@ -58,7 +57,7 @@ function TestResult() {
       const response = await axios.get(`${BASE_URL}/checkup/report`, {
         params: {
           userId: userInfo.userId,
-          date: '2024-06-02',
+          date: '2024-05-13',
         },
       });
       setRenderedData(response.data);
@@ -72,29 +71,83 @@ function TestResult() {
     getResultData();
   }, []);
 
+  const handleAddScrap = async (productId) => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/scrap/add?userId=${userInfo.userId}&recommendationId=${productId}`,
+        {
+          userId: userInfo.userId,
+          recommendationId: productId,
+        },
+      );
+      console.log(response);
+      getResultData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteScrap = async (productId) => {
+    try {
+      const response = await axios.delete(
+        `${BASE_URL}/scrap/cancel?userId=${userInfo.userId}&recommendationId=${productId}`,
+        {
+          params: {
+            userId: userInfo.userId,
+            recommendationId: productId,
+          },
+        },
+      );
+      console.log(response);
+      getResultData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      {isModalOpen && (
-        <Modal key={currentMealType} open={isModalOpen} onClose={isModalOpen ? handleCloseModal : null}>
+      {isModalOpen && renderedData && renderedData.meals && renderedData.meals[currentMealType] && (
+        <Modal key={currentMealType} open={isModalOpen} onClose={handleCloseModal}>
           <ModalTitle>추천 더보기</ModalTitle>
-          {renderedData.meals[currentMealType][1].productResponse ? (
+          {renderedData.meals[currentMealType].some((meal) => meal.productResponse) ? (
             <>
-            <ModalContent>
-              {userInfo.userName}님의 {translateMealType(currentMealType)}식단을 분석해본 결과,
-              <br />
-              {renderedData.meals[currentMealType][1].productResponse.targetProductName}에 대한 대체 제품으로
-              {renderedData.meals[currentMealType][1].productResponse.productName}를 추천드려요
-            </ModalContent>
-            <ModalItem>
-              <p>{renderedData.meals[currentMealType][1].productResponse.productName}</p>
-              <a href={renderedData.meals[currentMealType][1].productResponse.productLink}>제품 보러가기</a>
-              <ItemScrapBtn
-                      type="button"
-                      onClick={renderedData.meals[currentMealType][1].productResponse.scrap ? () => handleDeleteScrap(renderedData.meals[currentMealType][1].productResponse.productId) : () => handleAddScrap(renderedData.meals[currentMealType][1].productResponse.productId)}
-                    >
-                      <ItemScrap src={renderedData.meals[currentMealType][1].productResponse.scrap ? FullBookmarkImg : EmptyBookmarkImg} alt="북마크" />
-                    </ItemScrapBtn>
-            </ModalItem>
+              <ModalContent>
+                {userInfo.userName}님의 {translateMealType()}식단 분석해본 결과,
+                <br />
+                {renderedData.meals[currentMealType].map((meal, index) =>
+                  meal.productResponse ? (
+                    <div key={index}>
+                      {meal.productResponse.targetProductName}에 대한 대체 제품으로<span> </span>
+                      {meal.productResponse.productName}
+                      <span> </span>을/를 추천드려요
+                    </div>
+                  ) : null,
+                )}
+              </ModalContent>
+              <ModalItemContainer>
+                {renderedData.meals[currentMealType].map((meal, index) =>
+                  meal.productResponse ? (
+                    <ModalItem key={index}>
+                      <ModalItemText>
+                        <p>{meal.productResponse.productName}</p>
+                        <a href={meal.productResponse.productLink}>제품 보러가기</a>
+                      </ModalItemText>
+
+                      <ItemScrapBtn
+                        type="button"
+                        onClick={
+                          meal.productResponse.scrap
+                            ? () => handleDeleteScrap(meal.productResponse.productId)
+                            : () => handleAddScrap(meal.productResponse.productId)
+                        }
+                      >
+                        <ItemScrap src={meal.productResponse.scrap ? FullBookmarkImg : EmptyBookmarkImg} alt="북마크" />
+                      </ItemScrapBtn>
+                    </ModalItem>
+                  ) : null,
+                )}
+              </ModalItemContainer>
             </>
           ) : (
             <ModalContent>추천 제품이 없습니다</ModalContent>
@@ -135,7 +188,8 @@ const ModalTitle = styled.p`
   line-height: normal;
 `;
 
-const ModalContent = styled.p`
+const ModalContent = styled.div`
+  width: 80%;
   margin-top: 2.6rem;
   color: #000;
   text-align: center;
@@ -145,18 +199,45 @@ const ModalContent = styled.p`
   line-height: normal;
 `;
 
-const ModalItem = styled.div`
-  
-`
+const ModalItem = styled.li`
+  border-top: 1px dotted gray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0rem 6rem;
 
-const ItemScrapBtn =styled.button`
-  
-`
+  & p {
+  }
+
+  & a {
+    color: blue;
+  }
+`;
+
+const ModalItemText = styled.div`
+  max-width: 34rem;
+  min-width: 16rem;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ModalItemContainer = styled.ul`
+  width: 80%;
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 7rem;
+  border-bottom: 1px dotted gray;
+`;
+
+const ItemScrapBtn = styled.button``;
 
 const ItemScrap = styled.img`
-    width: 3rem;
-    height: 5rem;
-`
+  width: 3rem;
+  height: 5rem;
+`;
 
 const SubmitBtnWrapper = styled.div`
   margin-top: 5.3rem;

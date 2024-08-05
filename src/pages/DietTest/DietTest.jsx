@@ -72,14 +72,14 @@ function DietTest() {
         response = await axios.post(`${BASE_URL}/checkup/submit`, {
           userId: userInfo.userId,
           checkupId: userInfo.userCheckupId,
-          date: '2024-08-02',
+          date: date,
           meals: filteredInputData,
           memo: memoValues,
         });
         console.log({
           userId: userInfo.userId,
           checkupId: userInfo.userCheckupId,
-          date: '2024-08-02',
+          date: date,
           meals: filteredInputData,
           memo: memoValues,
         });
@@ -88,13 +88,13 @@ function DietTest() {
       } else {
         response = await axios.post(`${BASE_URL}/checkup/submit`, {
           userId: userInfo.userId,
-          date: '2024-06-02',
+          date: '2024-05-13',
           meals: filteredInputData,
           memo: memoValues,
         });
         console.log({
           userId: userInfo.userId,
-          date: '2024-06-02',
+          date: '2024-05-13',
           meals: filteredInputData,
           memo: memoValues,
         });

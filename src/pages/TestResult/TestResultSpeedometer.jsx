@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import InfoButton from '../../assets/TestResultAssets/InfoButton.png';
-import TestInfoBox from '../../assets/TestResultAssets/TestInfoBox.png';
+import TestInfoBox from '../../assets/DietTestAssets/TestInfoBox.png';
 import LowSpeed from '../../assets/TestResultAssets/LowSpeed.png';
 import MiddleSpeed from '../../assets/TestResultAssets/MiddleSpeed.png';
 import HighSpeed from '../../assets/TestResultAssets/HighSpeed.png';
@@ -166,8 +166,8 @@ const GreenBoxImg = styled.img`
 const GreenBoxText = styled.p`
   z-index: 1;
   position: absolute;
-  top: 6.5rem;
-  left: 11.8rem;
+  top: 6rem;
+  left: 12rem;
   text-align: center;
   font-size: 1.8rem;
   font-style: normal;

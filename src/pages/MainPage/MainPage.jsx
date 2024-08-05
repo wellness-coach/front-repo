@@ -41,7 +41,7 @@ function MainPage() {
       const response = await axios.get(`${BASE_URL}/mainPage`, {
         params: {
           userId: userId,
-          date: "2024-06-02",
+          date: "2024-05-13",
         },
       });
 

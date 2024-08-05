@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import EmptyBookmarkImg from '../../assets/MainPageAssets/EmptyBookmark.png';
 import FullBookmarkImg from '../../assets/MainPageAssets/FullBookmark.png';
-import ThumbsUpImg from '../../assets/MainPageAssets/ThumbsUp.png';
 import RightArrowImg from '../../assets/MainPageAssets/RightArrow.png';
 import TipBlackLeft from '../../assets/MainPageAssets/TipBlackLeft.png';
 import TipBlackRight from '../../assets/MainPageAssets/TipBlackRight.png';
@@ -27,10 +26,13 @@ function MainFooter({ onOpenTip, data, refreshData }) {
 
   const handleAddScrap = async (productId) => {
     try {
-      const response = await axios.post(`${BASE_URL}/scrap/add`, {
-        userId: userInfo.userId,
-        recommendationId: productId,
-      });
+      const response = await axios.post(
+        `${BASE_URL}/scrap/add?userId=${userInfo.userId}&recommendationId=${productId}`,
+        {
+          userId: userInfo.userId,
+          recommendationId: productId,
+        },
+      );
       console.log(response);
       refreshData();
     } catch (error) {
@@ -40,12 +42,17 @@ function MainFooter({ onOpenTip, data, refreshData }) {
 
   const handleDeleteScrap = async (productId) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/scrap/cancel`, {
-        data: {
-          userId: userInfo.userId,
-          recommendationId: productId,
+      console.log(productId);
+      console.log(userInfo.userId);
+      const response = await axios.delete(
+        `${BASE_URL}/scrap/cancel?userId=${userInfo.userId}&recommendationId=${productId}`,
+        {
+          params: {
+            userId: userInfo.userId,
+            recommendationId: productId,
+          },
         },
-      });
+      );
       console.log(response);
       refreshData();
     } catch (error) {
@@ -109,7 +116,7 @@ function MainFooter({ onOpenTip, data, refreshData }) {
           </TipListBody>
         </TipListContainer>
         <RecommendationListContainer>
-          <RecommendationListHeader>00님을 위한 맞춤 추천 제품</RecommendationListHeader>
+          <RecommendationListHeader>{userInfo.userName}님을 위한 맞춤 추천 제품</RecommendationListHeader>
           <RecommendationListBody>
             <ListLabel>
               <LabelProductName>제품명</LabelProductName>

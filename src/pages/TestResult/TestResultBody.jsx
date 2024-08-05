@@ -18,18 +18,18 @@ import OffSirenIcon from '../../assets/TestResultAssets/OffSirenIcon.png';
 import styled from 'styled-components';
 import React, { useState } from 'react';
 
-function TestResultBody({fetchedData, onOpenRecommendation}) {
+function TestResultBody({ fetchedData, onOpenRecommendation }) {
   const data = fetchedData.meals;
 
   const processMealData = (mealData) => {
     if (!Array.isArray(mealData) || mealData.length < 2)
-      return { sugar: [], grain: [], redmeat: [], carbohydrate: [], solutions: [] };
+      return { sugar: [], grain: [], redmeat: [], salt: [], solutions: [] };
 
     const result = {
       sugar: [],
       grain: [],
       redmeat: [],
-      carbohydrate: [],
+      salt: [],
       solutions: [],
     };
 
@@ -38,7 +38,7 @@ function TestResultBody({fetchedData, onOpenRecommendation}) {
       if (menu.sugar) result.sugar.push(menu.menuName);
       if (menu.grain) result.grain.push(menu.menuName);
       if (menu.redmeat) result.redmeat.push(menu.menuName);
-      if (menu.carbohydrate) result.carbohydrate.push(menu.menuName);
+      if (menu.salt) result.salt.push(menu.menuName);
       if (menu.solution) result.solutions.push(menu.solution);
     }
 
@@ -47,16 +47,19 @@ function TestResultBody({fetchedData, onOpenRecommendation}) {
 
   const getIconForMealType = (mealType, score) => {
     if (mealType === 'BREAKFAST' || mealType === 'LUNCH' || mealType === 'DINNER') {
+      if (score === undefined) return MealGray;
       if (score >= 7) return MealGreen;
       if (score >= 4) return MealYellow;
       return MealRed;
     }
     if (mealType === 'SNACK') {
+      if (score === undefined) return SnackGray;
       if (score >= 7) return SnackGreen;
       if (score >= 4) return SnackYellow;
       return SnackRed;
     }
     if (mealType === 'DRINK') {
+      if (score === undefined) return DrinkGray;
       if (score >= 7) return DrinkGreen;
       if (score >= 4) return DrinkYellow;
       return DrinkRed;
@@ -90,76 +93,46 @@ function TestResultBody({fetchedData, onOpenRecommendation}) {
 
   const renderSirens = (data) => (
     <SirensContainer>
-      {data.sugar.length > 0 ? (
-        <Siren type="단순당" data={data.sugar} />
-      ) : (
-        <SirenContainer>
-          <SirenIconImg src={OffSirenIcon} alt="꺼진 사이렌 아이콘" />
-          <SirenName>{'단순당'}</SirenName>
-        </SirenContainer>
-      )}
-      {data.grain.length > 0 ? (
-        <Siren type="정제곡물" data={data.grain} />
-      ) : (
-        <SirenContainer>
-          <SirenIconImg src={OffSirenIcon} alt="꺼진 사이렌 아이콘" />
-          <SirenName>{'정제곡물'}</SirenName>
-        </SirenContainer>
-      )}
-      {data.redmeat.length > 0 ? (
-        <Siren type="적색육" data={data.redmeat} />
-      ) : (
-        <SirenContainer>
-          <SirenIconImg src={OffSirenIcon} alt="꺼진 사이렌 아이콘" />
-          <SirenName>{'적색육'}</SirenName>
-        </SirenContainer>
-      )}
-      {data.carbohydrate.length > 0 ? (
-        <Siren type="탄수화물" data={data.carbohydrate} />
-      ) : (
-        <SirenContainer>
-          <SirenIconImg src={OffSirenIcon} alt="꺼진 사이렌 아이콘" />
-          <SirenName>{'탄수화물'}</SirenName>
-        </SirenContainer>
-      )}
+      {data.sugar.length > 0 && <Siren type="단순당" data={data.sugar} />}
+      {data.grain.length > 0 && <Siren type="정제곡물" data={data.grain} />}
+      {data.redmeat.length > 0 && <Siren type="적색육" data={data.redmeat} />}
+      {data.salt.length > 0 && <Siren type="나트륨" data={data.salt} />}
     </SirensContainer>
   );
 
   const renderSirensForDrink = (data) => (
-    <SirensContainer>
-      {data.sugar.length > 0 ? (
-        <Siren type="단순당" data={data.sugar} />
-      ) : (
-        <SirenContainer>
-          <SirenIconImg src={OffSirenIcon} alt="꺼진 사이렌 아이콘" />
-          <SirenName>{'단순당'}</SirenName>
-        </SirenContainer>
-      )}
-    </SirensContainer>
+    <SirensContainer>{data.sugar.length > 0 && <Siren type="단순당" data={data.sugar} />}</SirensContainer>
   );
-
 
   const renderSolutions = (solutions) =>
     solutions.map((solution, index) => <SolutionDetail key={index}>{solution}</SolutionDetail>);
 
   const MealSection = ({ mealType, timeName }) => {
-    const mealData = processMealData(data[mealType]);
-    const score = data[mealType][0].score;
+    const mealData = data[mealType];
+    const processedMealData = processMealData(mealData);
+    const score = mealData[0]?.score;
 
     return (
       <ResultDetailContainer>
-        <LevelContainer>
-          <LevelLabelContainer>
-            <TimeName>{timeName}</TimeName>
-            <LevelIcon src={getIconForMealType(mealType, score)} alt={`${mealType} 아이콘`} />
-          </LevelLabelContainer>
-          {renderSirens(mealData)}
-          <Score score={score} color={getColorForScore(score)}>
-            {score}점
+        <TimeName>{timeName}</TimeName>
+        <Score score={score} color={getColorForScore(score)}>
+            {score === undefined ? '' : `${score}점`}
           </Score>
+        <LevelContainer>
+          <LevelIcon src={getIconForMealType(mealType, score)} alt={`${mealType} 아이콘`} />
+          {score === undefined ? null : renderSirens(processedMealData)}
         </LevelContainer>
         <FoodResultDetailWrapper>
-          <MealSolutionDetail>{renderSolutions(mealData.solutions)}</MealSolutionDetail>
+          {mealData.length > 0 ? (
+            <MealSolutionDetail>{renderSolutions(processedMealData.solutions)}</MealSolutionDetail>
+          ) : (
+            <MealSolutionDetail>
+              <SolutionDetail>
+                식사를 안하셨네요 :) 식사를 자주 거르면 신체에 필요한 에너지를 공급받지 못해 집중력이 떨어지고 신체
+                능력이 저하될 수 있어요. 끼니를 거른 뒤에는 균형있는 식사를 통해 영양분을 보충해주세요!
+              </SolutionDetail>
+            </MealSolutionDetail>
+          )}
         </FoodResultDetailWrapper>
         <RecommendationBtnWrapper>
           <RecommendationBtn onClick={() => onOpenRecommendation(mealType)}>추천 더보기</RecommendationBtn>
@@ -169,45 +142,59 @@ function TestResultBody({fetchedData, onOpenRecommendation}) {
   };
 
   const SnackSection = ({ snackData }) => {
-    const mealData = processMealData(snackData);
-    const score = snackData[0].score;
+    const processedSnackData = processMealData(snackData);
+    const score = snackData[0]?.score;
 
     return (
       <SubResultContainer>
         <SubTimeName>간식</SubTimeName>
         <SubScore score={score} color={getColorForScore(score)}>
-          {score}점
+          {score === undefined ? '' : `${score}점`}
         </SubScore>
         <LevelUiContainer>
           <LevelIcon src={getIconForMealType('SNACK', score)} alt={`간식 아이콘`} />
-          {renderSirens(mealData)}
+          {renderSirens(processedSnackData)}
         </LevelUiContainer>
         <SubResultDetailWrapper>
-          <SubSolutionDetail>{renderSolutions(mealData.solutions)}</SubSolutionDetail>
+          {processedSnackData.solutions.length > 0 ? (
+            <SubSolutionDetail>{renderSolutions(processedSnackData.solutions)}</SubSolutionDetail>
+          ) : (
+            <SubSolutionDetail>
+              <SolutionDetail>간식을 줄이는 노력 덕분에 더욱 건강해지고 있어요 :)</SolutionDetail>
+            </SubSolutionDetail>
+          )}
         </SubResultDetailWrapper>
-        <SubRecommendationBtn onClick={() => onOpenRecommendation('SNACK')}>추천 더보기</SubRecommendationBtn>
+        <RecommendationBtnWrapper><SubRecommendationBtn onClick={() => onOpenRecommendation('SNACK')}>추천 더보기</SubRecommendationBtn></RecommendationBtnWrapper>
+        
       </SubResultContainer>
     );
   };
 
   const DrinkSection = ({ drinkData }) => {
-    const mealData = processMealData(drinkData);
-    const score = drinkData[0].score;
+    const processedDrinkData = processMealData(drinkData);
+    const score = drinkData[0]?.score;
 
     return (
       <SubResultContainer>
         <SubTimeName>음료</SubTimeName>
         <SubScore score={score} color={getColorForScore(score)}>
-          {score}점
+          {score === undefined ? '' : `${score}점`}
         </SubScore>
         <LevelUiContainer>
           <LevelIcon src={getIconForMealType('DRINK', score)} alt={`음료 아이콘`} />
-          {renderSirensForDrink(mealData)}
+          {renderSirensForDrink(processedDrinkData)}
         </LevelUiContainer>
         <SubResultDetailWrapper>
-          <SubSolutionDetail>{renderSolutions(mealData.solutions)}</SubSolutionDetail>
+          {processedDrinkData.solutions.length > 0 ? (
+            <SubSolutionDetail>{renderSolutions(processedDrinkData.solutions)}</SubSolutionDetail>
+          ) : (
+            <SubSolutionDetail>
+              <SolutionDetail>물을 자주 마셔보세요! 건강을 위한 좋은 습관입니다 :)</SolutionDetail>
+            </SubSolutionDetail>
+          )}
         </SubResultDetailWrapper>
-        <SubRecommendationBtn onClick={() => onOpenRecommendation('DRINK')}>추천 더보기</SubRecommendationBtn>
+        <RecommendationBtnWrapper><SubRecommendationBtn onClick={() => onOpenRecommendation('DRINK')}>추천 더보기</SubRecommendationBtn></RecommendationBtnWrapper>
+        
       </SubResultContainer>
     );
   };
@@ -244,20 +231,23 @@ const MealSections = styled.div`
 
 const LevelIcon = styled.img`
   width: 14rem;
-  height: 12.8rem;
+  /* height: 12.8rem; */
 `;
 const Score = styled.div`
+  position: absolute;
+  top: 10%;
+  left: 82%;
   font-size: 2.5rem;
   text-align: center;
   font-size: 5.5rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  margin-left: 47rem;
   color: ${(props) => props.color};
 `;
 
-const SubScore = styled.div`
+const SubScore = styled.p`
+  background-color: aliceblue;
   font-size: 2.5rem;
   text-align: center;
   font-size: 5.5rem;
@@ -271,13 +261,14 @@ const SubScore = styled.div`
 `;
 
 const SirensContainer = styled.div`
-  margin-top: 10rem;
   padding-top: 0.8rem;
   display: flex;
   justify-content: space-between;
-  width: 22rem;
+  gap: 2rem;
+  /* width: 22rem; */
   align-items: flex-end;
   height: 100%;
+  margin-bottom: 2rem;
 `;
 const SirenContainer = styled.div`
   position: relative;
@@ -334,9 +325,11 @@ const ResultDetailContainer = styled.div`
   border-radius: 50px;
   background: #f4f2f2;
   margin-bottom: 5.5rem;
+  padding-top: 6rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `;
 const TimeName = styled.p`
   color: #000;
@@ -345,21 +338,22 @@ const TimeName = styled.p`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  padding-right: 2rem;
+  margin-right: 85rem;
 `;
 
 const LevelContainer = styled.div`
   width: 90%;
   display: flex;
-  align-items: center;
-  margin-top: 4.6rem;
+  align-items: flex-end;
+  gap: 3rem;
+  margin-top: 1.6rem;
   margin-bottom: 3.5rem;
+  margin-left: 3rem;
 `;
 
 const LevelLabelContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   margin-right: 3.4rem;
   gap: 2rem;
 `;
@@ -444,9 +438,6 @@ const RecommendationBtn = styled.button`
 `;
 
 const SubRecommendationBtn = styled.button`
-  position: absolute;
-  top: 90%;
-  left: 56%;
   width: 17rem;
   height: 4rem;
   border-radius: 25px;
