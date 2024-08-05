@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-import googleimg from '../../assets/img/googleImg.png';
-import naverimg from '../../assets/img/naverImg.png';
-import logoimg from '../../assets/img/LoginLogo.png';
-import backgroundimg from '../../assets/img/LoginBackground.png';
+import googleimg from '../../assets/LoginImg/googleImg.png';
+import naverimg from '../../assets/LoginImg/naverImg.png';
+import logoimg from '../../assets/LoginImg/LoginLogo.png';
+import backgroundimg from '../../assets/LoginImg/LoginBackground.png';
 
 function Login() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -27,6 +27,7 @@ function Login() {
       const res = await axios.get(`${BASE_URL}/login`, {
         withCredentials: true,
       });
+      console.log(res);
     } catch (error) {
       alert(`error: ${error.message}`);
     }
