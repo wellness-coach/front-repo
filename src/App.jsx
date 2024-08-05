@@ -1,13 +1,15 @@
-import DailyResult from './pages/DailyResult/DailyResult';
 import GlobalStyles from './GlobalStyles';
 import './reset.css';
 import { Outlet } from 'react-router-dom';
+import { UserInfoContextProvider } from './store/UserInfoCtx';
+
 function App() {
   return (
     <>
-      <GlobalStyles />
-      {/* <Outlet /> */}
-      <DailyResult />
+      <UserInfoContextProvider>
+        <GlobalStyles />
+        <Outlet />
+      </UserInfoContextProvider>
     </>
   );
 }

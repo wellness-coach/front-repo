@@ -200,7 +200,7 @@ const DrinkSection = ({ drinkData }) => {
 const RightResult = ({ data }) => {
   return !data ? (
     <MenuResultContainer>
-      <SolutionDetail>검사를 하지 않았습니다.</SolutionDetail>
+      <SolutionDetail>해당 날짜는 진단을 하지 않았습니다. 다른 날짜를 선택해주세요 :) </SolutionDetail>
     </MenuResultContainer>
   ) : (
     <MenuResultContainer>
