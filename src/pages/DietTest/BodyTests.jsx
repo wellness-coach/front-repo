@@ -55,145 +55,161 @@ function BodyTests() {
     }
   };
 
+
+  // const handleInputChange = (id, identifier, value) => {
+  //   setEnteredValues((prev) => {
+  //     const index = prev.findIndex((entry) => entry.id === id);
+  //     if (index !== -1) {
+  //       const updatedValues = [...prev];
+  //       updatedValues[index] = { ...updatedValues[index], menuName: value };
+  //       return updatedValues;
+  //     } else {
+  //       return [...prev, { id, menuType: identifier, menuName: value }];
+  //     }
+  //   });
+  // };
+
   return (
     <>
-      <TestBox>
-        <BoxHeader>
-          <TestCategory>
-            <MealImg src={Meal} alt="식사" />
-            <TestCategoryText>식사</TestCategoryText>
-          </TestCategory>
-        </BoxHeader>
-        <BoxBody>
-          <QuestionText>Q1. 오늘 먹은 음식을 적어주세요.</QuestionText>
-          <MealInputArrangeContainer>
-            <MealInputContainer>
-              <InputCategory>아침</InputCategory>
-              <MealListContainer>
-                {mealInputs.breakfast.map(({ id, placeholder }) => (
-                  <InputContainer key={id}>
-                    <Input type="text" key={id} id={id} name="breakfastInput" placeholder={placeholder} />
-                    {mealInputs.breakfast.length > 1 && (
-                      <button onClick={() => handleDeleteMealInput('breakfast', id)}>
-                        <DeleteButtonImg src={Minus} alt="삭제 버튼" />
-                      </button>
-                    )}
-                  </InputContainer>
-                ))}
-                <PlusButton onClick={() => handleAddMealInput('breakfast')}>
-                  <img src={PlusImg} alt="입력칸 더하기" />
-                </PlusButton>
-              </MealListContainer>
-            </MealInputContainer>
-            <MealInputContainer>
-              <InputCategory>점심</InputCategory>
-              <MealListContainer>
-                {mealInputs.lunch.map(({ id, placeholder }) => (
-                  <InputContainer key={id}>
-                    <Input type="text" key={id} id={id} name="lunchInput" placeholder={placeholder} />
-                    {mealInputs.lunch.length > 1 && (
-                      <button onClick={() => handleDeleteMealInput('lunch', id)}>
-                        <DeleteButtonImg src={Minus} alt="삭제 버튼" />
-                      </button>
-                    )}
-                  </InputContainer>
-                ))}
-                <PlusButton onClick={() => handleAddMealInput('lunch')}>
-                  <img src={PlusImg} alt="입력칸 더하기" />
-                </PlusButton>
-              </MealListContainer>
-            </MealInputContainer>
-            <MealInputContainer>
-              <InputCategory>저녁</InputCategory>
-              <MealListContainer>
-                {mealInputs.dinner.map(({ id, placeholder }) => (
-                  <InputContainer key={id}>
-                    <Input type="text" key={id} id={id} name="dinnerInput" placeholder={placeholder} />
-                    {mealInputs.dinner.length > 1 && (
-                      <button onClick={() => handleDeleteMealInput('dinner', id)}>
-                        <DeleteButtonImg src={Minus} alt="삭제 버튼" />
-                      </button>
-                    )}
-                  </InputContainer>
-                ))}
-                <PlusButton onClick={() => handleAddMealInput('dinner')}>
-                  <img src={PlusImg} alt="입력칸 더하기" />
-                </PlusButton>
-              </MealListContainer>
-            </MealInputContainer>
-          </MealInputArrangeContainer>
-        </BoxBody>
-      </TestBox>
+      
+        <TestBox>
+          <BoxHeader>
+            <TestCategory>
+              <MealImg src={Meal} alt="식사" />
+              <TestCategoryText>식사</TestCategoryText>
+            </TestCategory>
+          </BoxHeader>
+          <BoxBody>
+            <QuestionText>Q1. 오늘 먹은 음식을 적어주세요.</QuestionText>
+            <MealInputArrangeContainer>
+              <MealInputContainer>
+                <InputCategory>아침</InputCategory>
+                <MealListContainer>
+                  {mealInputs.breakfast.map(({ id, placeholder }) => (
+                    <InputContainer key={id}>
+                      <Input type="text" key={id} id={id} name="BREAKFAST" placeholder={placeholder} />
+                      {mealInputs.breakfast.length > 1 && (
+                        <button onClick={() => handleDeleteMealInput('breakfast', id)}>
+                          <DeleteButtonImg src={Minus} alt="삭제 버튼" />
+                        </button>
+                      )}
+                    </InputContainer>
+                  ))}
+                  <PlusButton type="button" onClick={() => handleAddMealInput('breakfast')}>
+                    <img src={PlusImg} alt="입력칸 더하기" />
+                  </PlusButton>
+                </MealListContainer>
+              </MealInputContainer>
+              <MealInputContainer>
+                <InputCategory>점심</InputCategory>
+                <MealListContainer>
+                  {mealInputs.lunch.map(({ id, placeholder }) => (
+                    <InputContainer key={id}>
+                      <Input type="text" key={id} id={id} name="LUNCH" placeholder={placeholder} />
+                      {mealInputs.lunch.length > 1 && (
+                        <button onClick={() => handleDeleteMealInput('lunch', id)}>
+                          <DeleteButtonImg src={Minus} alt="삭제 버튼" />
+                        </button>
+                      )}
+                    </InputContainer>
+                  ))}
+                  <PlusButton type="button" onClick={() => handleAddMealInput('lunch')}>
+                    <img src={PlusImg} alt="입력칸 더하기" />
+                  </PlusButton>
+                </MealListContainer>
+              </MealInputContainer>
+              <MealInputContainer>
+                <InputCategory>저녁</InputCategory>
+                <MealListContainer>
+                  {mealInputs.dinner.map(({ id, placeholder }) => (
+                    <InputContainer key={id}>
+                      <Input type="text" key={id} id={id} name="DINNER" placeholder={placeholder} />
+                      {mealInputs.dinner.length > 1 && (
+                        <button onClick={() => handleDeleteMealInput('dinner', id)}>
+                          <DeleteButtonImg src={Minus} alt="삭제 버튼" />
+                        </button>
+                      )}
+                    </InputContainer>
+                  ))}
+                  <PlusButton type="button" onClick={() => handleAddMealInput('dinner')}>
+                    <img src={PlusImg} alt="입력칸 더하기" />
+                  </PlusButton>
+                </MealListContainer>
+              </MealInputContainer>
+            </MealInputArrangeContainer>
+          </BoxBody>
+        </TestBox>
 
-      <TestBox>
-        <BoxHeader>
-          <TestCategory>
-            <SnackAndDrinkImg src={SnackAndDrink} alt="간식 및 음료" />
-            <TestCategoryText>간식 및 음료</TestCategoryText>
-          </TestCategory>
-        </BoxHeader>
-        <BoxBody>
-          <QuestionText>Q2. 오늘 먹은 간식과 음료를 적어주세요.</QuestionText>
-          <SnackInputArrangeContainer>
-            <SnackInputContainer>
-              <InputCategory>간식</InputCategory>
-              <SnackListContainer>
-                {snackInputs.snack.map(({ id, placeholder }) => (
-                  <InputContainer key={id}>
-                    <Input type="text" key={id} id={id} name="snackInput" placeholder={placeholder} />
-                    {snackInputs.snack.length > 1 && (
-                      <button onClick={() => handleDeleteSnackInput('snack', id)}>
-                        <DeleteButtonImg src={Minus} alt="삭제 버튼" />
-                      </button>
-                    )}
-                  </InputContainer>
-                ))}
-                <PlusButton onClick={() => handleAddSnackInput('snack')}>
-                  <img src={PlusImg} alt="입력칸 더하기" />
-                </PlusButton>
-              </SnackListContainer>
-            </SnackInputContainer>
-            <SnackInputContainer>
-              <InputCategory>음료</InputCategory>
-              <SnackListContainer>
-                {snackInputs.drink.map(({ id, placeholder }) => (
-                  <InputContainer key={id}>
-                    <Input type="text" key={id} id={id} name="drinkInput" placeholder={placeholder} />
-                    {snackInputs.drink.length > 1 && (
-                      <button onClick={() => handleDeleteSnackInput('drink', id)}>
-                        <DeleteButtonImg src={Minus} alt="삭제 버튼" />
-                      </button>
-                    )}
-                  </InputContainer>
-                ))}
-                <PlusButton onClick={() => handleAddSnackInput('drink')}>
-                  <img src={PlusImg} alt="입력칸 더하기" />
-                </PlusButton>
-              </SnackListContainer>
-            </SnackInputContainer>
-          </SnackInputArrangeContainer>
-        </BoxBody>
-      </TestBox>
+        <TestBox>
+          <BoxHeader>
+            <TestCategory>
+              <SnackAndDrinkImg src={SnackAndDrink} alt="간식 및 음료" />
+              <TestCategoryText>간식 및 음료</TestCategoryText>
+            </TestCategory>
+          </BoxHeader>
+          <BoxBody>
+            <QuestionText>Q2. 오늘 먹은 간식과 음료를 적어주세요.</QuestionText>
+            <SnackInputArrangeContainer>
+              <SnackInputContainer>
+                <InputCategory>간식</InputCategory>
+                <SnackListContainer>
+                  {snackInputs.snack.map(({ id, placeholder }) => (
+                    <InputContainer key={id}>
+                      <Input type="text" key={id} id={id} name="SNACK" placeholder={placeholder} />
+                      {snackInputs.snack.length > 1 && (
+                        <button onClick={() => handleDeleteSnackInput('snack', id)}>
+                          <DeleteButtonImg src={Minus} alt="삭제 버튼" />
+                        </button>
+                      )}
+                    </InputContainer>
+                  ))}
+                  <PlusButton type="button" onClick={() => handleAddSnackInput('snack')}>
+                    <img src={PlusImg} alt="입력칸 더하기" />
+                  </PlusButton>
+                </SnackListContainer>
+              </SnackInputContainer>
+              <SnackInputContainer>
+                <InputCategory>음료</InputCategory>
+                <SnackListContainer>
+                  {snackInputs.drink.map(({ id, placeholder }) => (
+                    <InputContainer key={id}>
+                      <Input type="text" key={id} id={id} name="DRINK" placeholder={placeholder} />
+                      {snackInputs.drink.length > 1 && (
+                        <button onClick={() => handleDeleteSnackInput('drink', id)}>
+                          <DeleteButtonImg src={Minus} alt="삭제 버튼" />
+                        </button>
+                      )}
+                    </InputContainer>
+                  ))}
+                  <PlusButton type="button" onClick={() => handleAddSnackInput('drink')}>
+                    <img src={PlusImg} alt="입력칸 더하기" />
+                  </PlusButton>
+                </SnackListContainer>
+              </SnackInputContainer>
+            </SnackInputArrangeContainer>
+          </BoxBody>
+        </TestBox>
 
-      <TestBox>
-        <BoxHeader>
-          <TestCategory>
-            <MemoImg src={Memo} alt="메모" />
-            <TestCategoryText>메모</TestCategoryText>
-          </TestCategory>
-        </BoxHeader>
-        <BoxBody>
-          <QuestionText>Q3. 오늘의 식단에 대해 남기고 싶은 말을 자유롭게 적어주세요.</QuestionText>
+        <TestBox>
+          <BoxHeader>
+            <TestCategory>
+              <MemoImg src={Memo} alt="메모" />
+              <TestCategoryText>메모</TestCategoryText>
+            </TestCategory>
+          </BoxHeader>
+          <BoxBody>
+            <QuestionText>Q3. 오늘의 식단에 대해 남기고 싶은 말을 자유롭게 적어주세요.</QuestionText>
 
-          <FeedbackInputCategory>식단 피드백</FeedbackInputCategory>
+            <FeedbackInputCategory>식단 피드백</FeedbackInputCategory>
 
-          <FeedbackTextarea
-            name="FeedbackInput"
-            id="FeedbackInput"
-            placeholder="식단을 입력하고 난 뒤의 생각과 감정들을 자유롭게 작성해주세요!"
-          ></FeedbackTextarea>
-        </BoxBody>
-      </TestBox>
+            <FeedbackTextarea
+              name="memo"
+              id="FeedbackInput"
+              placeholder="식단을 입력하고 난 뒤의 생각과 감정들을 자유롭게 작성해주세요!"
+            ></FeedbackTextarea>
+          </BoxBody>
+        </TestBox>
+      
     </>
   );
 }

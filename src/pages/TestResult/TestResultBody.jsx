@@ -18,57 +18,8 @@ import OffSirenIcon from '../../assets/TestResultAssets/OffSirenIcon.png';
 import styled from 'styled-components';
 import React, { useState } from 'react';
 
-function TestResultBody() {
-  const data = {
-    BREAKFAST: [
-      { score: 8 },
-      {
-        menuName: '소금빵',
-        sugar: 1,
-        grain: 0,
-        redmeat: 1,
-        carbohydrate: 1,
-        solution:
-          '소금빵은으느나어더야ㅓㅐㅓㅐ냐ㅓㄹ내러냐ㅐ러내ㅑㅓ랸어랸얼냐ㅐㅓ랴너야래ㅜㄿ야너ㅐㅓ랴구ㅐㄹ아ㅡ래너ㅐㅡㅇ라ㅐㅈ더래으ㅡ차내들ㅇ',
-      },
-      {
-        menuName: '시리얼',
-        sugar: 1,
-        grain: 1,
-        redmeat: 1,
-        carbohydrate: 1,
-        solution:
-          '시리얼은으느나어더야ㅓㅐㅓㅐ냐ㅓㄹ내러냐ㅐ러내ㅑㅓ랸어랸얼냐ㅐㅓ랴너야래ㅜㄿ야너ㅐㅓ랴구ㅐㄹ아ㅡ래너ㅐㅡㅇ라ㅐㅈ더래으ㅡ차내들ㅇ',
-      },
-      {
-        menuName: '라면',
-        sugar: 1,
-        grain: 1,
-        redmeat: 1,
-        carbohydrate: 1,
-        solution:
-          '라면은으느나어더야ㅓㅐㅓㅐ냐ㅓㄹ내러냐ㅐ러내ㅑㅓ랸어랸얼냐ㅐㅓ랴너야래ㅜㄿ야너ㅐㅓ랴구ㅐㄹ아ㅡ래너ㅐㅡㅇ라ㅐㅈ더래으ㅡ차내들ㅇ여여여여여여여여여여여여여여여여여ㅇ뇨여뇽녕ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ',
-      },
-    ],
-    LUNCH: [
-      { score: 1 },
-      { menuName: '햄버거', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '햄버거는~~' },
-    ],
-    DINNER: [{ score: 9 }, { menuName: '피자', sugar: 1, grain: 1, redmeat: 1, carbohydrate: 1, solution: '피자는~~' }],
-    SNACK: [
-      { score: 5 },
-      {
-        menuName: '과자',
-        sugar: 1,
-        grain: 1,
-        redmeat: 1,
-        carbohydrate: 1,
-        solution:
-          '과자는 정말 맛있지 안그래? 그랙안 그랙안 그랙안 그랙안 그랙안 그랙안 그랙안그랙안그랙안  그랙안 그랙안그랙안 그랙안그랙안그랙안그랙안그랙안그랙안그랙안그랙안그랙안v',
-      },
-    ],
-    DRINK: [{ score: 9 }, { menuName: '콜라', sugar: 1, solution: '콜라는~~' }],
-  };
+function TestResultBody({fetchedData, onOpenRecommendation}) {
+  const data = fetchedData.meals;
 
   const processMealData = (mealData) => {
     if (!Array.isArray(mealData) || mealData.length < 2)
@@ -211,7 +162,7 @@ function TestResultBody() {
           <MealSolutionDetail>{renderSolutions(mealData.solutions)}</MealSolutionDetail>
         </FoodResultDetailWrapper>
         <RecommendationBtnWrapper>
-          <RecommendationBtn>추천 더보기</RecommendationBtn>
+          <RecommendationBtn onClick={() => onOpenRecommendation(mealType)}>추천 더보기</RecommendationBtn>
         </RecommendationBtnWrapper>
       </ResultDetailContainer>
     );
@@ -234,7 +185,7 @@ function TestResultBody() {
         <SubResultDetailWrapper>
           <SubSolutionDetail>{renderSolutions(mealData.solutions)}</SubSolutionDetail>
         </SubResultDetailWrapper>
-        <SubRecommendationBtn>추천 더보기</SubRecommendationBtn>
+        <SubRecommendationBtn onClick={() => onOpenRecommendation('SNACK')}>추천 더보기</SubRecommendationBtn>
       </SubResultContainer>
     );
   };
@@ -256,7 +207,7 @@ function TestResultBody() {
         <SubResultDetailWrapper>
           <SubSolutionDetail>{renderSolutions(mealData.solutions)}</SubSolutionDetail>
         </SubResultDetailWrapper>
-        <SubRecommendationBtn>추천 더보기</SubRecommendationBtn>
+        <SubRecommendationBtn onClick={() => onOpenRecommendation('DRINK')}>추천 더보기</SubRecommendationBtn>
       </SubResultContainer>
     );
   };

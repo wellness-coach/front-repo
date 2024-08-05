@@ -10,8 +10,7 @@ function DietTestBody() {
   const handleShowInfo = () => {
     setIsInfoRendered(!isInfoRendered);
   };
-
-  console.log(isInfoRendered);
+  
   return (
     <DietTestBodyContainer>
       <ExplanationContainer>

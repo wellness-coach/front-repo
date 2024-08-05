@@ -5,11 +5,13 @@ import LowSpeed from '../../assets/TestResultAssets/LowSpeed.png';
 import MiddleSpeed from '../../assets/TestResultAssets/MiddleSpeed.png';
 import HighSpeed from '../../assets/TestResultAssets/HighSpeed.png';
 import NoSpeed from '../../assets/TestResultAssets/NoSpeed.png';
-import BottomArrow from '../../assets/TestResultAssets/BottomArrow.png'
-import { useState } from 'react';
+import BottomArrow from '../../assets/TestResultAssets/BottomArrow.png';
+import GreenBox from '../../assets/TestResultAssets/GreenBox.png';
+import { useState, useContext } from 'react';
+import UserInfoContext from '../../store/UserInfoCtx';
 
-function TestResultSpeedometer() {
-  const [speed, setSpeed] = useState(1);
+function TestResultSpeedometer({ data }) {
+  const { userInfo } = useContext(UserInfoContext);
   const [isInfoRendered, setIsInfoRendered] = useState(false);
 
   const handleRenderInfo = () => {
@@ -17,17 +19,53 @@ function TestResultSpeedometer() {
   };
 
   const renderSpeedometer = () => {
-    switch (speed) {
-      case 1:
+    if (!data) return <Speedometer src={NoSpeed} alt="노화 속도계 - No Speed" />;
+
+    switch (data.todayAgingType) {
+      case '':
         return <Speedometer src={NoSpeed} alt="노화 속도계 - No Speed" />;
-      case 2:
+      case 'PROPER':
         return <Speedometer src={LowSpeed} alt="노화 속도계 - Low Speed" />;
-      case 3:
+      case 'CAUTION':
         return <Speedometer src={MiddleSpeed} alt="노화 속도계 - Medium Speed" />;
-      case 4:
+      case 'DANGER':
         return <Speedometer src={HighSpeed} alt="노화 속도계 - High Speed" />;
       default:
         return <Speedometer src={NoSpeed} alt="노화 속도계 - Default" />;
+    }
+  };
+
+  const translateLevel = () => {
+    if (!data) return '??';
+
+    switch (data.todayAgingType) {
+      case '':
+        return '??';
+      case 'PROPER':
+        return '저속';
+      case 'CAUTION':
+        return '유의';
+      case 'DANGER':
+        return '가속';
+      default:
+        return '??';
+    }
+  };
+
+  const scaleAgingType = (agingType) => {
+    if (!agingType) return 0;
+
+    switch (agingType) {
+      case '':
+        return 0;
+      case 'PROPER':
+        return 1;
+      case 'CAUTION':
+        return 2;
+      case 'DANGER':
+        return 3;
+      default:
+        return 0;
     }
   };
 
@@ -42,12 +80,23 @@ function TestResultSpeedometer() {
         오늘의 <span>검사 결과</span> 분석지
       </SpeedometerTitle>
       <UserSpeedometerContainer>
+        <GreenBoxImg src={GreenBox} alt="초록색 박스" />
+        {data.recentAgingType === null ? (
+          <GreenBoxText>매일매일 <br />검사해보세요!</GreenBoxText>
+        ) : scaleAgingType(data.recentAgingType) > scaleAgingType(data.todayAgingType) ? (
+          <GreenBoxText>어제보다 노화속도가 <br/>느려졌어요!</GreenBoxText>
+        ) : scaleAgingType(data.recentAgingType) < scaleAgingType(data.todayAgingType) ? (
+          <GreenBoxText>어제보다 노화속도가 <br />빨라졌어요!</GreenBoxText>
+        ) : (
+          <GreenBoxText>어제와 노화속도가 <br />바뀌지 않았어요!</GreenBoxText>
+        )}
+
         {renderSpeedometer()}
         <LevelBar>
-          <LevelLabel>oo님의 오늘 노화 속도</LevelLabel>
-          <Level>?? 단계</Level>
+          <LevelLabel>{userInfo.userName}님의 오늘 노화 속도</LevelLabel>
+          <Level level={data ? data.todayAgingType : ''}>{translateLevel()} 단계</Level>
         </LevelBar>
-        <BottomArrowImg src={BottomArrow} alt='항목별 자세히 보기'/>
+        <BottomArrowImg src={BottomArrow} alt="항목별 자세히 보기" />
       </UserSpeedometerContainer>
     </ResultSpeedometerContainer>
   );
@@ -102,6 +151,28 @@ const UserSpeedometerContainer = styled.div`
   align-items: center;
   height: 44.6rem;
   margin-top: 5.5rem;
+  position: relative;
+`;
+
+const GreenBoxImg = styled.img`
+  position: absolute;
+  top: 1rem;
+  left: 7rem;
+  z-index: 0;
+  width: 24.5rem;
+  height: 15.5rem;
+`;
+
+const GreenBoxText = styled.p`
+  z-index: 1;
+  position: absolute;
+  top: 6.5rem;
+  left: 11.8rem;
+  text-align: center;
+  font-size: 1.8rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 `;
 
 const Speedometer = styled.img`
@@ -134,7 +205,14 @@ const LevelLabel = styled.p`
 `;
 
 const Level = styled.p`
-  color: #d8c317;
+  color: ${(props) => {
+    if (props.level === 'PROPER') return '#78A55A';
+    if (props.level === 'CAUTION') return '#D8C317';
+    if (props.level === 'DANGER') return '#D35F4F';
+    else {
+      return '#000';
+    }
+  }};
   text-align: center;
   font-size: 4.4rem;
   font-style: normal;

@@ -50,6 +50,7 @@ function MainHeader({ data }) {
     }
   };
 
+  console.log(userInfo.userCheckupStatus)
   console.log(userInfo.userName);
 
   return (
@@ -57,14 +58,18 @@ function MainHeader({ data }) {
       <MainHeaderContainer>
         <TitleContainer>
           <MainLogoImg src={MainLogo} alt="메인페이지 로고" />
-          <LogoutBtn>
+          <LogoutBtn onClick={() => navigate('/')}>
             <LogoutText>로그아웃</LogoutText>
             <LogoutImg src={Logout} alt="로그아웃" />
           </LogoutBtn>
         </TitleContainer>
 
         <UserInfoContainer>
-          <InfoContainer_left onClick={() => navigate('/daily_result')} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+          <InfoContainer_left
+            onClick={() => navigate('/daily_result')}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
             {renderSpeedometer()}
             <>
               {!isHovered ? (
@@ -85,8 +90,18 @@ function MainHeader({ data }) {
             <MainText>
               안녕하세요! {userInfo.userName}님 <br /> 오늘도 건강한 하루를 보내셨나요?
             </MainText>
-            <GoToTestButton onClick={() => navigate('/test')}>
-              <p>오늘의 식단 진단하기</p>
+            <GoToTestButton
+              onClick={
+                userInfo.userCheckupStatus === 'COMPLETED' ? () => navigate('/test_result') : () => navigate('/test')
+              }
+            >
+              {userInfo.userCheckupStatus === 'NOT_STARTED' ? (
+                <p>오늘의 식단 진단하기</p>
+              ) : userInfo.userCheckupStatus === 'IN_PROGRESS' ? (
+                <p>식단 이어서 입력하기</p>
+              ) : (
+                <p>오늘의 결과 보러가기</p>
+              )}
               <p>
                 <AngleBracketImg src={AngleBracket} alt="꺽쇠" />
               </p>
@@ -156,7 +171,7 @@ const LogoutImg = styled.img`
 
 // 유저 정보 창
 const UserInfoContainer = styled.div`
-  width: 102rem;
+  width: 104rem;
   margin-top: 5.5rem;
   display: flex;
   align-items: flex-end;

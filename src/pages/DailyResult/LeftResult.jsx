@@ -1,19 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { format } from 'date-fns';
 import { ko as koLocale } from 'date-fns/locale';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import UserInfoContext from '../../store/UserInfoCtx';
+
 import './calStyle.css';
 import MemoModal from './MemoModal';
-// img
+import speednull from '../../assets/TestResultAssets/NoSpeed.png';
 import calendaricon from '../../assets/img/Calendar.png';
 import speedgreen from '../../assets/img/SpeedGreen.png';
 import speedyellow from '../../assets/img/SpeedYellow.png';
 import speedred from '../../assets/img/SpeedRed.png';
 
-function LeftResult() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+function LeftResult({ data, date, setDate }) {
+  const { userInfo } = useContext(UserInfoContext);
   const [open, setOpen] = useState(false);
   const datePickerRef = useRef(null);
   const buttonRef = useRef(null);
@@ -21,107 +23,41 @@ function LeftResult() {
   const [isMemoOverflow, setIsMemoOverflow] = useState(false);
   const memoRef = useRef(null);
 
-  const data = {
-    userId: '홍길동',
-    todayAgingType: 'DANGER', // PROPER, CAUTION, DANGER
-    memo: '맛있었다!!!',
-    meals: {
-      DINNER: [
-        {
-          score: 8,
-        },
-        {
-          menuName: '우삼겹숙주찜',
-          solution: '우삼겹숙주찜은 저속노화에 도움이 되는 음식입니다. ...',
-        },
-      ],
-      BREAKFAST: [
-        {
-          score: 5,
-        },
-        {
-          menuName: '초밥',
-          solution: '초밥의 경우, 흰쌀밥 대신 현미밥이나 퀴노아를 사용하면 ...',
-        },
-      ],
-      SNACK: [],
-      LUNCH: [
-        {
-          score: 2,
-        },
-        {
-          menuName: '조각케이크',
-          solution: '조각케이크는 가속노화 음식이므로, 가속노화를 줄이기 위해 ...',
-        },
-      ],
-      DRINK: [
-        {
-          score: 6,
-        },
-        {
-          menuName: '밀크티',
-          solution: '당 섭취를 줄이고, 항산화 식품을 섭취하세요.',
-        },
-      ],
-    },
+  const defaultSpeedLevelInfo = {
+    text: '? ? 단계',
+    color: 'gray',
+    imgSrc: speednull,
   };
 
   const getSpeedLevelInfo = (agingType) => {
     switch (agingType) {
       case 'PROPER':
-        return {
-          text: '저속 단계',
-          color: 'green',
-          imgSrc: speedgreen,
-        };
+        return { text: '저속 단계', color: 'green', imgSrc: speedgreen };
       case 'CAUTION':
-        return {
-          text: '유의 단계',
-          color: 'yellow',
-          imgSrc: speedyellow,
-        };
+        return { text: '유의 단계', color: 'yellow', imgSrc: speedyellow };
       case 'DANGER':
-        return {
-          text: '가속 단계',
-          color: 'red',
-          imgSrc: speedred,
-        };
+        return { text: '가속 단계', color: 'red', imgSrc: speedred };
       default:
-        return {
-          text: '정보 없음',
-          color: 'gray',
-          imgSrc: null,
-        };
+        return defaultSpeedLevelInfo;
     }
   };
 
-  const speedLevelInfo = getSpeedLevelInfo(data.todayAgingType);
-
-  const memoContent = data.memo;
-
-  const userId = data.userId;
+  const speedLevelInfo = data ? getSpeedLevelInfo(data.todayAgingType) : defaultSpeedLevelInfo;
+  const memoContent = data ? data.memo : '';
 
   const getShortDay = (date) => {
     const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
     return weekdays[date.getDay()];
   };
 
-  const formatDate = (date) => {
-    return format(date, `yyyy. MM. dd (${getShortDay(date)})`, {
-      locale: koLocale,
-    });
-  };
+  const formatDate = (date) => format(date, `yyyy. MM. dd (${getShortDay(date)})`, { locale: koLocale });
 
   const handleCalendarClick = () => {
     setOpen(!open);
-    if (!open) {
-      datePickerRef.current?.setOpen(true);
-    }
+    if (!open) datePickerRef.current?.setOpen(true);
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+  const openModal = () => setIsModalOpen(true);
 
   useEffect(() => {
     if (memoRef.current) {
@@ -130,95 +66,93 @@ function LeftResult() {
   }, [memoContent]);
 
   return (
-    <>
-      <LeftResultContainer>
-        <CalendarWrapper>
-          <CalendarContainer>
-            <ResultName>{userId}님의 일별 리포트 분석</ResultName>
-            <div className="date-picker-container">
-              <button onClick={handleCalendarClick} ref={buttonRef} className="calendar-button">
-                <CalendarIcon src={calendaricon} alt="달력아이콘" />
-              </button>
-              <DatePicker
-                ref={datePickerRef}
-                selected={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-                dateFormat="yyyy. MM. dd (EEEE)"
-                customInput={<CustomDateInput>{formatDate(selectedDate)}</CustomDateInput>}
-                open={open}
-                onClickOutside={() => setOpen(false)}
-                onCalendarClose={() => setOpen(false)}
-                locale={koLocale}
-                renderCustomHeader={({
-                  date,
-                  decreaseMonth,
-                  increaseMonth,
-                  prevMonthButtonDisabled,
-                  nextMonthButtonDisabled,
-                }) => (
-                  <div className="react-datepicker__header">
-                    <div className="react-datepicker__header-top">
-                      <div className="react-datepicker__header-inner">
-                        <span className="react-datepicker__current-month">
-                          {format(date, 'yyyy. M', { locale: koLocale })}
-                        </span>
-                      </div>
-                      <div className="react-datepicker__navigation-container">
-                        <button
-                          onClick={decreaseMonth}
-                          disabled={prevMonthButtonDisabled}
-                          className="react-datepicker__navigation react-datepicker__navigation--previous"
-                        >
-                          {'<'}
-                        </button>
-                        <button
-                          onClick={increaseMonth}
-                          disabled={nextMonthButtonDisabled}
-                          className="react-datepicker__navigation react-datepicker__navigation--next"
-                        >
-                          {'>'}
-                        </button>
-                      </div>
+    <LeftResultContainer>
+      <CalendarWrapper>
+        <CalendarContainer>
+          <ResultName>{userInfo.userName}님의 일별 리포트 분석</ResultName>
+          <div className="date-picker-container">
+            <button onClick={handleCalendarClick} ref={buttonRef} className="calendar-button">
+              <CalendarIcon src={calendaricon} alt="달력아이콘" />
+            </button>
+            <DatePicker
+              ref={datePickerRef}
+              selected={date}
+              onChange={(date) => setDate(date)}
+              dateFormat="yyyy. MM. dd (EEEE)"
+              customInput={<CustomDateInput>{formatDate(date)}</CustomDateInput>}
+              open={open}
+              onClickOutside={() => setOpen(false)}
+              onCalendarClose={() => setOpen(false)}
+              locale={koLocale}
+              renderCustomHeader={({
+                date,
+                decreaseMonth,
+                increaseMonth,
+                prevMonthButtonDisabled,
+                nextMonthButtonDisabled,
+              }) => (
+                <div className="react-datepicker__header">
+                  <div className="react-datepicker__header-top">
+                    <div className="react-datepicker__header-inner">
+                      <span className="react-datepicker__current-month">
+                        {format(date, 'yyyy. M', { locale: koLocale })}
+                      </span>
+                    </div>
+                    <div className="react-datepicker__navigation-container">
+                      <button
+                        onClick={decreaseMonth}
+                        disabled={prevMonthButtonDisabled}
+                        className="react-datepicker__navigation react-datepicker__navigation--previous"
+                      >
+                        {'<'}
+                      </button>
+                      <button
+                        onClick={increaseMonth}
+                        disabled={nextMonthButtonDisabled}
+                        className="react-datepicker__navigation react-datepicker__navigation--next"
+                      >
+                        {'>'}
+                      </button>
                     </div>
                   </div>
-                )}
-              />
-            </div>
-          </CalendarContainer>
-        </CalendarWrapper>
-        <SpeedAndMemoContainer>
-          <SpeedometerContainer>
-            <SpeedImg src={speedLevelInfo.imgSrc} alt="속도계 이미지" />
-            <SpeedLevelContainer>
-              <SpeedDateContainer>
-                <SpeedDate>{format(selectedDate, 'yyyy년 M월 d일', { locale: koLocale })}</SpeedDate>{' '}
-                <SpeedDateM>건강 진단 결과</SpeedDateM>
-              </SpeedDateContainer>
-              <SpeedLevel color={speedLevelInfo.color}>{speedLevelInfo.text}</SpeedLevel>
-            </SpeedLevelContainer>
-          </SpeedometerContainer>
-          <MemoContainer>
-            <MemoTitle>나의 메모</MemoTitle>
-            <MemoDetailContainer>
-              <MemoDetailTopContainer>
-                <MemoDate>{format(selectedDate, 'MM.dd', { locale: koLocale })}</MemoDate>
-                <MemoDetail ref={memoRef} isOverflow={isMemoOverflow}>
-                  {memoContent}
-                </MemoDetail>
-              </MemoDetailTopContainer>
-              {isMemoOverflow && (
-                <div>
-                  <MemoMoreButton onClick={openModal}>더보기</MemoMoreButton>
-                  {isModalOpen && (
-                    <MemoModal setIsModalOpen={setIsModalOpen} selectedDate={selectedDate} memoContent={memoContent} />
-                  )}
                 </div>
               )}
-            </MemoDetailContainer>
-          </MemoContainer>
-        </SpeedAndMemoContainer>
-      </LeftResultContainer>
-    </>
+            />
+          </div>
+        </CalendarContainer>
+      </CalendarWrapper>
+      <SpeedAndMemoContainer>
+        <SpeedometerContainer>
+          <SpeedImg src={speedLevelInfo.imgSrc} alt="속도계 이미지" />
+          <SpeedLevelContainer>
+            <SpeedDateContainer>
+              <SpeedDate>{format(date, 'yyyy년 M월 d일', { locale: koLocale })}</SpeedDate>
+              <SpeedDateM>건강 진단</SpeedDateM>
+            </SpeedDateContainer>
+            <SpeedLevel color={speedLevelInfo.color}>{speedLevelInfo.text}</SpeedLevel>
+          </SpeedLevelContainer>
+        </SpeedometerContainer>
+        <MemoContainer>
+          <MemoTitle>나의 메모</MemoTitle>
+          <MemoDetailContainer>
+            <MemoDetailTopContainer>
+              <MemoDate>{format(date, 'MM.dd', { locale: koLocale })}</MemoDate>
+              <MemoDetail ref={memoRef} isOverflow={isMemoOverflow}>
+                {memoContent}
+              </MemoDetail>
+            </MemoDetailTopContainer>
+            {isMemoOverflow && (
+              <div>
+                <MemoMoreButton onClick={openModal}>더보기</MemoMoreButton>
+                {isModalOpen && (
+                  <MemoModal setIsModalOpen={setIsModalOpen} selectedDate={date} memoContent={memoContent} />
+                )}
+              </div>
+            )}
+          </MemoDetailContainer>
+        </MemoContainer>
+      </SpeedAndMemoContainer>
+    </LeftResultContainer>
   );
 }
 
@@ -371,20 +305,21 @@ const MemoDetail = styled.p`
   line-height: 2.5rem;
   position: relative;
   overflow: hidden;
-  ${({ isOverflow }) =>
-    isOverflow &&
-    `
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 30%, #f8f8f8 100%);
-      pointer-events: none;
-    }
-  `}
+
+  ${(props) =>
+    props.isOverflow &&
+    css`
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 30%, #f8f8f8 100%);
+        pointer-events: none;
+      }
+    `}
 `;
 
 const MemoMoreButton = styled.div`

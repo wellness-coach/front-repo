@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-function DietTestFooter() {
-
-  
+function DietTestFooter({ onTempSave }) {
   return (
     <DietTestFooterWrapper>
       <ButtonContainer>
-        <TempSaveButton>임시 저장</TempSaveButton>
-        <PermSaveButton>완료하기</PermSaveButton>
+        <TempSaveButton type="button" onClick={onTempSave}>
+          임시 저장
+        </TempSaveButton>
+        <PermSaveButton type="submit">완료하기</PermSaveButton>
       </ButtonContainer>
     </DietTestFooterWrapper>
   );

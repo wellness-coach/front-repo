@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import WellnessCoachTitle from '../../assets/TestResultAssets/WellnessCoachTitle.png';
 import LogoPicture from '../../assets/TestResultAssets/LogoPicture.png';
 import Logout from '../../assets/TestResultAssets/Logout.png';
+import { useNavigate } from 'react-router-dom';
+import UserInfoContext from '../../store/UserInfoCtx';
+
 
 function DailyResultHeader() {
+const {userInfo} = useContext(UserInfoContext);
+
+  const navigate = useNavigate();
   return (
     <DietTestHeaderWrapper>
       <DietTestHeaderContainer>
         <LogoPictureImg src={LogoPicture} alt="로고 그림" />
-        <WellnessCoachTitleImg src={WellnessCoachTitle} alt="타이틀" />
-        <LogoutButton>
+        <WellnessCoachTitleImg src={WellnessCoachTitle} alt="타이틀" onClick={() => navigate(`/main/${userInfo.userId}`)} />
+        <LogoutButton onClick={() => navigate('/')}>
           <LogoutText>로그아웃</LogoutText>
           <LogoutImg src={Logout} alt="로그아웃" />
         </LogoutButton>

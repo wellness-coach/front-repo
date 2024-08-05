@@ -13,7 +13,8 @@ import UserInfoContext from '../../store/UserInfoCtx';
 function MainPage() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { userId } = useParams();
-  const {userInfo, updateUserInfo} = useContext(UserInfoContext);
+  const { updateUserDefaultInfo } = useContext(UserInfoContext);
+  console.log(userId);
 
   const date = new Date().toISOString().split('T')[0];
   const [fetchedData, setFetchedData] = useState();
@@ -39,14 +40,13 @@ function MainPage() {
     try {
       const response = await axios.get(`${BASE_URL}/mainPage`, {
         params: {
-          userId,
-          date,
+          userId: userId,
+          date: "2024-06-02",
         },
       });
-      
-      setFetchedData(response);
-      updateUserInfo(userId, response.data.name);
-      
+
+      setFetchedData(response.data);
+      updateUserDefaultInfo(userId, response.data.name);
     } catch (error) {
       console.log('Error fetching main page data:', error);
     }
@@ -75,7 +75,7 @@ function MainPage() {
       )}
       <MainContainer>
         <MainHeader data={fetchedData} />
-        <MainFooter onOpenTip={handleOpenModal} />
+        <MainFooter onOpenTip={handleOpenModal} data={fetchedData} refreshData={getMainPageData} />
       </MainContainer>
     </>
   );

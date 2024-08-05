@@ -7,10 +7,14 @@ import TipBlackLeft from '../../assets/MainPageAssets/TipBlackLeft.png';
 import TipBlackRight from '../../assets/MainPageAssets/TipBlackRight.png';
 import TipGrayLeft from '../../assets/MainPageAssets/TipGrayLeft.png';
 import TipGrayRight from '../../assets/MainPageAssets/TipGrayRight.png';
+import axios from 'axios';
 import Tips from '../../assets/Tips.json';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import UserInfoContext from '../../store/UserInfoCtx';
 
-function MainFooter({ onOpenTip }) {
+function MainFooter({ onOpenTip, data, refreshData }) {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const { userInfo } = useContext(UserInfoContext);
   const [renderedTipId, setRenderedTipId] = useState(0);
 
   const handleGoToLeftTip = () => {
@@ -20,6 +24,49 @@ function MainFooter({ onOpenTip }) {
   const handleGoToRightTip = () => {
     if (renderedTipId < Tips.length - 2) setRenderedTipId(renderedTipId + 1);
   };
+
+  const handleAddScrap = async (productId) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/scrap/add`, {
+        userId: userInfo.userId,
+        recommendationId: productId,
+      });
+      console.log(response);
+      refreshData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteScrap = async (productId) => {
+    try {
+      const response = await axios.delete(`${BASE_URL}/scrap/cancel`, {
+        data: {
+          userId: userInfo.userId,
+          recommendationId: productId,
+        },
+      });
+      console.log(response);
+      refreshData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // 중복 제거 로직
+  const uniqueProductsMap = new Map();
+  if (data && data.products) {
+    data.products.forEach((product) => {
+      const key = `${product.targetProductName}-${product.productName}`;
+      if (!uniqueProductsMap.has(key)) {
+        uniqueProductsMap.set(key, product);
+      }
+    });
+  }
+  const uniqueProducts = Array.from(uniqueProductsMap.values());
+
+  console.log('Original products:', data && data.products);
+  console.log('Unique products:', uniqueProducts);
 
   return (
     <MainFooterWrapper>
@@ -69,27 +116,28 @@ function MainFooter({ onOpenTip }) {
               <LabelScrap>스크랩</LabelScrap>
             </ListLabel>
             <ListItemContainer>
-              <ListItem>
-                <ItemProductName>제품1</ItemProductName>
-                <ItemScrap src={FullBookmarkImg} alt="북마크" />
-              </ListItem>
-              <ListItem>
-                <ItemProductName>제품1</ItemProductName>
-                <ItemScrap src={EmptyBookmarkImg} alt="북마크" />
-              </ListItem>
-              <ListItem>
-                <ItemProductName>제품1</ItemProductName>
-                <ItemScrap src={EmptyBookmarkImg} alt="북마크" />
-              </ListItem>
-              <ListItem>
-                <ItemProductName>제품1</ItemProductName>
-                <ItemScrap src={FullBookmarkImg} alt="북마크" />
-              </ListItem>
-              <ListItem>
-                <ItemProductName>제품1</ItemProductName>
-
-                <ItemScrap src={FullBookmarkImg} alt="북마크" />
-              </ListItem>
+              {uniqueProducts.length > 0 ? (
+                uniqueProducts.map((product) => (
+                  <ListItem key={product.productId}>
+                    <ItemProductName href={product.productLink}>
+                      {product.productName}
+                      <span>({product.targetProductName}의 대체품)</span>
+                    </ItemProductName>
+                    <ItemScrapBtn
+                      type="button"
+                      onClick={
+                        product.scrap
+                          ? () => handleDeleteScrap(product.productId)
+                          : () => handleAddScrap(product.productId)
+                      }
+                    >
+                      <ItemScrap src={product.scrap ? FullBookmarkImg : EmptyBookmarkImg} alt="북마크" />
+                    </ItemScrapBtn>
+                  </ListItem>
+                ))
+              ) : (
+                <p>아직 추천 제품이 없습니다.</p>
+              )}
             </ListItemContainer>
           </RecommendationListBody>
         </RecommendationListContainer>
@@ -169,11 +217,11 @@ const TipImage = styled.img`
   top: 0;
   left: 0;
   z-index: 0;
-  filter: brightness(0.4); 
-  backdrop-filter: blur(5px); 
+  filter: brightness(0.3);
+  backdrop-filter: blur(5px);
 
   &:hover {
-    filter: brightness(0.8); 
+    filter: brightness(0.8);
   }
 `;
 
@@ -308,7 +356,18 @@ const ListItemContainer = styled.ul`
   margin-top: 1.5rem;
   margin-bottom: 1.4rem;
   height: 22.8rem;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
+  overflow-y: auto;
+
+  & p {
+    color: #000;
+    text-align: center;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-top: 8rem;
+  }
 `;
 
 const ListItem = styled.li`
@@ -322,7 +381,7 @@ const ListItem = styled.li`
   justify-content: space-between;
 `;
 
-const ItemProductName = styled.p`
+const ItemProductName = styled.a`
   color: #000;
   text-align: center;
   font-size: 1.8rem;
@@ -330,8 +389,15 @@ const ItemProductName = styled.p`
   font-weight: 500;
   line-height: normal;
   margin-left: 5.1rem;
-  max-width: 15rem;
+  max-width: 25rem;
+
+  & span {
+    color: gray;
+    margin-left: 1rem;
+  }
 `;
+
+const ItemScrapBtn = styled.button``;
 
 const ItemScrap = styled.img`
   margin-right: 4rem;
