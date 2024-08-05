@@ -20,10 +20,15 @@ function DailyResult() {
 
     const formattedDate = date.toISOString().split('T')[0];
     axios
-      .get(`${BASE_URL}/checkup/report`, { params: { userId: userInfo.userId, date: formattedDate } })
+      .get(`${BASE_URL}/checkup/report`, {
+        params: {
+          userId: userInfo.userId,
+          date: formattedDate,
+        },
+      })
       .then((response) => setData(response.data))
-      .catch((error) => console.error('Error fetching data:', error));
-  }, [BASE_URL, userInfo, date]);
+      .catch((error) => console.error('Error fetching DailyResult page data:', error));
+  }, [date]);
 
   return (
     <DailyResultContainer>

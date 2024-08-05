@@ -21,14 +21,14 @@ import sirenicon from '../../assets/TestResultAssets/SirenIcon.png';
 
 const processMealData = (mealData) => {
   if (!Array.isArray(mealData) || mealData.length < 2) {
-    return { sugar: [], grain: [], redmeat: [], carbohydrate: [], solutions: [] };
+    return { sugar: [], grain: [], redmeat: [], salt: [], solutions: [] };
   }
 
   const result = {
     sugar: [],
     grain: [],
     redmeat: [],
-    carbohydrate: [],
+    salt: [],
     solutions: [],
   };
 
@@ -37,7 +37,7 @@ const processMealData = (mealData) => {
     if (menu.sugar) result.sugar.push(menu.menuName);
     if (menu.grain) result.grain.push(menu.menuName);
     if (menu.redmeat) result.redmeat.push(menu.menuName);
-    if (menu.carbohydrate) result.carbohydrate.push(menu.menuName);
+    if (menu.salt) result.salt.push(menu.menuName);
     if (menu.solution) result.solutions.push(menu.solution);
   }
 
@@ -72,12 +72,12 @@ const getColorForScore = (score) => {
   return '#F15C5C';
 };
 
-const renderDrinkSolutionMessage = (score) => {
-  if (score === undefined) return '물을 자주 마셔보세요! 건강을 위한 좋은 습관입니다 :)';
-  if (score >= 7) return '당 섭취를 줄이는데 좋은 음료예요.';
-  if (score >= 4) return '건강한 음료와 번갈아 마셔보세요.';
-  return '당분 섭취를 줄이기 위해 무가당 음료를 선택하세요.';
-};
+// const renderDrinkSolutionMessage = (score) => {
+//   if (score === undefined) return '물을 자주 마셔보세요! 건강을 위한 좋은 습관입니다 :)';
+//   if (score >= 7) return '당 섭취를 줄이는데 좋은 음료예요.';
+//   if (score >= 4) return '건강한 음료와 번갈아 마셔보세요.';
+//   return '당분 섭취를 줄이기 위해 무가당 음료를 선택하세요.';
+// };
 
 const Siren = ({ type, data }) => {
   const [showTooltip, setShowTooltip] = useState(false);
@@ -102,15 +102,15 @@ const renderSirens = (data) => (
     {data.sugar.length > 0 && <Siren type="단순당" data={data.sugar} />}
     {data.grain.length > 0 && <Siren type="정제곡물" data={data.grain} />}
     {data.redmeat.length > 0 && <Siren type="적색육" data={data.redmeat} />}
-    {data.carbohydrate.length > 0 && <Siren type="탄수화물" data={data.carbohydrate} />}
+    {data.salt.length > 0 && <Siren type="나트륨" data={data.salt} />}
   </SirensContainer>
 );
 
 const renderSolutions = (solutions) =>
   solutions.map((solution, index) => <SolutionDetail key={index}>{solution}</SolutionDetail>);
 
-const MealSection = ({ mealType, timeName }) => {
-  const mealData = data.meals[mealType];
+const MealSection = ({ mealType, timeName, data }) => {
+  const mealData = data;
   const processedMealData = processMealData(mealData);
   const score = mealData[0]?.score;
 
@@ -183,36 +183,41 @@ const DrinkSection = ({ drinkData }) => {
           <Score score={score}>{score === undefined ? '' : `${score}점`}</Score>
         </DrinkDetailTopContainer>
         <DrinkSolutionDetail>
-          <SolutionDetail>{renderDrinkSolutionMessage(score)}</SolutionDetail>
-        </DrinkSolutionDetail>
+          {drinkData[1]?.solution ? (
+            renderSolutions([drinkData[1].solution])
+          ) : (
+            <SolutionDetail>물을 자주 마셔보세요! 건강을 위한 좋은 습관입니다 :)</SolutionDetail>
+          )}
+        </DrinkSolutionDetail>{' '}
+        {/* <DrinkSolutionDetail>
+          <SolutionDetail>{renderDrinkSolutionMessage(score)}</SolutionDetail>{' '}
+        </DrinkSolutionDetail> */}
       </DrinkFoodResultDetailContainer>
     </DrinkResultContainer>
   );
 };
 
 const RightResult = ({ data }) => {
-  if (!data) {
-    return (
-      <MenuResultContainer>
-        <SolutionDetail>검사를 하지 않았습니다.</SolutionDetail>
-      </MenuResultContainer>
-    );
-  }
-  <MenuResultContainer>
-    <MealSections>
-      <MealSection mealType="BREAKFAST" timeName="아침" />
-      <MealSection mealType="LUNCH" timeName="점심" />
-      <MealSection mealType="DINNER" timeName="저녁" />
-    </MealSections>
-    <ServeMenuResultContainer>
-      <SnackSection snackData={data.meals.SNACK} />
-      <DrinkSection drinkData={data.meals.DRINK} />
-    </ServeMenuResultContainer>
-  </MenuResultContainer>;
+  return !data ? (
+    <MenuResultContainer>
+      <SolutionDetail>검사를 하지 않았습니다.</SolutionDetail>
+    </MenuResultContainer>
+  ) : (
+    <MenuResultContainer>
+      <MealSections>
+        <MealSection mealType="BREAKFAST" timeName="아침" data={data.meals.BREAKFAST} />
+        <MealSection mealType="LUNCH" timeName="점심" data={data.meals.LUNCH} />
+        <MealSection mealType="DINNER" timeName="저녁" data={data.meals.DINNER} />
+      </MealSections>
+      <ServeMenuResultContainer>
+        <SnackSection snackData={data.meals.SNACK} />
+        <DrinkSection drinkData={data.meals.DRINK} />
+      </ServeMenuResultContainer>
+    </MenuResultContainer>
+  );
 };
 export default RightResult;
 
-// 스타일링
 const MenuResultContainer = styled.div`
   width: 50%;
   padding-top: 16.5rem;
@@ -289,10 +294,6 @@ const SolutionDetail = styled.div`
   line-height: 1.6rem;
   color: black;
 `;
-
-// const DefaultSolutionMessage = styled(SolutionDetail)`
-//   color: #000000;
-// `;
 
 // 아침, 점심, 저녁
 const MealSections = styled.div`
@@ -408,6 +409,7 @@ const SnackResultContainer = styled.div`
 const SnackSolutionDetail = styled.div`
   width: 22rem;
   height: 5rem;
+  overflow-y: auto;
 `;
 
 const SnackFoodResultDetailContainer = styled.div``;
@@ -437,6 +439,7 @@ const DrinkDetailTopContainer = styled.div`
 const DrinkSolutionDetail = styled.div`
   width: 9rem;
   height: 5rem;
+  overflow-y: auto;
 `;
 
 const DrinkFoodResultDetailContainer = styled.div``;

@@ -8,7 +8,7 @@ import UserInfoContext from '../../store/UserInfoCtx';
 
 import './calStyle.css';
 import MemoModal from './MemoModal';
-import speednull from '../../assets/img/SpeedNull.png';
+import speednull from '../../assets/TestResultAssets/NoSpeed.png';
 import calendaricon from '../../assets/img/Calendar.png';
 import speedgreen from '../../assets/img/SpeedGreen.png';
 import speedyellow from '../../assets/img/SpeedYellow.png';
@@ -137,7 +137,7 @@ function LeftResult({ data, date, setDate }) {
           <MemoDetailContainer>
             <MemoDetailTopContainer>
               <MemoDate>{format(date, 'MM.dd', { locale: koLocale })}</MemoDate>
-              <MemoDetail ref={memoRef} isOverflow={isMemoOverflow}>
+              <MemoDetail ref={memoRef} isoverflow={isMemoOverflow ? true : undefined}>
                 {memoContent}
               </MemoDetail>
             </MemoDetailTopContainer>
@@ -307,7 +307,7 @@ const MemoDetail = styled.p`
   overflow: hidden;
 
   ${(props) =>
-    props.isOverflow &&
+    props.isoverflow &&
     css`
       &::after {
         content: '';
