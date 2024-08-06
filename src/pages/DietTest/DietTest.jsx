@@ -20,6 +20,8 @@ function DietTest() {
   const [refresh, setRefresh] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const initialRenderRef = useRef(true);
+  console.log('initialRenderRef:', initialRenderRef.current);
+  console.log('refresh: ', refresh);
 
   const getTempInputValues = async () => {
     try {
@@ -29,7 +31,7 @@ function DietTest() {
           date: date, 
         },
       });
-      console.log(response);
+      console.log(response.data);
       setTempInputs({ mealResponses: response.data.mealResponses, memo: response.data.memo });
     } catch (error) {
       console.log(error);
@@ -46,7 +48,7 @@ function DietTest() {
 
   useEffect(() => {
     return () => {
-      setIsInitialRender(true); // Set to true when unmounting
+      setIsInitialRender(true); 
     };
   }, []);
 
