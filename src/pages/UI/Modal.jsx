@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-
+import closeimg from '../../assets/DailyResultImg/Close.png';
 function Modal({ children, open, onClose }) {
   const dialog = useRef();
 
@@ -26,8 +26,10 @@ function Modal({ children, open, onClose }) {
   console.log(open);
 
   return createPortal(
-    <StyledDialog ref={dialog} >
-      <CloseButton onClick={onClose}>X</CloseButton>
+    <StyledDialog ref={dialog}>
+      <CloseButton onClick={onClose}>
+        <CloseImg src={closeimg} alt="닫기 아이콘" />
+      </CloseButton>
       {children}
     </StyledDialog>,
     document.getElementById('modal'),
@@ -60,4 +62,8 @@ const CloseButton = styled.button`
   left: 68rem;
   width: 2.4rem;
   height: 2.4rem;
+`;
+
+const CloseImg = styled.img`
+  width: 2.4rem;
 `;
