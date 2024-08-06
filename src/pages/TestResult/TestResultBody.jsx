@@ -13,7 +13,7 @@ import SnackYellow from '../../assets/TestResultAssets/SnackYellow.png';
 import SnackGreen from '../../assets/TestResultAssets/SnackGreen.png';
 import SnackGray from '../../assets/TestResultAssets/SnackGray.png';
 
-import SirenIcon from '../../assets/TestResultAssets/SirenIcon.png';
+import SirenIcon from '../../assets/TestResultAssets/Siren.png';
 import OffSirenIcon from '../../assets/TestResultAssets/OffSirenIcon.png';
 import styled from 'styled-components';
 import React, { useState } from 'react';
@@ -68,9 +68,9 @@ function TestResultBody({ fetchedData, onOpenRecommendation }) {
   };
 
   const getColorForScore = (score) => {
-    if (score >= 7) return '#5AC451';
-    if (score >= 4) return '#FFD700';
-    return '#FF5656';
+    if (score >= 7) return '#78A55A';
+    if (score >= 4) return '#D8C317';
+    return '#F15C5C';
   };
 
   const Siren = ({ type, data }) => {
@@ -116,8 +116,8 @@ function TestResultBody({ fetchedData, onOpenRecommendation }) {
       <ResultDetailContainer>
         <TimeName>{timeName}</TimeName>
         <Score score={score} color={getColorForScore(score)}>
-            {score === undefined ? '' : `${score}점`}
-          </Score>
+          {score === undefined ? '' : `${score}점`}
+        </Score>
         <LevelContainer>
           <LevelIcon src={getIconForMealType(mealType, score)} alt={`${mealType} 아이콘`} />
           {score === undefined ? null : renderSirens(processedMealData)}
@@ -164,8 +164,9 @@ function TestResultBody({ fetchedData, onOpenRecommendation }) {
             </SubSolutionDetail>
           )}
         </SubResultDetailWrapper>
-        <RecommendationBtnWrapper><SubRecommendationBtn onClick={() => onOpenRecommendation('SNACK')}>추천 더보기</SubRecommendationBtn></RecommendationBtnWrapper>
-        
+        <RecommendationBtnWrapper>
+          <SubRecommendationBtn onClick={() => onOpenRecommendation('SNACK')}>추천 더보기</SubRecommendationBtn>
+        </RecommendationBtnWrapper>
       </SubResultContainer>
     );
   };
@@ -193,8 +194,9 @@ function TestResultBody({ fetchedData, onOpenRecommendation }) {
             </SubSolutionDetail>
           )}
         </SubResultDetailWrapper>
-        <RecommendationBtnWrapper><SubRecommendationBtn onClick={() => onOpenRecommendation('DRINK')}>추천 더보기</SubRecommendationBtn></RecommendationBtnWrapper>
-        
+        <RecommendationBtnWrapper>
+          <SubRecommendationBtn onClick={() => onOpenRecommendation('DRINK')}>추천 더보기</SubRecommendationBtn>
+        </RecommendationBtnWrapper>
       </SubResultContainer>
     );
   };
@@ -247,7 +249,6 @@ const Score = styled.div`
 `;
 
 const SubScore = styled.p`
-  background-color: aliceblue;
   font-size: 2.5rem;
   text-align: center;
   font-size: 5.5rem;

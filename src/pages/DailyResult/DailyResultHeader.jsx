@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import WellnessCoachTitle from '../../assets/TestResultAssets/WellnessCoachTitle.png';
-import LogoPicture from '../../assets/TestResultAssets/LogoPicture.png';
-import Logout from '../../assets/TestResultAssets/Logout.png';
+import WellnessCoachTitle from '../../assets/HeaderImg/WellnessCoachTitle.png';
+import LogoPicture from '../../assets/HeaderImg/LogoPicture.png';
+import Logout from '../../assets/HeaderImg/Logout.png';
 import { useNavigate } from 'react-router-dom';
 import UserInfoContext from '../../store/UserInfoCtx';
 

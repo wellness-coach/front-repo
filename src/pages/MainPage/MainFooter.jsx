@@ -277,6 +277,9 @@ const DetailText = styled.p`
     font-weight: 800;
     line-height: normal;
   }
+  & img {
+    width: 2rem;
+  }
 `;
 
 const HelpfulTextBox = styled.p`

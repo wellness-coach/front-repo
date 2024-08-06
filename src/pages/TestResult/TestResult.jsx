@@ -33,11 +33,11 @@ function TestResult() {
   console.log(currentMealType);
 
   const translateMealType = () => {
-    if (!currentMealType) return '??';
+    if (!currentMealType) return '? ?';
 
     switch (currentMealType) {
       case '':
-        return '??';
+        return '? ?';
       case 'BREAKFAST':
         return '아침';
       case 'LUNCH':
@@ -49,7 +49,7 @@ function TestResult() {
       case 'DRINK':
         return '음료';
       default:
-        return '??';
+        return '? ?';
     }
   };
 

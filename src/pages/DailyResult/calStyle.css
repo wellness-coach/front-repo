@@ -23,7 +23,7 @@
   background-color: white;
   border-bottom: none;
   width: 31rem;
-  box-sizing: border-box; /* 패딩과 테두리를 포함한 너비 계산 */
+  box-sizing: border-box;
 }
 
 /* 헤더 상단 부분 스타일 */
@@ -31,7 +31,6 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
-  /* background-color: yellow; */
 }
 
 /* 헤더 내부 스타일 */
@@ -40,8 +39,6 @@
   align-items: center;
   justify-content: center;
   margin-left: 2rem;
-  /* background-color: blue; */
-  /* width: 100%; 내부 너비를 100%로 설정 */
 }
 
 /* 내비게이션 버튼 스타일 */
@@ -49,13 +46,12 @@
 .react-datepicker__navigation--next {
   background: white;
   border: none;
-  color: black; /* 텍스트 색상 검은색 */
+  color: black;
   cursor: pointer;
-  font-size: 2rem; /* 폰트 크기 조정 */
+  font-size: 2rem;
   font-weight: 700;
-  position: relative; /* 상대 위치 */
+  position: relative;
 }
-
 /* 내비게이션 버튼 화살표 스타일 */
 .react-datepicker__navigation--previous::before,
 .react-datepicker__navigation--next::before {
@@ -67,11 +63,11 @@
 }
 
 .react-datepicker__navigation--previous::before {
-  transform: rotate(135deg); /* 왼쪽 화살표 */
+  transform: rotate(135deg);
 }
 
 .react-datepicker__navigation--next::before {
-  transform: rotate(-45deg); /* 오른쪽 화살표 */
+  transform: rotate(-45deg);
 }
 
 /* 내비게이션 버튼 컨테이너 스타일 */
@@ -79,7 +75,6 @@
   display: flex;
   align-items: center;
   margin-right: 1rem;
-  /* background-color: red; */
 }
 
 /* 현재 월 스타일 */
@@ -88,12 +83,11 @@
   margin: 0 auto;
   color: black;
   text-align: center;
-  flex-grow: 1; /* 공간을 채우도록 설정 */
+  flex-grow: 1;
 }
 
 /* 요일 이름 스타일 */
 .react-datepicker__day-names {
-  /* background-color: green; */
   display: grid;
   grid-template-columns: repeat(7, 1fr); /* 7일을 균등한 칸으로 나누기 */
   gap: 0;
@@ -139,13 +133,13 @@
 
 /* 날짜 hover 상태 스타일 */
 .react-datepicker__day:hover {
-  background-color: pink;
+  background-color: #c3e3ab;
   border-radius: 50%;
 }
 
 /* 선택된 날짜 hover 상태 스타일 */
 .react-datepicker__day--selected:hover {
-  background-color: purple;
+  background-color: #68b248;
   border-radius: 50%;
   color: white;
 }
@@ -176,6 +170,7 @@
 }
 
 .date-picker-container {
-  display: flex; /* Flexbox 사용 */
-  align-items: center; /* 아이콘과 날짜를 수직으로 중앙 정렬 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

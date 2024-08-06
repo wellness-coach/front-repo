@@ -15,7 +15,7 @@ function BodyTests({ tempInputs }) {
     breakfast: [{ id: 'breakfast_0', placeholder: 'ex. 가지볶음' }],
     lunch: [{ id: 'lunch_0', placeholder: 'ex. 빅맥 세트' }],
     dinner: [{ id: 'dinner_0', placeholder: 'ex. 갈치 구이' }],
-    snack: [{ id: 'snack_0', placeholder: 'ex. 다이제 초코맛' }],
+    snack: [{ id: 'snack_0', placeholder: 'ex. 방울토마토' }],
     drink: [{ id: 'drink_0', placeholder: 'ex. 코카 콜라 제로' }],
   });
 

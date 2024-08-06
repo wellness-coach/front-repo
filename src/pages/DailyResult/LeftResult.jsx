@@ -8,11 +8,11 @@ import UserInfoContext from '../../store/UserInfoCtx';
 
 import './calStyle.css';
 import MemoModal from './MemoModal';
-import speednull from '../../assets/TestResultAssets/NoSpeed.png';
-import calendaricon from '../../assets/img/calendar.png';
-import speedgreen from '../../assets/img/SpeedGreen.png';
-import speedyellow from '../../assets/img/SpeedYellow.png';
-import speedred from '../../assets/img/SpeedRed.png';
+import speednull from '../../assets/DailyResultImg/NoSpeed.png';
+import calendaricon from '../../assets/DailyResultImg/Calendar.png';
+import speedgreen from '../../assets/DailyResultImg/SpeedGreen.png';
+import speedyellow from '../../assets/DailyResultImg/SpeedYellow.png';
+import speedred from '../../assets/DailyResultImg/SpeedRed.png';
 
 function LeftResult({ data, date, setDate }) {
   const { userInfo } = useContext(UserInfoContext);

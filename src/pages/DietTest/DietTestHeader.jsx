@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import WellnessCoachTitle from '../../assets/DietTestAssets/WellnessCoachTitle.png';
-import LogoPicture from '../../assets/DietTestAssets/LogoPicture.png';
-import Logout from '../../assets/DietTestAssets/Logout.png';
+import WellnessCoachTitle from '../../assets/HeaderImg/WellnessCoachTitle.png';
+import LogoPicture from '../../assets/HeaderImg/LogoPicture.png';
+import Logout from '../../assets/HeaderImg/Logout.png';
 import { useNavigate } from 'react-router-dom';
 import UserInfoContext from '../../store/UserInfoCtx';
 import { useContext } from 'react';
@@ -14,7 +14,11 @@ function DietTestHeader() {
     <DietTestHeaderWrapper>
       <DietTestHeaderContainer>
         <LogoPictureImg src={LogoPicture} alt="로그 그림" />
-        <WellnessCoachTitleImg src={WellnessCoachTitle} alt="타이틀" onClick={() => navigate(`/main/${userInfo.userId}`)} />
+        <WellnessCoachTitleImg
+          src={WellnessCoachTitle}
+          alt="타이틀"
+          onClick={() => navigate(`/main/${userInfo.userId}`)}
+        />
         <LogoutButton onClick={() => navigate(`/main/${userInfo.userId}`)}>
           <LogoutText>로그아웃</LogoutText>
           <LogoutImg src={Logout} alt="로그아웃" />

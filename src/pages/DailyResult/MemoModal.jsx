@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { format } from 'date-fns';
 import { ko as koLocale } from 'date-fns/locale';
-import memocloseicon from '../../assets/img/Close.png';
-
+import memocloseicon from '../../assets/DailyResultImg/Close.png';
 function MemoModal({ setIsModalOpen, selectedDate, memoContent }) {
   const closeModal = () => setIsModalOpen(false);
 

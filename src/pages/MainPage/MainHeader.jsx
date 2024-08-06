@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import MainBackground from '../../assets/MainPageAssets/MainBackground.png';
-import MainLogo from '../../assets/MainPageAssets/MainLogo.png';
-import Logout from '../../assets/MainPageAssets/Logout.png';
+import MainLogo from '../../assets/LoginImg/LoginLogo.png';
+import Logout from '../../assets/HeaderImg/Logout.png';
 import AngleBracket from '../../assets/MainPageAssets/AngleBracket.png';
-import LowSpeed from '../../assets/MainPageAssets/LowSpeed.png';
-import MiddleSpeed from '../../assets/MainPageAssets/MiddleSpeed.png';
-import HighSpeed from '../../assets/MainPageAssets/HighSpeed.png';
-import NoSpeed from '../../assets/MainPageAssets/NoSpeed.png';
+import LowSpeed from '../../assets/DailyResultImg/SpeedGreen.png';
+import MiddleSpeed from '../../assets/DailyResultImg/SpeedYellow.png';
+import HighSpeed from '../../assets/DailyResultImg/SpeedRed.png';
+import NoSpeed from '../../assets/DailyResultImg/NoSpeed.png';
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserInfoContext from '../../store/UserInfoCtx';
@@ -50,7 +50,7 @@ function MainHeader({ data }) {
     }
   };
 
-  console.log(userInfo.userCheckupStatus)
+  console.log(userInfo.userCheckupStatus);
   console.log(userInfo.userName);
 
   return (
