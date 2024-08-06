@@ -14,8 +14,8 @@ function TestResult() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const { userInfo } = useContext(UserInfoContext);
-  // const date = new Date().toISOString().split('T')[0];
-  const date = "2024-01-21";
+  const date = new Date().toISOString().split('T')[0];
+  // const date = "2024-01-21";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [renderedData, setRenderedData] = useState(null);

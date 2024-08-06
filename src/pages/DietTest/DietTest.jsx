@@ -12,8 +12,8 @@ function DietTest() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { userInfo, updateUserTestInfo } = useContext(UserInfoContext);
   const navigate = useNavigate();
-    // const date = new Date().toISOString().split('T')[0];
-    const date = "2024-01-21";
+    const date = new Date().toISOString().split('T')[0];
+    // const date = "2024-01-21";
 
   const [isLoading, setIsLoading] = useState(false);
   const [tempInputs, setTempInputs] = useState({ mealResponses: [], memo: '' });

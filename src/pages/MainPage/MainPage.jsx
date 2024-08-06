@@ -15,8 +15,8 @@ function MainPage() {
   const { userId } = useParams();
   const { updateUserDefaultInfo } = useContext(UserInfoContext);
   console.log(userId);
-  // const date = new Date().toISOString().split('T')[0];
-  const date = '2024-01-21';
+  const date = new Date().toISOString().split('T')[0];
+  // const date = '2024-01-21';
 
   const [fetchedData, setFetchedData] = useState();
 
