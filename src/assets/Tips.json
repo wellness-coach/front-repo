@@ -3,8 +3,8 @@
     "id": "t0",
     "category": "생활 속 건강 팁",
     "title": "주의하세요, \n 의외의 가속노화 음식들!",
-    "tipImgSrc": "./TipImg/TipImg_1.png",
-    "modalImgSrc": "./TipImg/ModalImg_1.png",
+    "tipImgSrc": "../../assets/TipImg/TipImg_1.png",
+    "modalImgSrc": "../../assets/TipImg/ModalImg_1.png",
     "content": "아이스 아메리카노 - 적당량의 커피는 근력 강화부터 심혈관 질환 예방에 도움이 되지만, 하루 3잔 이상의 커피는 가속 노화를 초래할 수 있어요. 물처럼 아메리카노를 마시는 일은 지양하는 것이 좋아요.\n제로 디저트 - 건강을 생각해 제로 케이크, 쿠키 등을 먹어왔다면 정말 건강에 이로울지 주목해주세요. 제로 디저트들은 설탕과 정제 곡물을 기존보다 줄였지만, 고당류 대체당과 인공 감미료를 쓴 경우가 많아 실제로는 가속노화 음식이 될 확률이 아주 높아요.",
     "source": "https://www.gqkorea.co.kr/2024/07/25/%ea%b1%b4%ea%b0%95%ec%8b%9d%ec%9d%b8-%ec%a4%84-%ec%95%8c%ec%95%98%eb%8a%94%eb%8d%b0-%ec%9d%98%ec%99%b8%eb%a1%9c-10%eb%85%84%ec%9d%80-%eb%b9%a8%eb%a6%ac-%eb%8a%99%eb%8a%94-%ea%b0%80%ec%86%8d-%eb%85%b8/?utm_source=naver&utm_medium=partnership"
   },
