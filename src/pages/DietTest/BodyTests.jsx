@@ -15,11 +15,11 @@ function BodyTests({ tempInputs }) {
     breakfast: [{ id: 'breakfast_0', placeholder: 'ex. 가지볶음' }],
     lunch: [{ id: 'lunch_0', placeholder: 'ex. 빅맥 세트' }],
     dinner: [{ id: 'dinner_0', placeholder: 'ex. 갈치 구이' }],
-    snack: [{ id: 'snack_0', placeholder: 'ex. 방울토마토' }],
+    snack: [{ id: 'snack_0', placeholder: 'ex. 다이제 초코맛' }],
     drink: [{ id: 'drink_0', placeholder: 'ex. 코카 콜라 제로' }],
   });
 
-  console.log(testInputs);
+  console.log('testInputs: ', testInputs);
 
   useEffect(() => {
     if (userInfo.userCheckupStatus === 'IN_PROGRESS' && tempInputs.mealResponses.length > 0) {
@@ -31,10 +31,10 @@ function BodyTests({ tempInputs }) {
         drink: [],
       };
 
-      tempInputs.mealResponses.forEach((meal) => {
+      tempInputs.mealResponses.forEach((밥) => {
         const newInput = {
           id: `${meal.menuType.toLowerCase()}_${uuidv4()}`,
-          placeholder: '메뉴 입력',
+          placeholder: meal.menuName,
           menuName: meal.menuName,
         };
         updatedInputs[meal.menuType.toLowerCase()].push(newInput);

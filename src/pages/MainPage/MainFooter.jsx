@@ -143,7 +143,7 @@ function MainFooter({ onOpenTip, data, refreshData }) {
                   </ListItem>
                 ))
               ) : (
-                <p>아직 추천 제품이 없습니다.</p>
+                <p>아직 스크랩한 제품이 없습니다.</p>
               )}
             </ListItemContainer>
           </RecommendationListBody>
