@@ -200,6 +200,7 @@ const LevelBar = styled.button`
   align-items: center;
   justify-content: center;
   gap: 4rem;
+  cursor: pointer;
 `;
 
 const LevelLabel = styled.span`
@@ -243,6 +244,7 @@ const GoToReport = styled.p`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  cursor: pointer;
 `;
 
 const InfoContainer_right = styled.div`

@@ -116,7 +116,7 @@ function MainFooter({ onOpenTip, data, refreshData }) {
           </TipListBody>
         </TipListContainer>
         <RecommendationListContainer>
-          <RecommendationListHeader>{userInfo.userName}님을 위한 맞춤 추천 제품</RecommendationListHeader>
+          <RecommendationListHeader>{userInfo.userName}님이 스크랩한 추천 제품</RecommendationListHeader>
           <RecommendationListBody>
             <ListLabel>
               <LabelProductName>제품명</LabelProductName>
