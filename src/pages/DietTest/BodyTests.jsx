@@ -305,7 +305,7 @@ const MealListContainer = styled.div`
 
 const PlusButton = styled.button`
   & img {
-    width: 2rem;
+    width: 3.5rem;
   }
 `;
 
