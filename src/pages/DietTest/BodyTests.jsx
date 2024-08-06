@@ -34,7 +34,7 @@ function BodyTests({ tempInputs }) {
       tempInputs.mealResponses.forEach((meal) => {
         const newInput = {
           id: `${meal.menuType.toLowerCase()}_${uuidv4()}`,
-          placeholder: '메뉴 입력',
+          placeholder: meal.menuName,
           menuName: meal.menuName,
         };
         updatedInputs[meal.menuType.toLowerCase()].push(newInput);

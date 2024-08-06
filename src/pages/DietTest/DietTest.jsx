@@ -18,7 +18,6 @@ function DietTest() {
   const [isLoading, setIsLoading] = useState(false);
   const [tempInputs, setTempInputs] = useState({ mealResponses: [], memo: '' });
   const [refresh, setRefresh] = useState(false);
-  const [isInitialRender, setIsInitialRender] = useState(true);
   const initialRenderRef = useRef(true);
   console.log('initialRenderRef:', initialRenderRef.current);
   console.log('refresh: ', refresh);
@@ -31,7 +30,7 @@ function DietTest() {
           date: date, 
         },
       });
-      console.log(response.data);
+      console.log('임시저장 get하는거 테스트', response.data);
       setTempInputs({ mealResponses: response.data.mealResponses, memo: response.data.memo });
     } catch (error) {
       console.log(error);
@@ -39,16 +38,22 @@ function DietTest() {
   };
 
   useEffect(() => {
-    if (initialRenderRef.current) {
-      initialRenderRef.current = false;
-    } else {
-      getTempInputValues();
+    if (!initialRenderRef.current) {
+      getTempInputValues(); // 첫 렌더링이 아닌 경우에만 호출
     }
   }, [refresh]);
 
   useEffect(() => {
+    if (initialRenderRef.current) {
+      initialRenderRef.current = false;
+    } else {
+      getTempInputValues(); // 다른 페이지에서 돌아왔을 때 호출
+    }
+  }, []);
+
+  useEffect(() => {
     return () => {
-      setIsInitialRender(true); 
+      initialRenderRef.current = true; // 컴포넌트 언마운트 시 초기화
     };
   }, []);
 
