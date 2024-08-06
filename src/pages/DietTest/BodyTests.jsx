@@ -303,7 +303,11 @@ const MealListContainer = styled.div`
   align-items: center;
 `;
 
-const PlusButton = styled.button``;
+const PlusButton = styled.button`
+  & img {
+    width: 2rem;
+  }
+`;
 
 const SnackAndDrinkImg = styled.img`
   width: 7.3rem;
