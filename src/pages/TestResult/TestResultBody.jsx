@@ -404,6 +404,7 @@ const SubResultContainer = styled.div`
 
 const SubResultDetailWrapper = styled.div`
   width: 90%;
+  min-height: 30rem;
   padding: 0rem 5rem;
   margin-bottom: 5rem;
 `;
