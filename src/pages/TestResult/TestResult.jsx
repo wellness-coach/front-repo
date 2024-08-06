@@ -14,7 +14,8 @@ function TestResult() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const { userInfo } = useContext(UserInfoContext);
-  const date = new Date().toISOString().split('T')[0];
+  // const date = new Date().toISOString().split('T')[0];
+  const date = "2024-01-21";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [renderedData, setRenderedData] = useState(null);
@@ -57,13 +58,13 @@ function TestResult() {
       const response = await axios.get(`${BASE_URL}/checkup/report`, {
         params: {
           userId: userInfo.userId,
-          date: '2024-05-13',
+          date: date,
         },
       });
       setRenderedData(response.data);
       console.log(response);
     } catch (error) {
-      console.log('Error fetching Test page data:', error);
+      alert('에러 발생!', error);
     }
   };
 

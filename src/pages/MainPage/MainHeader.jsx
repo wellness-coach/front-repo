@@ -34,11 +34,11 @@ function MainHeader({ data }) {
   };
 
   const translateLevel = () => {
-    if (!data) return '??';
+    if (!data) return '? ?';
 
     switch (data.lastWeekAgingType) {
       case '':
-        return '??';
+        return '? ?';
       case 'PROPER':
         return '저속';
       case 'CAUTION':
@@ -46,7 +46,7 @@ function MainHeader({ data }) {
       case 'DANGER':
         return '가속';
       default:
-        return '??';
+        return '? ?';
     }
   };
 
@@ -75,7 +75,7 @@ function MainHeader({ data }) {
               {!isHovered ? (
                 <LevelBar>
                   <LevelLabel>
-                    지난주
+                    지난 주
                     <br />
                     건강 진단
                   </LevelLabel>
@@ -217,7 +217,7 @@ const Level = styled.span`
     if (props.level === 'CAUTION') return '#D8C317';
     if (props.level === 'DANGER') return '#D35F4F';
     else {
-      return '#000';
+      return '#6c757d';
     }
   }};
   text-align: center;

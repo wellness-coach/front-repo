@@ -3,7 +3,7 @@ import DietTestHeader from './DietTestHeader';
 import DietTestBody from './DietTestBody';
 import DietTestFooter from './DietTestFooter';
 import Loading from '../Loading/Loading';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import axios from 'axios';
 import UserInfoContext from '../../store/UserInfoCtx';
 import { useNavigate } from 'react-router-dom';
@@ -11,19 +11,51 @@ import { useNavigate } from 'react-router-dom';
 function DietTest() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { userInfo, updateUserTestInfo } = useContext(UserInfoContext);
-  const date = new Date().toISOString().split('T')[0];
   const navigate = useNavigate();
+    // const date = new Date().toISOString().split('T')[0];
+    const date = "2024-01-21";
 
   const [isLoading, setIsLoading] = useState(false);
+  const [tempInputs, setTempInputs] = useState({ mealResponses: [], memo: '' });
+  const [refresh, setRefresh] = useState(false);
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  const initialRenderRef = useRef(true);
 
-  console.log(isLoading);
+  const getTempInputValues = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/checkup/get`, {
+        params: {
+          userId: userInfo.userId,
+          date: date, 
+        },
+      });
+      console.log(response);
+      setTempInputs({ mealResponses: response.data.mealResponses, memo: response.data.memo });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (initialRenderRef.current) {
+      initialRenderRef.current = false;
+    } else {
+      getTempInputValues();
+    }
+  }, [refresh]);
+
+  useEffect(() => {
+    return () => {
+      setIsInitialRender(true); // Set to true when unmounting
+    };
+  }, []);
+
   const handleTempSave = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
 
     const fd = new FormData(event.target.form);
     const entriesArray = Array.from(fd.entries());
-    const filteredEntries = entriesArray.filter(([name, value]) => name !== 'memo');
+    const filteredEntries = entriesArray.filter(([name]) => name !== 'memo');
     const inputData = filteredEntries.map(([menuType, menuName]) => ({ menuType, menuName }));
     console.log(inputData);
     const filteredInputData = inputData.filter((item) => item.menuName.length > 0);
@@ -33,21 +65,26 @@ function DietTest() {
     try {
       const response = await axios.post(`${BASE_URL}/checkup/save`, {
         userId: userInfo.userId,
-        date: date,
+        date: date, 
         meals: filteredInputData,
         memo: memoValues,
       });
       console.log(response);
       updateUserTestInfo(response.data.checkupStatus);
+      setRefresh((prev) => !prev);
+      alert("임시 저장 되었습니다!");
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!confirm('제출을 완료하시겠습니까?')) {
+      return;
+    }
+
     setIsLoading(true);
     console.log(userInfo.userCheckupStatus);
 
@@ -59,7 +96,7 @@ function DietTest() {
 
     const fd = new FormData(form);
     const entriesArray = Array.from(fd.entries());
-    const filteredEntries = entriesArray.filter(([name, value]) => name !== 'memo');
+    const filteredEntries = entriesArray.filter(([name]) => name !== 'memo');
     const inputData = filteredEntries.map(([menuType, menuName]) => ({ menuType, menuName }));
     console.log(inputData);
     const filteredInputData = inputData.filter((item) => item.menuName.length > 0);
@@ -67,41 +104,15 @@ function DietTest() {
     const memoValues = fd.get('memo');
 
     try {
-      let response;
-      if (userInfo.userCheckupStatus === 'IN_PROGRESS') {
-        response = await axios.post(`${BASE_URL}/checkup/submit`, {
-          userId: userInfo.userId,
-          checkupId: userInfo.userCheckupId,
-          date: date,
-          meals: filteredInputData,
-          memo: memoValues,
-        });
-        console.log({
-          userId: userInfo.userId,
-          checkupId: userInfo.userCheckupId,
-          date: date,
-          meals: filteredInputData,
-          memo: memoValues,
-        });
-        updateUserTestInfo('COMPLETED');
-        navigate('/test_result');
-      } else {
-        response = await axios.post(`${BASE_URL}/checkup/submit`, {
-          userId: userInfo.userId,
-          date: '2024-05-13',
-          meals: filteredInputData,
-          memo: memoValues,
-        });
-        console.log({
-          userId: userInfo.userId,
-          date: '2024-05-13',
-          meals: filteredInputData,
-          memo: memoValues,
-        });
-        console.log(response);
-        if (response.data === 'success') updateUserTestInfo('COMPLETED');
-        navigate('/test_result');
-      }
+      const response = await axios.post(`${BASE_URL}/checkup/submit`, {
+        userId: userInfo.userId,
+        date: date, 
+        meals: filteredInputData,
+        memo: memoValues,
+      });
+      console.log(response);
+      if (response.data === 'success') updateUserTestInfo('COMPLETED');
+      navigate('/test_result');
     } catch (error) {
       console.log(error);
     } finally {
@@ -112,12 +123,12 @@ function DietTest() {
   return (
     <>
       {isLoading ? (
-        <Loading/>
+        <Loading />
       ) : (
         <DietTestContainer>
           <DietTestHeader />
           <form onSubmit={handleSubmit}>
-            <DietTestBody />
+            <DietTestBody tempInputs={tempInputs} />
             <DietTestFooter onTempSave={handleTempSave} />
           </form>
         </DietTestContainer>
@@ -127,6 +138,8 @@ function DietTest() {
 }
 
 export default DietTest;
+
+
 
 const DietTestContainer = styled.div`
   width: 100vw;

@@ -2,15 +2,17 @@ import styled from 'styled-components';
 import BodyTests from './BodyTests';
 import InfoButton from '../../assets/DietTestAssets/InfoButton.png';
 import TestInfoBox from '../../assets/DietTestAssets/TestInfoBox.png';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import UserInfoContext from '../../store/UserInfoCtx';
 
-function DietTestBody() {
+function DietTestBody({ tempInputs }) {
+  const { userInfo } = useContext(UserInfoContext);
   const [isInfoRendered, setIsInfoRendered] = useState(false);
 
   const handleShowInfo = () => {
     setIsInfoRendered(!isInfoRendered);
   };
-  
+
   return (
     <DietTestBodyContainer>
       <ExplanationContainer>
@@ -19,7 +21,7 @@ function DietTestBody() {
             <span>오늘 식단</span>은 어떠셨나요?
           </Title1>
           <GrayBox>
-            <Title2>00님의 식단이 어땠는지 차근차근 기록해주세요.</Title2>
+            <Title2>{userInfo.userName}님의 식단이 어땠는지 차근차근 기록해주세요.</Title2>
             <Title3>
               더욱 정확한 분석을 위해 메뉴 이름을 자세히 적어주세요. (ex. 참치 포케 -&gt; 참치 통곡물 포케) <br />
               또한 드시지 않았다면 빈칸으로 남겨주세요.
@@ -27,12 +29,12 @@ function DietTestBody() {
           </GrayBox>
         </ExplanationTextContainer>
         {isInfoRendered && <TestInfoBoxImg src={TestInfoBox} alt="정보 글" />}
-        <TestExplanationButton onClick={handleShowInfo}>
+        <TestExplanationButton type="button" onClick={handleShowInfo}>
           <InfoButtonImg src={InfoButton} alt="검사 정보 버튼" />
         </TestExplanationButton>
       </ExplanationContainer>
       <TestContainer>
-        <BodyTests />
+        <BodyTests tempInputs={tempInputs} />
       </TestContainer>
     </DietTestBodyContainer>
   );

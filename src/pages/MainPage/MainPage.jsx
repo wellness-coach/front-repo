@@ -15,8 +15,9 @@ function MainPage() {
   const { userId } = useParams();
   const { updateUserDefaultInfo } = useContext(UserInfoContext);
   console.log(userId);
+  // const date = new Date().toISOString().split('T')[0];
+  const date = '2024-01-21';
 
-  const date = new Date().toISOString().split('T')[0];
   const [fetchedData, setFetchedData] = useState();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,7 +42,7 @@ function MainPage() {
       const response = await axios.get(`${BASE_URL}/mainPage`, {
         params: {
           userId: userId,
-          date: "2024-05-13",
+          date: date,
         },
       });
 

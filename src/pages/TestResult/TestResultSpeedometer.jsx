@@ -210,7 +210,7 @@ const Level = styled.p`
     if (props.level === 'CAUTION') return '#D8C317';
     if (props.level === 'DANGER') return '#D35F4F';
     else {
-      return '#000';
+      return '#6c757d';
     }
   }};
   text-align: center;
@@ -225,3 +225,4 @@ const BottomArrowImg = styled.img`
   width: 29.5rem;
   height: 9rem;
 `;
+
