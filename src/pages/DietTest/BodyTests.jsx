@@ -19,7 +19,7 @@ function BodyTests({ tempInputs }) {
     drink: [{ id: 'drink_0', placeholder: 'ex. 코카 콜라 제로' }],
   });
 
-  console.log(testInputs);
+  console.log('testInputs: ', testInputs);
 
   useEffect(() => {
     if (userInfo.userCheckupStatus === 'IN_PROGRESS' && tempInputs.mealResponses.length > 0) {

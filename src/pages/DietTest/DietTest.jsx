@@ -17,8 +17,7 @@ function DietTest() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [tempInputs, setTempInputs] = useState({ mealResponses: [], memo: '' });
-  const [refresh, setRefresh] = useState(false);
-  const initialRenderRef = useRef(true);
+
   console.log('initialRenderRef:', initialRenderRef.current);
   console.log('refresh: ', refresh);
 
@@ -38,24 +37,10 @@ function DietTest() {
   };
 
   useEffect(() => {
-    if (!initialRenderRef.current) {
-      getTempInputValues(); // 첫 렌더링이 아닌 경우에만 호출
+    if (userInfo.userCheckupStatus === 'IN_PROGRESS') {
+      getTempInputValues()
     }
-  }, [refresh]);
-
-  useEffect(() => {
-    if (initialRenderRef.current) {
-      initialRenderRef.current = false;
-    } else {
-      getTempInputValues(); // 다른 페이지에서 돌아왔을 때 호출
-    }
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      initialRenderRef.current = true; // 컴포넌트 언마운트 시 초기화
-    };
-  }, []);
+  }, [userInfo.userCheckupStatus]);
 
   const handleTempSave = async (event) => {
     event.preventDefault();
@@ -78,7 +63,6 @@ function DietTest() {
       });
       console.log(response);
       updateUserTestInfo(response.data.checkupStatus);
-      setRefresh((prev) => !prev);
       alert("임시 저장 되었습니다!");
     } catch (error) {
       console.log(error);
