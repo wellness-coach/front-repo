@@ -18,9 +18,6 @@ function DietTest() {
   const [isLoading, setIsLoading] = useState(false);
   const [tempInputs, setTempInputs] = useState({ mealResponses: [], memo: '' });
 
-  console.log('initialRenderRef:', initialRenderRef.current);
-  console.log('refresh: ', refresh);
-
   const getTempInputValues = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/checkup/get`, {
