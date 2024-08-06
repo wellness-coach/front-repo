@@ -31,7 +31,7 @@ function BodyTests({ tempInputs }) {
         drink: [],
       };
 
-      tempInputs.mealResponses.forEach((밥) => {
+      tempInputs.mealResponses.forEach((meal) => {
         const newInput = {
           id: `${meal.menuType.toLowerCase()}_${uuidv4()}`,
           placeholder: meal.menuName,
