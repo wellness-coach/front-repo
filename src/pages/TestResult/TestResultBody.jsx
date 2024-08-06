@@ -292,7 +292,10 @@ const Tooltip = styled.div`
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #f4f2f2;
+  background-color: rgba(249, 248, 235, 0.5);
+
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  backdrop-filter: blur(20px);
   color: black;
   padding: 0.5rem;
   border-radius: 0.5rem;
