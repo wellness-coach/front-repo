@@ -9,7 +9,7 @@ import UserInfoContext from '../../store/UserInfoCtx';
 import './calStyle.css';
 import MemoModal from './MemoModal';
 import speednull from '../../assets/TestResultAssets/NoSpeed.png';
-import calendaricon from '../../assets/img/Calendar.png';
+import calendaricon from '../../assets/img/calendar.png';
 import speedgreen from '../../assets/img/SpeedGreen.png';
 import speedyellow from '../../assets/img/SpeedYellow.png';
 import speedred from '../../assets/img/SpeedRed.png';
