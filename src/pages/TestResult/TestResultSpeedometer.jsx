@@ -14,10 +14,6 @@ function TestResultSpeedometer({ data }) {
   const { userInfo } = useContext(UserInfoContext);
   const [isInfoRendered, setIsInfoRendered] = useState(false);
 
-  const handleRenderInfo = () => {
-    setIsInfoRendered(!isInfoRendered);
-  };
-
   const renderSpeedometer = () => {
     if (!data) return <Speedometer src={NoSpeed} alt="노화 속도계 - No Speed" />;
 
@@ -72,7 +68,7 @@ function TestResultSpeedometer({ data }) {
   return (
     <ResultSpeedometerContainer>
       {isInfoRendered && <TestInfoBoxImg src={TestInfoBox} alt="검사 정보 글" />}
-      <TestExplanationBtn onClick={handleRenderInfo}>
+      <TestExplanationBtn onMouseOver={() => setIsInfoRendered(true)} onMouseLeave={() => setIsInfoRendered(false)}>
         <InfoButtonImg src={InfoButton} alt="검사 정보 버튼" />
       </TestExplanationBtn>
 

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import closeImg from '../../assets/DailyResultImg/Close.png';
-function Modal({ children, open, onClose }) {
+function ResultModal({ children, open, onClose }) {
   const dialog = useRef();
 
   // 간혹 dialog.current가 클린업 함수와
@@ -39,34 +39,32 @@ function Modal({ children, open, onClose }) {
   return createPortal(
     <StyledDialog ref={dialog}>
       {children}
+      
       <LeaveBtn onClick={onClose}>닫기</LeaveBtn>
     </StyledDialog>,
     document.getElementById('modal'),
   );
 }
 
-export default Modal;
+export default ResultModal;
 
 const StyledDialog = styled.dialog`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 72rem;
   max-height: 66rem;
   justify-content: center;
-  padding: 2rem;
   background: white;
   position: fixed;
   border: none;
-  border-radius: 8px;
+  border-radius: 50px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000; /* 모달이 다른 요소 위에 표시되도록 */
 `;
 
 const LeaveBtn = styled.button`
-  width: 6rem;
-  height: 3rem;
-  border-radius: 30px;
+  width: 8rem;
+  height: 4rem;
+  border-radius: 10px;
   margin-top: 3rem;
   background: rgba(227, 100, 68, 0.8);
   color: #000;
