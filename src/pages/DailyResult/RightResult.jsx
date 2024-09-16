@@ -437,9 +437,9 @@ const DrinkDetailTopContainer = styled.div`
 `;
 
 const DrinkSolutionDetail = styled.div`
-  width: 9rem;
+  width: 12rem;
   height: 5rem;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 `;
 
 const DrinkFoodResultDetailContainer = styled.div``;
