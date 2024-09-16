@@ -304,7 +304,7 @@ const MealSections = styled.div`
 const ResultDetailContainer = styled.div`
   width: 60.6rem;
   height: 15.2rem;
-  border-radius: 1.6rem;
+  border-radius: 16px;
   background: #f4f1da;
   box-shadow: 0rem 0.4rem 0.4rem 0rem rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(2.5rem);
@@ -318,7 +318,7 @@ const TimeName = styled.p`
   background-color: #fff;
   width: 10.8rem;
   height: 2.8rem;
-  border-radius: 2rem;
+  border-radius: 20px;
   font-size: 1.8rem;
   font-weight: 700;
   display: flex;
@@ -372,7 +372,7 @@ const ServeTimeName = styled.div`
   background-color: #fff;
   width: 7.7rem;
   height: 2.8rem;
-  border-radius: 2rem;
+  border-radius: 20px;
   font-size: 1.8rem;
   font-weight: 700;
   display: flex;
@@ -396,9 +396,9 @@ const SnackDetailTopContainer = styled.div`
 const SnackResultContainer = styled.div`
   width: 35.5rem;
   height: 15.2rem;
-  border-radius: 1.6rem;
+  border-radius: 16px;
   background: #f4f1da;
-  box-shadow: 0rem 0.4rem 0.4rem 0rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(2.5rem);
   display: flex;
   flex-direction: row;
@@ -418,9 +418,9 @@ const SnackFoodResultDetailContainer = styled.div``;
 const DrinkResultContainer = styled.div`
   width: 24rem;
   height: 15.2rem;
-  border-radius: 1.6rem;
+  border-radius: 16px;
   background: #f4f1da;
-  box-shadow: 0rem 0.4rem 0.4rem 0rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(2.5rem);
   display: flex;
   flex-direction: row;

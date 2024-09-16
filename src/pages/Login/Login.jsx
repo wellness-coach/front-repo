@@ -111,7 +111,7 @@ const LoginToNaverContainer = styled.button`
   background-color: #45b649;
   width: 35.6rem;
   height: 4.4rem;
-  border-radius: 1.5rem;
+  border-radius: 15px;
   display: flex;
   align-items: center;
   margin-bottom: 1.2rem;
@@ -122,7 +122,7 @@ const LoginToGoogleContainer = styled.button`
   background-color: #fff;
   width: 35.6rem;
   height: 4.4rem;
-  border-radius: 1.5rem;
+  border-radius: 15px;
   display: flex;
   align-items: center;
   cursor: pointer;
