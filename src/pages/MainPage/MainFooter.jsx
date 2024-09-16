@@ -279,6 +279,7 @@ const TipTitle = styled.p`
   overflow: hidden;
   word-wrap: break-word;
   z-index: 1;
+  white-space: pre-line;
 `;
 
 const DetailText = styled.p`
