@@ -17,7 +17,7 @@ import snackyellow from '../../assets/TestResultAssets/SnackYellow.png';
 import snackgreen from '../../assets/TestResultAssets/SnackGreen.png';
 import snackgray from '../../assets/TestResultAssets/SnackGray.png';
 
-import sirenicon from '../../assets/TestResultAssets/SirenIcon.png';
+import sirenicon from '../../assets/TestResultAssets/Siren.png';
 
 const processMealData = (mealData) => {
   if (!Array.isArray(mealData) || mealData.length < 2) {
