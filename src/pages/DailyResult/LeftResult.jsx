@@ -263,7 +263,8 @@ const MemoContainer = styled.div`
   border-radius: 15px;
   padding: 2.5rem 1.8rem;
   margin-top: 4rem;
-  border: 1px solid #aaa;
+  /* border: 1px solid #aaa; */
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
 const MemoTitle = styled.p`

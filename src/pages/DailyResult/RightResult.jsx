@@ -302,7 +302,7 @@ const MealSections = styled.div`
 `;
 
 const ResultDetailContainer = styled.div`
-  width: 60.6rem;
+  width: 64.6rem;
   height: 15.2rem;
   border-radius: 16px;
   background: #f4f1da;
@@ -394,7 +394,7 @@ const SnackDetailTopContainer = styled.div`
 `;
 
 const SnackResultContainer = styled.div`
-  width: 35.5rem;
+  width: 37.5rem;
   height: 15.2rem;
   border-radius: 16px;
   background: #f4f1da;
@@ -416,7 +416,7 @@ const SnackFoodResultDetailContainer = styled.div``;
 
 // 음료
 const DrinkResultContainer = styled.div`
-  width: 24rem;
+  width: 26rem;
   height: 15.2rem;
   border-radius: 16px;
   background: #f4f1da;
