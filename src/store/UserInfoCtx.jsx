@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from 'react';
 const UserInfoContext = createContext({
   userInfo: { userId: '', userName: '', userCheckupStatus: 'NOT_STARTED' },
   updateUserDefaultInfo: (id, name) => {},
-  updateUserTestInfo: (checkupStatus) => {},
+  updateUserTestInfo: (checkupStatus) => {}, 
 });
 
 export function UserInfoContextProvider({ children }) {
@@ -17,13 +17,11 @@ export function UserInfoContextProvider({ children }) {
   }, [userInfo]);
 
   function updateUserDefaultInfo(id, name) {
-    setUserInfo((prevState) => ({ ...prevState, userId: id, userName: name }));
+    setUserInfo(prevState => ({ ...prevState, userId: id, userName: name }));
   }
 
   function updateUserTestInfo(checkupStatus) {
-    setUserInfo((prevState) => ({ ...prevState, userCheckupStatus: checkupStatus }));
-  }
-
+    setUserInfo(prevState => ({...prevState, userCheckupStatus: checkupStatus}));
   const userInfoCtx = {
     userInfo,
     updateUserDefaultInfo,
