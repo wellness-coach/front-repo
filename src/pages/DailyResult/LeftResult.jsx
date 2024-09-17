@@ -137,7 +137,7 @@ function LeftResult({ data, date, setDate }) {
           <MemoDetailContainer>
             <MemoDetailTopContainer>
               <MemoDate>{format(date, 'MM.dd', { locale: koLocale })}</MemoDate>
-              <MemoDetail ref={memoRef} isoverflow="false">
+              <MemoDetail ref={memoRef} isoverflow={isMemoOverflow ? true : undefined}>
                 {memoContent}
               </MemoDetail>
             </MemoDetailTopContainer>
@@ -184,13 +184,14 @@ const ResultName = styled.p`
 const CalendarIcon = styled.img`
   width: 4.6rem;
   height: 4.4rem;
+  margin-top: 1rem;
 `;
 
 const CustomDateInput = styled.span`
   font-size: 3.5rem;
   font-weight: 700;
   padding: 0.5rem;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   display: inline-block;
   margin-left: 1rem;
 `;
@@ -218,7 +219,7 @@ const SpeedImg = styled.img`
 const SpeedLevelContainer = styled.div`
   width: 38.6rem;
   height: 6.7rem;
-  border-radius: 2rem;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: left;
@@ -260,10 +261,11 @@ const MemoContainer = styled.div`
   background-color: white;
   width: 44rem;
   height: 30.5rem;
-  border-radius: 1.5rem;
+  border-radius: 15px;
   padding: 2.5rem 1.8rem;
   margin-top: 4rem;
-  border: 1px solid #aaa;
+  /* border: 1px solid #aaa; */
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
 const MemoTitle = styled.p`
@@ -306,8 +308,8 @@ const MemoDetail = styled.p`
   position: relative;
   overflow: hidden;
 
-  ${(isoverflow) =>
-    isoverflow &&
+  ${(props) =>
+    props.isoverflow &&
     css`
       &::after {
         content: '';
@@ -325,7 +327,7 @@ const MemoDetail = styled.p`
 const MemoMoreButton = styled.div`
   width: 7.6rem;
   height: 2rem;
-  border-radius: 1.5rem;
+  border-radius: 15px;
   border: 1px solid #aaa;
   font-size: 1rem;
   font-weight: 500;

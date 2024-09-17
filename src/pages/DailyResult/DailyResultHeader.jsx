@@ -20,7 +20,7 @@ function DailyResultHeader() {
           onClick={() => navigate(`/main/${userInfo.userId}`)}
         />
         <LogoutButton onClick={() => navigate('/')}>
-          <LogoutText>로그 아웃</LogoutText>
+          <LogoutText>로그아웃</LogoutText>
           <LogoutImg src={Logout} alt="로그아웃" />
         </LogoutButton>
       </DietTestHeaderContainer>
@@ -50,7 +50,7 @@ const DietTestHeaderContainer = styled.div`
 const LogoutButton = styled.button`
   width: 14.5rem;
   height: 4rem;
-  border-radius: 3rem;
+  border-radius: 30px;
   border: 3px solid #f4f1da;
   background: #fff;
   display: flex;

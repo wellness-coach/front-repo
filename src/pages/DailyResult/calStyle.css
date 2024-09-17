@@ -9,6 +9,8 @@
 .react-datepicker {
   width: 31rem;
   border: none;
+  border-radius: 15px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 /* 달력 헤더 스타일 */
@@ -22,6 +24,8 @@
   font-weight: 700;
   background-color: white;
   border-bottom: none;
+  /* border-radius 확인 !!!!  */
+  border-radius: 15px;
   width: 31rem;
   box-sizing: border-box;
 }
@@ -58,7 +62,7 @@
   content: '';
   display: inline-block;
   border: solid black;
-  border-width: 0 0.4rem 0.4rem 0;
+  border-width: 0 4px 4px 0;
   padding: 0.5rem;
 }
 
@@ -89,7 +93,7 @@
 /* 요일 이름 스타일 */
 .react-datepicker__day-names {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 1fr); /* 7일을 균등한 칸으로 나누기 */
   gap: 0;
   border-bottom: none;
   width: 100%;
@@ -172,4 +176,5 @@
 .date-picker-container {
   display: flex;
   align-items: center;
+  justify-content: center;
 }

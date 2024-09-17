@@ -17,7 +17,7 @@ import snackyellow from '../../assets/TestResultAssets/SnackYellow.png';
 import snackgreen from '../../assets/TestResultAssets/SnackGreen.png';
 import snackgray from '../../assets/TestResultAssets/SnackGray.png';
 
-import sirenicon from '../../assets/TestResultAssets/SirenIcon.png';
+import sirenicon from '../../assets/TestResultAssets/Siren.png';
 
 const processMealData = (mealData) => {
   if (!Array.isArray(mealData) || mealData.length < 2) {
@@ -72,12 +72,12 @@ const getColorForScore = (score) => {
   return '#F15C5C';
 };
 
-// const renderDrinkSolutionMessage = (score) => {
-//   if (score === undefined) return '물을 자주 마셔보세요! 건강을 위한 좋은 습관입니다 :)';
-//   if (score >= 7) return '당 섭취를 줄이는데 좋은 음료예요.';
-//   if (score >= 4) return '건강한 음료와 번갈아 마셔보세요.';
-//   return '당분 섭취를 줄이기 위해 무가당 음료를 선택하세요.';
-// };
+const renderDrinkSolutionMessage = (score) => {
+  if (score === undefined) return '물을 자주 마셔보세요! 건강을 위한 좋은 습관입니다 :)';
+  if (score >= 7) return '당 섭취를 줄이는데 좋은 음료예요.';
+  if (score >= 4) return '건강한 음료와 번갈아 마셔보세요.';
+  return '당분 섭취를 줄이기 위해 무가당 음료를 선택하세요.';
+};
 
 const Siren = ({ type, data }) => {
   const [showTooltip, setShowTooltip] = useState(false);
@@ -130,8 +130,9 @@ const MealSection = ({ mealType, timeName, data }) => {
             renderSolutions([mealData[1].solution])
           ) : (
             <SolutionDetail>
-              '식사를 안하셨네요 :) 식사를 자주 거르면 신체에 필요한 에너지를 공급받지 못해 집중력이 떨어지고 신체
-              능력이 저하될 수 있어요. 끼니를 거른 뒤에는 균형있는 식사를 통해 영양분을 보충해주세요! '
+              식사를 안하셨네요 :) <br />
+              식사를 자주 거르면 신체에 필요한 에너지를 공급받지 못해 집중력이 떨어지고 신체 능력이 저하될 수 있어요.
+              끼니를 거른 뒤에는 균형있는 식사를 통해 영양분을 보충해주세요!
             </SolutionDetail>
           )}
         </MealSolutionDetail>
@@ -182,16 +183,16 @@ const DrinkSection = ({ drinkData }) => {
           {score === undefined ? null : renderSirens(processedDrinkData)}
           <Score score={score}>{score === undefined ? '' : `${score}점`}</Score>
         </DrinkDetailTopContainer>
-        <DrinkSolutionDetail>
+        {/* <DrinkSolutionDetail>
           {drinkData[1]?.solution ? (
             renderSolutions([drinkData[1].solution])
           ) : (
             <SolutionDetail>물을 자주 마셔보세요! 건강을 위한 좋은 습관입니다 :)</SolutionDetail>
           )}
-        </DrinkSolutionDetail>{' '}
-        {/* <DrinkSolutionDetail>
+        </DrinkSolutionDetail>{' '} */}
+        <DrinkSolutionDetail>
           <SolutionDetail>{renderDrinkSolutionMessage(score)}</SolutionDetail>{' '}
-        </DrinkSolutionDetail> */}
+        </DrinkSolutionDetail>
       </DrinkFoodResultDetailContainer>
     </DrinkResultContainer>
   );
@@ -200,7 +201,10 @@ const DrinkSection = ({ drinkData }) => {
 const RightResult = ({ data }) => {
   return !data ? (
     <MenuResultContainer>
-      <SolutionDetail>해당 날짜는 진단을 하지 않았습니다. 다른 날짜를 선택해주세요 :) </SolutionDetail>
+      <NoneTest>
+        해당 날짜는 진단을 하지 않았습니다. <br />
+        다른 날짜를 선택해주세요 :){' '}
+      </NoneTest>
     </MenuResultContainer>
   ) : (
     <MenuResultContainer>
@@ -295,6 +299,12 @@ const SolutionDetail = styled.div`
   color: black;
 `;
 
+const NoneTest = styled.p`
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 2rem;
+  text-align: center;
+`;
 // 아침, 점심, 저녁
 const MealSections = styled.div`
   display: flex;
@@ -302,9 +312,9 @@ const MealSections = styled.div`
 `;
 
 const ResultDetailContainer = styled.div`
-  width: 60.6rem;
+  width: 64.6rem;
   height: 15.2rem;
-  border-radius: 1.6rem;
+  border-radius: 16px;
   background: #f4f1da;
   box-shadow: 0rem 0.4rem 0.4rem 0rem rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(2.5rem);
@@ -318,7 +328,7 @@ const TimeName = styled.p`
   background-color: #fff;
   width: 10.8rem;
   height: 2.8rem;
-  border-radius: 2rem;
+  border-radius: 20px;
   font-size: 1.8rem;
   font-weight: 700;
   display: flex;
@@ -352,7 +362,7 @@ const DetailTopContainer = styled.div`
 
 const MealSolutionDetail = styled.div`
   width: 40rem;
-  height: 5rem;
+  height: 7rem;
   overflow-y: auto;
 `;
 
@@ -372,7 +382,7 @@ const ServeTimeName = styled.div`
   background-color: #fff;
   width: 7.7rem;
   height: 2.8rem;
-  border-radius: 2rem;
+  border-radius: 20px;
   font-size: 1.8rem;
   font-weight: 700;
   display: flex;
@@ -394,11 +404,11 @@ const SnackDetailTopContainer = styled.div`
 `;
 
 const SnackResultContainer = styled.div`
-  width: 35.5rem;
+  width: 37.5rem;
   height: 15.2rem;
-  border-radius: 1.6rem;
+  border-radius: 16px;
   background: #f4f1da;
-  box-shadow: 0rem 0.4rem 0.4rem 0rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(2.5rem);
   display: flex;
   flex-direction: row;
@@ -416,11 +426,11 @@ const SnackFoodResultDetailContainer = styled.div``;
 
 // 음료
 const DrinkResultContainer = styled.div`
-  width: 24rem;
+  width: 26rem;
   height: 15.2rem;
-  border-radius: 1.6rem;
+  border-radius: 16px;
   background: #f4f1da;
-  box-shadow: 0rem 0.4rem 0.4rem 0rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(2.5rem);
   display: flex;
   flex-direction: row;
@@ -430,6 +440,7 @@ const DrinkResultContainer = styled.div`
 
 const DrinkDetailTopContainer = styled.div`
   width: 10rem;
+  height: 5rem;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -437,9 +448,9 @@ const DrinkDetailTopContainer = styled.div`
 `;
 
 const DrinkSolutionDetail = styled.div`
-  width: 9rem;
+  width: 12rem;
   height: 5rem;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 `;
 
 const DrinkFoodResultDetailContainer = styled.div``;
