@@ -15,6 +15,8 @@ function MainFooter({ onOpenTip, data, refreshData }) {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { userInfo } = useContext(UserInfoContext);
   const [renderedTipId, setRenderedTipId] = useState(0);
+  const [isLeftDetailTextHovered, setIsLeftDetailTextHovered] = useState(false);
+  const [isRightDetailTextHovered, setIsRightDetailTextHovered] = useState(false);
 
   const handleGoToLeftTip = () => {
     if (renderedTipId > 0) setRenderedTipId(renderedTipId - 1);
@@ -95,28 +97,42 @@ function MainFooter({ onOpenTip, data, refreshData }) {
             </ControlActionContainer>
           </TipListHeader>
           <TipListBody>
-            <TipBox key={renderedTipId} onClick={() => onOpenTip(renderedTipId)}>
+            <TipBox
+              key={renderedTipId}
+              onClick={() => onOpenTip(renderedTipId)}
+              onMouseOver={() => setIsLeftDetailTextHovered(true)}
+              onMouseOut={() => setIsLeftDetailTextHovered(false)}
+            >
               <TipImage src={`${Tips[renderedTipId].tipImgSrc}`} alt="팁 이미지" />
               <RecipeText>{Tips[renderedTipId].category}</RecipeText>
               <TipTitle>{Tips[renderedTipId].title}</TipTitle>
-              <DetailText>
-                <span>자세히 보기</span>
-                <img src={RightArrowImg} alt="자세히 보기" />
-              </DetailText>
+              {isLeftDetailTextHovered && (
+                <DetailText>
+                  <span>자세히 보기</span>
+                  <img src={RightArrowImg} alt="자세히 보기" />
+                </DetailText>
+              )}
             </TipBox>
-            <TipBox key={renderedTipId + 1} onClick={() => onOpenTip(renderedTipId + 1)}>
+            <TipBox
+              key={renderedTipId + 1}
+              onClick={() => onOpenTip(renderedTipId + 1)}
+              onMouseEnter={() => setIsRightDetailTextHovered(true)}
+              onMouseLeave={() => setIsRightDetailTextHovered(false)}
+            >
               <TipImage src={`${Tips[renderedTipId + 1].tipImgSrc}`} alt="팁 이미지" />
               <RecipeText>{Tips[renderedTipId + 1].category}</RecipeText>
               <TipTitle>{Tips[renderedTipId + 1].title}</TipTitle>
-              <DetailText>
-                <span>자세히 보기</span>
-                <img src={RightArrowImg} alt="자세히 보기" />
-              </DetailText>
+              {isRightDetailTextHovered && (
+                <DetailText>
+                  <span>자세히 보기</span>
+                  <img src={RightArrowImg} alt="자세히 보기" />
+                </DetailText>
+              )}
             </TipBox>
           </TipListBody>
         </TipListContainer>
         <RecommendationListContainer>
-          <RecommendationListHeader>{userInfo.userName}님을 위한 맞춤 추천 제품</RecommendationListHeader>
+          <RecommendationListHeader>{userInfo.userName}님이 스크랩한 추천 제품</RecommendationListHeader>
           <RecommendationListBody>
             <ListLabel>
               <LabelProductName>제품명</LabelProductName>
@@ -143,7 +159,7 @@ function MainFooter({ onOpenTip, data, refreshData }) {
                   </ListItem>
                 ))
               ) : (
-                <p>아직 추천 제품이 없습니다.</p>
+                <p>아직 스크랩한 제품이 없습니다.</p>
               )}
             </ListItemContainer>
           </RecommendationListBody>
@@ -215,6 +231,11 @@ const TipBox = styled.div`
   height: 100%;
   position: relative;
   border-radius: 18px;
+  overflow: hidden;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const TipImage = styled.img`
@@ -224,11 +245,11 @@ const TipImage = styled.img`
   top: 0;
   left: 0;
   z-index: 0;
-  filter: brightness(0.3);
-  backdrop-filter: blur(5px);
+  filter: brightness(0.3) blur(1px);
+  transition: all 0.3s ease-in-out;
 
   &:hover {
-    filter: brightness(0.8);
+    filter: brightness(0.6);
   }
 `;
 
@@ -254,21 +275,24 @@ const TipTitle = styled.p`
   font-weight: 800;
   line-height: normal;
   width: 25rem;
-  height: 10rem;
+  height: 6rem;
   overflow: hidden;
   word-wrap: break-word;
   z-index: 1;
+  white-space: pre-line;
 `;
 
 const DetailText = styled.p`
   position: absolute;
   left: 2.8rem;
   top: 28.5rem;
-  width: 10rem;
+  width: 9.6rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   z-index: 1;
+  cursor: pointer;
+  transition: all 0.6s ease-in-out;
 
   & span {
     color: #fff;
@@ -276,6 +300,10 @@ const DetailText = styled.p`
     font-style: normal;
     font-weight: 800;
     line-height: normal;
+  }
+  & img {
+    width: 2rem;
+    padding-top: 0.3rem;
   }
 `;
 

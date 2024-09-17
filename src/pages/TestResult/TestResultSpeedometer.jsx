@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import InfoButton from '../../assets/TestResultAssets/InfoButton.png';
+import InfoButton from '../../assets/DietTestAssets/InfoButton.png';
 import TestInfoBox from '../../assets/DietTestAssets/TestInfoBox.png';
-import LowSpeed from '../../assets/TestResultAssets/LowSpeed.png';
-import MiddleSpeed from '../../assets/TestResultAssets/MiddleSpeed.png';
-import HighSpeed from '../../assets/TestResultAssets/HighSpeed.png';
-import NoSpeed from '../../assets/TestResultAssets/NoSpeed.png';
+import LowSpeed from '../../assets/DailyResultImg/SpeedGreen.png';
+import MiddleSpeed from '../../assets/DailyResultImg/SpeedYellow.png';
+import HighSpeed from '../../assets/DailyResultImg/SpeedRed.png';
+import NoSpeed from '../../assets/DailyResultImg/NoSpeed.png';
 import BottomArrow from '../../assets/TestResultAssets/BottomArrow.png';
 import GreenBox from '../../assets/TestResultAssets/GreenBox.png';
 import { useState, useContext } from 'react';
@@ -13,10 +13,6 @@ import UserInfoContext from '../../store/UserInfoCtx';
 function TestResultSpeedometer({ data }) {
   const { userInfo } = useContext(UserInfoContext);
   const [isInfoRendered, setIsInfoRendered] = useState(false);
-
-  const handleRenderInfo = () => {
-    setIsInfoRendered(!isInfoRendered);
-  };
 
   const renderSpeedometer = () => {
     if (!data) return <Speedometer src={NoSpeed} alt="노화 속도계 - No Speed" />;
@@ -72,7 +68,7 @@ function TestResultSpeedometer({ data }) {
   return (
     <ResultSpeedometerContainer>
       {isInfoRendered && <TestInfoBoxImg src={TestInfoBox} alt="검사 정보 글" />}
-      <TestExplanationBtn onClick={handleRenderInfo}>
+      <TestExplanationBtn onMouseOver={() => setIsInfoRendered(true)} onMouseLeave={() => setIsInfoRendered(false)}>
         <InfoButtonImg src={InfoButton} alt="검사 정보 버튼" />
       </TestExplanationBtn>
 
@@ -82,13 +78,25 @@ function TestResultSpeedometer({ data }) {
       <UserSpeedometerContainer>
         <GreenBoxImg src={GreenBox} alt="초록색 박스" />
         {data.recentAgingType === null ? (
-          <GreenBoxText>매일매일 <br />검사해보세요!</GreenBoxText>
+          <GreenBoxText>
+            매일매일 <br />
+            검사해보세요!
+          </GreenBoxText>
         ) : scaleAgingType(data.recentAgingType) > scaleAgingType(data.todayAgingType) ? (
-          <GreenBoxText>어제보다 노화속도가 <br/>느려졌어요!</GreenBoxText>
+          <GreenBoxText>
+            어제보다 노화속도가 <br />
+            느려졌어요!
+          </GreenBoxText>
         ) : scaleAgingType(data.recentAgingType) < scaleAgingType(data.todayAgingType) ? (
-          <GreenBoxText>어제보다 노화속도가 <br />빨라졌어요!</GreenBoxText>
+          <GreenBoxText>
+            어제보다 노화속도가 <br />
+            빨라졌어요!
+          </GreenBoxText>
         ) : (
-          <GreenBoxText>어제와 노화속도가 <br />바뀌지 않았어요!</GreenBoxText>
+          <GreenBoxText>
+            어제와 노화속도가 <br />
+            바뀌지 않았어요!
+          </GreenBoxText>
         )}
 
         {renderSpeedometer()}
@@ -208,7 +216,7 @@ const Level = styled.p`
   color: ${(props) => {
     if (props.level === 'PROPER') return '#78A55A';
     if (props.level === 'CAUTION') return '#D8C317';
-    if (props.level === 'DANGER') return '#D35F4F';
+    if (props.level === 'DANGER') return '#F15C5C';
     else {
       return '#6c757d';
     }
@@ -225,4 +233,3 @@ const BottomArrowImg = styled.img`
   width: 29.5rem;
   height: 9rem;
 `;
-

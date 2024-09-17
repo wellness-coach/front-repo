@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { format } from 'date-fns';
 import { ko as koLocale } from 'date-fns/locale';
-import memocloseicon from '../../assets/img/Close.png';
-
+import memocloseicon from '../../assets/DailyResultImg/Close.png';
 function MemoModal({ setIsModalOpen, selectedDate, memoContent }) {
   const closeModal = () => setIsModalOpen(false);
 
@@ -43,7 +42,7 @@ const Overlay = styled.div`
 const MemoModalContainer = styled.div`
   width: 71rem;
   height: 67rem;
-  border-radius: 1.8rem;
+  border-radius: 18px;
   box-shadow: 0px 6px 6px 0px rgba(0, 0, 0, 0.25);
   background-color: #fff;
   padding: 2rem;

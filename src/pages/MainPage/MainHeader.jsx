@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import MainBackground from '../../assets/MainPageAssets/MainBackground.png';
-import MainLogo from '../../assets/MainPageAssets/MainLogo.png';
-import Logout from '../../assets/MainPageAssets/Logout.png';
+import MainLogo from '../../assets/LoginImg/LoginLogo.png';
+import Logout from '../../assets/HeaderImg/Logout.png';
 import AngleBracket from '../../assets/MainPageAssets/AngleBracket.png';
-import LowSpeed from '../../assets/MainPageAssets/LowSpeed.png';
-import MiddleSpeed from '../../assets/MainPageAssets/MiddleSpeed.png';
-import HighSpeed from '../../assets/MainPageAssets/HighSpeed.png';
-import NoSpeed from '../../assets/MainPageAssets/NoSpeed.png';
+import LowSpeed from '../../assets/DailyResultImg/SpeedGreen.png';
+import MiddleSpeed from '../../assets/DailyResultImg/SpeedYellow.png';
+import HighSpeed from '../../assets/DailyResultImg/SpeedRed.png';
+import NoSpeed from '../../assets/DailyResultImg/NoSpeed.png';
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserInfoContext from '../../store/UserInfoCtx';
@@ -14,7 +14,8 @@ import UserInfoContext from '../../store/UserInfoCtx';
 function MainHeader({ data }) {
   const navigate = useNavigate();
   const { userInfo } = useContext(UserInfoContext);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isLeftHovered, setIsLeftHovered] = useState(false);
+  const [isRightHovered, setIsRightHovered] = useState(false);
 
   const renderSpeedometer = () => {
     if (!data) return <Speedometer src={NoSpeed} alt="노화 속도계 - No Speed" />;
@@ -50,7 +51,7 @@ function MainHeader({ data }) {
     }
   };
 
-  console.log(userInfo.userCheckupStatus)
+  console.log(userInfo.userCheckupStatus);
   console.log(userInfo.userName);
 
   return (
@@ -67,24 +68,22 @@ function MainHeader({ data }) {
         <UserInfoContainer>
           <InfoContainer_left
             onClick={() => navigate('/daily_result')}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            onMouseEnter={() => setIsLeftHovered(true)}
+            onMouseLeave={() => setIsLeftHovered(false)}
           >
             {renderSpeedometer()}
-            <>
-              {!isHovered ? (
-                <LevelBar>
-                  <LevelLabel>
-                    지난 주
-                    <br />
-                    건강 진단
-                  </LevelLabel>
-                  <Level level={data ? data.lastWeekAgingType : ''}>{translateLevel()} 단계</Level>
-                </LevelBar>
-              ) : (
-                <GoToReport>일별 리포트 보러가기</GoToReport>
-              )}
-            </>
+            <TransitionWrapper>
+              <LevelBar isHovered={isLeftHovered}>
+                <LevelLabel>
+                  지난 주
+                  <br />
+                  건강 진단
+                </LevelLabel>
+                <Level level={data ? data.lastWeekAgingType : ''}>{translateLevel()} 단계</Level>
+              </LevelBar>
+
+              <GoToReport isHovered={isLeftHovered}>일별 리포트 보러가기</GoToReport>
+            </TransitionWrapper>
           </InfoContainer_left>
           <InfoContainer_right>
             <MainText>
@@ -94,6 +93,8 @@ function MainHeader({ data }) {
               onClick={
                 userInfo.userCheckupStatus === 'COMPLETED' ? () => navigate('/test_result') : () => navigate('/test')
               }
+              onMouseEnter={() => setIsRightHovered(true)}
+              onMouseLeave={() => setIsRightHovered(false)}
             >
               {userInfo.userCheckupStatus === 'NOT_STARTED' ? (
                 <p>오늘의 식단 진단하기</p>
@@ -102,9 +103,11 @@ function MainHeader({ data }) {
               ) : (
                 <p>오늘의 결과 보러가기</p>
               )}
-              <p>
-                <AngleBracketImg src={AngleBracket} alt="꺽쇠" />
-              </p>
+              {isRightHovered && (
+                <p>
+                  <AngleBracketImg src={AngleBracket} alt="꺽쇠" />
+                </p>
+              )}
             </GoToTestButton>
           </InfoContainer_right>
         </UserInfoContainer>
@@ -181,11 +184,18 @@ const UserInfoContainer = styled.div`
 const InfoContainer_left = styled.div`
   width: 38.6rem;
   margin-right: 7.7rem;
+  transition: all 0.5s ease-in-out;
 `;
 
 const Speedometer = styled.img`
   width: 100%;
   height: 18.2rem;
+  cursor: pointer;
+`;
+
+const TransitionWrapper = styled.div`
+  position: relative;
+  height: 6.7rem;
 `;
 
 const LevelBar = styled.button`
@@ -200,6 +210,14 @@ const LevelBar = styled.button`
   align-items: center;
   justify-content: center;
   gap: 4rem;
+  cursor: pointer;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  transition: all 0.2s ease-in-out;
+  opacity: ${(props) => (props.isHovered ? 0 : 1)};
+  
+  pointer-events: ${(props) => (props.isHovered ? 'none' : 'auto')};
 `;
 
 const LevelLabel = styled.span`
@@ -243,6 +261,14 @@ const GoToReport = styled.p`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.2s ease-in-out;
+  opacity: ${(props) => (props.isHovered ? 1 : 0)};
+  
+  pointer-events: ${(props) => (props.isHovered ? 'auto' : 'none')};
 `;
 
 const InfoContainer_right = styled.div`
@@ -271,12 +297,16 @@ const GoToTestButton = styled.button`
   box-shadow: 5.714px 5.714px 4.571px 0px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0rem 4rem;
+  padding-left: 6.5rem;
+  transition: padding 0.3s ease-in-out;
+
+  &:hover {
+    padding-left: 5rem;
+  }
 
   & p {
     color: #000;
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
@@ -286,5 +316,6 @@ const GoToTestButton = styled.button`
 const AngleBracketImg = styled.img`
   width: 3rem;
   height: 3rem;
-  padding-top: 0.6rem;
+  padding-top: 0.7rem;
+  margin-left: 1rem;
 `;

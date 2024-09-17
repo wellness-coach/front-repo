@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import WellnessCoachTitle from '../../assets/TestResultAssets/WellnessCoachTitle.png';
-import LogoPicture from '../../assets/TestResultAssets/LogoPicture.png';
-import Logout from '../../assets/TestResultAssets/Logout.png';
+import WellnessCoachTitle from '../../assets/HeaderImg/WellnessCoachTitle.png';
+import LogoPicture from '../../assets/HeaderImg/LogoPicture.png';
+import Logout from '../../assets/HeaderImg/Logout.png';
 import UserInfoContext from '../../store/UserInfoCtx';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +15,11 @@ function TestResultHeader() {
     <DietTestHeaderWrapper>
       <DietTestHeaderContainer>
         <LogoPictureImg src={LogoPicture} alt="로그 그림" />
-        <WellnessCoachTitleImg src={WellnessCoachTitle} alt="타이틀" onClick={() => navigate(`/main/${userInfo.userId}`)}/>
+        <WellnessCoachTitleImg
+          src={WellnessCoachTitle}
+          alt="타이틀"
+          onClick={() => navigate(`/main/${userInfo.userId}`)}
+        />
         <LogoutButton onClick={() => navigate('/')}>
           <LogoutText>로그아웃</LogoutText>
           <LogoutImg src={Logout} alt="로그아웃" />
@@ -41,7 +45,7 @@ const DietTestHeaderContainer = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   padding-bottom: 1.3rem;
-  width: 136.2rem;      
+  width: 136.2rem;
 `;
 
 const LogoutButton = styled.button`

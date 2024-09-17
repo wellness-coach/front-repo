@@ -46,6 +46,7 @@ function MainPage() {
         },
       });
 
+      console.log('responseData: ', response)
       setFetchedData(response.data);
       updateUserDefaultInfo(userId, response.data.name);
     } catch (error) {
@@ -57,12 +58,13 @@ function MainPage() {
     getMainPageData();
   }, []);
 
-  console.log(fetchedData);
+  
+  console.log('fetchedData: ', fetchedData);
 
   return (
     <>
       {isModalOpen && (
-        <Modal key={Tips[currentTipIdx].id} open={isModalOpen} onClose={isModalOpen ? handleCloseModal : null}>
+        <Modal key={Tips[currentTipIdx].id} open={isModalOpen} onClose={handleCloseModal}>
           <ModalCategory>{Tips[currentTipIdx].category}</ModalCategory>
           <ModalTitle>{Tips[currentTipIdx].title}</ModalTitle>
           <ModalBody>
@@ -111,32 +113,23 @@ const ModalTitle = styled.p`
   font-weight: 800;
   line-height: normal;
   margin-bottom: 3rem;
-  overflow: hidden;
-  word-wrap: break-word;
-  word-break: keep-all;
   width: 90%;
 `;
 
 const ModalBody = styled.div`
   padding-left: 1rem;
-  max-height: 50rem;
-  scrollbar-width: thin;
-  overflow-y: auto;
+  max-height: 40rem;
+  overflow-y: scroll;
   padding-bottom: 2rem;
 
   &::-webkit-scrollbar {
-    width: 12px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #ebe6d2;
-    border-radius: 10px;
-  }
+    width: 1rem;
+}
 
   &::-webkit-scrollbar-thumb {
-    background-color: #a6cd7e;
-    border-radius: 10px;
-    border: 3px solid #ebe6d2;
+    background: #bbbaba; 
+    border: 2px solid #efefef; 
+    border-radius: 12px 12px 12px 12px;
   }
 `;
 

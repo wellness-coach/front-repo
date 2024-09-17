@@ -9,10 +9,6 @@ function DietTestBody({ tempInputs }) {
   const { userInfo } = useContext(UserInfoContext);
   const [isInfoRendered, setIsInfoRendered] = useState(false);
 
-  const handleShowInfo = () => {
-    setIsInfoRendered(!isInfoRendered);
-  };
-
   return (
     <DietTestBodyContainer>
       <ExplanationContainer>
@@ -29,7 +25,7 @@ function DietTestBody({ tempInputs }) {
           </GrayBox>
         </ExplanationTextContainer>
         {isInfoRendered && <TestInfoBoxImg src={TestInfoBox} alt="정보 글" />}
-        <TestExplanationButton type="button" onClick={handleShowInfo}>
+        <TestExplanationButton type="button" onMouseOver={() => setIsInfoRendered(true)} onMouseLeave={() => setIsInfoRendered(false)}>
           <InfoButtonImg src={InfoButton} alt="검사 정보 버튼" />
         </TestExplanationButton>
       </ExplanationContainer>

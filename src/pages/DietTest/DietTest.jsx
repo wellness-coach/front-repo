@@ -12,8 +12,8 @@ function DietTest() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { userInfo, updateUserTestInfo } = useContext(UserInfoContext);
   const navigate = useNavigate();
-    const date = new Date().toISOString().split('T')[0];
-    // const date = "2024-01-21";
+  const date = new Date().toISOString().split('T')[0];
+  // const date = "2024-01-21";
 
   const [isLoading, setIsLoading] = useState(false);
   const [tempInputs, setTempInputs] = useState({ mealResponses: [], memo: '' });
@@ -23,7 +23,7 @@ function DietTest() {
       const response = await axios.get(`${BASE_URL}/checkup/get`, {
         params: {
           userId: userInfo.userId,
-          date: date, 
+          date: date,
         },
       });
       console.log('임시저장 get하는거 테스트', response.data);
@@ -35,7 +35,7 @@ function DietTest() {
 
   useEffect(() => {
     if (userInfo.userCheckupStatus === 'IN_PROGRESS') {
-      getTempInputValues()
+      getTempInputValues();
     }
   }, [userInfo.userCheckupStatus]);
 
@@ -54,13 +54,13 @@ function DietTest() {
     try {
       const response = await axios.post(`${BASE_URL}/checkup/save`, {
         userId: userInfo.userId,
-        date: date, 
+        date: date,
         meals: filteredInputData,
         memo: memoValues,
       });
       console.log(response);
       updateUserTestInfo(response.data.checkupStatus);
-      alert("임시 저장 되었습니다!");
+      alert('임시 저장 되었습니다!');
     } catch (error) {
       console.log(error);
     }
@@ -94,7 +94,7 @@ function DietTest() {
     try {
       const response = await axios.post(`${BASE_URL}/checkup/submit`, {
         userId: userInfo.userId,
-        date: date, 
+        date: date,
         meals: filteredInputData,
         memo: memoValues,
       });
@@ -126,8 +126,6 @@ function DietTest() {
 }
 
 export default DietTest;
-
-
 
 const DietTestContainer = styled.div`
   width: 100vw;

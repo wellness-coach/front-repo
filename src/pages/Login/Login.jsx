@@ -14,9 +14,9 @@ function Login() {
     checkAuthStatus();
   }, []);
 
-  const onNaverLogin = () => {
-    window.location.href = `${BASE_URL}/oauth2/authorization/naver`;
-  };
+  // const onNaverLogin = () => {
+  //   window.location.href = `${BASE_URL}/oauth2/authorization/naver`;
+  // };
 
   const onGoogleLogin = () => {
     window.location.href = `${BASE_URL}/oauth2/authorization/google`;
@@ -43,10 +43,10 @@ function Login() {
           </ServiceIntroContainer>
 
           <LoginFormContainer>
-            <LoginToNaverContainer onClick={onNaverLogin}>
+            {/* <LoginToNaverContainer onClick={onNaverLogin}>
               <NaverImg src={naverimg} alt="네이버 로그인" />
               <LoginM>네이버로 로그인</LoginM>
-            </LoginToNaverContainer>
+            </LoginToNaverContainer> */}
 
             <LoginToGoogleContainer onClick={onGoogleLogin}>
               <GoogleImg src={googleimg} alt="구글 계정으로 로그인" />
@@ -111,7 +111,7 @@ const LoginToNaverContainer = styled.button`
   background-color: #45b649;
   width: 35.6rem;
   height: 4.4rem;
-  border-radius: 1.5rem;
+  border-radius: 15px;
   display: flex;
   align-items: center;
   margin-bottom: 1.2rem;
@@ -122,7 +122,7 @@ const LoginToGoogleContainer = styled.button`
   background-color: #fff;
   width: 35.6rem;
   height: 4.4rem;
-  border-radius: 1.5rem;
+  border-radius: 15px;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -139,5 +139,3 @@ const GoogleImg = styled.img`
   height: 2.1rem;
   margin: 1rem 1.2rem 1rem 1.9rem;
 `;
-
-

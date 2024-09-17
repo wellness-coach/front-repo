@@ -7,7 +7,7 @@ import shadowicon from '../../assets/LoadingAssets/Shadow.png';
 import UserInfoContext from '../../store/UserInfoCtx';
 
 function Loading() {
-const {userInfo} = useContext(UserInfoContext);
+  const { userInfo } = useContext(UserInfoContext);
 
   return (
     <>
@@ -115,7 +115,7 @@ const MovingBar = styled.div`
   top: 0;
   left: 0;
   height: 100%;
-  border-radius: 3rem;
+  border-radius: 30px;
   background: #e47f69;
   animation: ${moveRight} 20s forwards;
   animation-timing-function: linear;
