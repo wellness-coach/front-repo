@@ -184,6 +184,7 @@ const ResultName = styled.p`
 const CalendarIcon = styled.img`
   width: 4.6rem;
   height: 4.4rem;
+  margin-top: 1rem;
 `;
 
 const CustomDateInput = styled.span`
