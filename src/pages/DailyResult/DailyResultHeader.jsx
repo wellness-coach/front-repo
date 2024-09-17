@@ -20,7 +20,7 @@ function DailyResultHeader() {
           onClick={() => navigate(`/main/${userInfo.userId}`)}
         />
         <LogoutButton onClick={() => navigate('/')}>
-          <LogoutText>로그아웃</LogoutText>
+          <LogoutText>로그 아웃</LogoutText>
           <LogoutImg src={Logout} alt="로그아웃" />
         </LogoutButton>
       </DietTestHeaderContainer>
