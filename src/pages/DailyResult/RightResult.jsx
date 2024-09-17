@@ -130,8 +130,9 @@ const MealSection = ({ mealType, timeName, data }) => {
             renderSolutions([mealData[1].solution])
           ) : (
             <SolutionDetail>
-              '식사를 안하셨네요 :) 식사를 자주 거르면 신체에 필요한 에너지를 공급받지 못해 집중력이 떨어지고 신체
-              능력이 저하될 수 있어요. 끼니를 거른 뒤에는 균형있는 식사를 통해 영양분을 보충해주세요! '
+              식사를 안하셨네요 :) <br />
+              식사를 자주 거르면 신체에 필요한 에너지를 공급받지 못해 집중력이 떨어지고 신체 능력이 저하될 수 있어요.
+              끼니를 거른 뒤에는 균형있는 식사를 통해 영양분을 보충해주세요!
             </SolutionDetail>
           )}
         </MealSolutionDetail>
@@ -200,7 +201,10 @@ const DrinkSection = ({ drinkData }) => {
 const RightResult = ({ data }) => {
   return !data ? (
     <MenuResultContainer>
-      <SolutionDetail>검사를 하지 않았습니다.</SolutionDetail>
+      <NoneTest>
+        해당 날짜는 진단을 하지 않았습니다. <br />
+        다른 날짜를 선택해주세요 :){' '}
+      </NoneTest>
     </MenuResultContainer>
   ) : (
     <MenuResultContainer>
@@ -295,6 +299,12 @@ const SolutionDetail = styled.div`
   color: black;
 `;
 
+const NoneTest = styled.p`
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 2rem;
+  text-align: center;
+`;
 // 아침, 점심, 저녁
 const MealSections = styled.div`
   display: flex;
@@ -352,7 +362,7 @@ const DetailTopContainer = styled.div`
 
 const MealSolutionDetail = styled.div`
   width: 40rem;
-  height: 5rem;
+  height: 7rem;
   overflow-y: auto;
 `;
 
