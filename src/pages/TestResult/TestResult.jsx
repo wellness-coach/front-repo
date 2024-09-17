@@ -4,11 +4,12 @@ import FullBookmarkImg from '../../assets/MainPageAssets/FullBookmark.png';
 import TestResultHeader from './TestResultHeader';
 import TestResultSpeedometer from './TestResultSpeedometer';
 import TestResultBody from './TestResultBody';
+import ResultDetailSection from './ResultDetailSection';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import UserInfoContext from '../../store/UserInfoCtx';
 import axios from 'axios';
-import Modal from '../UI/Modal';
+import ResultModal from '../UI/ResultModal';
 
 function TestResult() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -109,57 +110,64 @@ function TestResult() {
   return (
     <>
       {isModalOpen && renderedData && renderedData.meals && renderedData.meals[currentMealType] && (
-        <Modal key={currentMealType} open={isModalOpen} onClose={handleCloseModal}>
-          <ModalTitle>추천 더보기</ModalTitle>
-          {renderedData.meals[currentMealType].some((meal) => meal.productResponse) ? (
-            <>
-              <ModalContent>
-                {userInfo.userName}님의 {translateMealType()}식단 분석해본 결과,
-                <br />
-                {renderedData.meals[currentMealType].map((meal, index) =>
-                  meal.productResponse ? (
-                    <div key={index}>
-                      {meal.productResponse.targetProductName}에 대한 대체 제품으로<span> </span>
-                      {meal.productResponse.productName}
-                      <span> </span>을/를 추천드려요
-                    </div>
-                  ) : null,
-                )}
-              </ModalContent>
-              <ModalItemContainer>
-                {renderedData.meals[currentMealType].map((meal, index) =>
-                  meal.productResponse ? (
-                    <ModalItem key={index}>
-                      <ModalItemText>
-                        <p>{meal.productResponse.productName}</p>
-                        <a href={meal.productResponse.productLink}>제품 보러가기</a>
-                      </ModalItemText>
+        <ResultModal key={currentMealType} open={isModalOpen} onClose={handleCloseModal}>
+          <ScrollSection>
+            <ResultDetailSection data={renderedData} mealType={currentMealType} timeName={translateMealType()} />
+            <RecommendationContainer>
+              <ModalTitle>추천 더보기</ModalTitle>
+              {renderedData.meals[currentMealType].some((meal) => meal.productResponse) ? (
+                <>
+                  <ModalContent>
+                    {userInfo.userName}님의 {translateMealType()}식단을 분석해본 결과,
+                    <br />
+                    {renderedData.meals[currentMealType].map((meal, index) =>
+                      meal.productResponse ? (
+                        <div key={index}>
+                          <span>{meal.productResponse.targetProductName}</span>에 대한 대체 제품으로&nbsp;
+                          <span>{meal.productResponse.productName}</span>을/를 추천드려요
+                        </div>
+                      ) : null,
+                    )}
+                  </ModalContent>
+                  <ModalItemContainer>
+                    {renderedData.meals[currentMealType].map((meal, index) =>
+                      meal.productResponse ? (
+                        <ModalItem key={index}>
+                          <ModalItemText>
+                            <p>{meal.productResponse.productName}</p>
+                            <a href={meal.productResponse.productLink}>제품 보러가기 ❯ </a>
+                          </ModalItemText>
 
-                      <ItemScrapBtn
-                        type="button"
-                        onClick={
-                          meal.productResponse.scrap
-                            ? () => handleDeleteScrap(meal.productResponse.productId)
-                            : () => handleAddScrap(meal.productResponse.productId)
-                        }
-                      >
-                        <ItemScrap src={meal.productResponse.scrap ? FullBookmarkImg : EmptyBookmarkImg} alt="북마크" />
-                      </ItemScrapBtn>
-                    </ModalItem>
-                  ) : null,
-                )}
-              </ModalItemContainer>
-            </>
-          ) : (
-            <ModalContent>추천 제품이 없습니다</ModalContent>
-          )}
-        </Modal>
+                          <ItemScrapBtn
+                            type="button"
+                            onClick={
+                              meal.productResponse.scrap
+                                ? () => handleDeleteScrap(meal.productResponse.productId)
+                                : () => handleAddScrap(meal.productResponse.productId)
+                            }
+                          >
+                            <ItemScrap
+                              src={meal.productResponse.scrap ? FullBookmarkImg : EmptyBookmarkImg}
+                              alt="북마크"
+                            />
+                          </ItemScrapBtn>
+                        </ModalItem>
+                      ) : null,
+                    )}
+                  </ModalItemContainer>
+                </>
+              ) : (
+                <ModalContent>추천 제품이 없습니다</ModalContent>
+              )}
+            </RecommendationContainer>
+          </ScrollSection>
+        </ResultModal>
       )}
       {renderedData && (
         <TestResultContainer>
           <TestResultHeader />
           <TestResultSpeedometer data={renderedData} />
-          <TestResultBody fetchedData={renderedData} onOpenRecommendation={handleOpenModal} />
+          <TestResultBody fetchedData={renderedData} onOpenDetailModal={handleOpenModal} />
           <SubmitBtnWrapper>
             <SubmitBtn onClick={() => navigate(`/main/${userInfo.userId}`)}>완료하기</SubmitBtn>
           </SubmitBtnWrapper>
@@ -179,8 +187,36 @@ const TestResultContainer = styled.div`
   align-items: center;
 `;
 
+const ScrollSection = styled.div`
+  overflow-y: scroll;
+  padding: 2rem;
+  margin-top: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #bbbaba;
+    border: 2px solid #efefef;
+    border-radius: 12px 12px 12px 12px;
+  }
+`;
+
+const RecommendationContainer = styled.div`
+  width: 90%;
+  border-radius: 30px;
+  background: #f4f2f2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const ModalTitle = styled.p`
-  margin-top: 6rem;
+  margin-top: 4rem;
   color: #000;
   text-align: center;
   font-size: 2.2rem;
@@ -190,14 +226,21 @@ const ModalTitle = styled.p`
 `;
 
 const ModalContent = styled.div`
-  width: 80%;
-  margin-top: 2.6rem;
+  width: 90%;
+  margin: 2.6rem 0rem;
   color: #000;
   text-align: center;
   font-size: 1.5rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  & div {
+    font-size: 1.5rem;
+  }
+  & span {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
 `;
 
 const ModalItem = styled.li`
@@ -209,22 +252,29 @@ const ModalItem = styled.li`
   padding: 0rem 6rem;
 
   & p {
+    font-size: 1.5rem;
   }
 
   & a {
-    color: blue;
   }
 `;
 
 const ModalItemText = styled.div`
-  max-width: 34rem;
-  min-width: 16rem;
+  /* max-width: 34rem;
+  min-width: 16rem; */
+  width: 34rem;
   display: flex;
   justify-content: space-between;
+
+  & a:link {
+    color: #78a55a;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
 `;
 
 const ModalItemContainer = styled.ul`
-  width: 80%;
+  width: 70%;
   margin-top: 4rem;
   display: flex;
   flex-direction: column;

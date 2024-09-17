@@ -6,16 +6,19 @@ import Logout from '../../assets/HeaderImg/Logout.png';
 import { useNavigate } from 'react-router-dom';
 import UserInfoContext from '../../store/UserInfoCtx';
 
-
 function DailyResultHeader() {
-const {userInfo} = useContext(UserInfoContext);
+  const { userInfo } = useContext(UserInfoContext);
 
   const navigate = useNavigate();
   return (
     <DietTestHeaderWrapper>
       <DietTestHeaderContainer>
         <LogoPictureImg src={LogoPicture} alt="로고 그림" />
-        <WellnessCoachTitleImg src={WellnessCoachTitle} alt="타이틀" onClick={() => navigate(`/main/${userInfo.userId}`)} />
+        <WellnessCoachTitleImg
+          src={WellnessCoachTitle}
+          alt="타이틀"
+          onClick={() => navigate(`/main/${userInfo.userId}`)}
+        />
         <LogoutButton onClick={() => navigate('/')}>
           <LogoutText>로그아웃</LogoutText>
           <LogoutImg src={Logout} alt="로그아웃" />
@@ -47,7 +50,7 @@ const DietTestHeaderContainer = styled.div`
 const LogoutButton = styled.button`
   width: 14.5rem;
   height: 4rem;
-  border-radius: 3rem;
+  border-radius: 30px;
   border: 3px solid #f4f1da;
   background: #fff;
   display: flex;

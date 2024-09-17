@@ -18,7 +18,17 @@ function DailyResult() {
       return;
     }
 
-    const formattedDate = date.toISOString().split('T')[0];
+    const utcDate = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Seoul' }));
+
+    // 연, 월, 일 추출
+    const year = utcDate.getFullYear();
+    const month = (utcDate.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 +1
+    const day = utcDate.getDate().toString().padStart(2, '0');
+
+    // yyyy-MM-dd 형식으로 날짜 구성
+    const formattedDate = `${year}-${month}-${day}`;
+    console.log(formattedDate);
+
     axios
       .get(`${BASE_URL}/checkup/report`, { params: { userId: userInfo.userId, date: formattedDate } })
       .then((response) => setData(response.data))
