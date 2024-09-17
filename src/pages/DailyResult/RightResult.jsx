@@ -350,10 +350,11 @@ const LevelLeftContainer = styled.div`
 
 const FoodResultDetailContainer = styled.div`
   margin-left: 1.6rem;
+  width: 45rem;
 `;
 
 const DetailTopContainer = styled.div`
-  width: 40rem;
+  width: 45rem;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -361,7 +362,7 @@ const DetailTopContainer = styled.div`
 `;
 
 const MealSolutionDetail = styled.div`
-  width: 40rem;
+  width: 45rem;
   height: 7rem;
   overflow-y: auto;
 `;
@@ -440,10 +441,11 @@ const DrinkResultContainer = styled.div`
 
 const DrinkDetailTopContainer = styled.div`
   width: 10rem;
-  height: 5rem;
+  /* height: 5rem; */
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  padding-bottom: 2rem;
   margin-bottom: 1rem;
 `;
 

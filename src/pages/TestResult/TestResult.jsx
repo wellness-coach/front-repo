@@ -15,8 +15,18 @@ function TestResult() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const { userInfo } = useContext(UserInfoContext);
-  const date = new Date().toISOString().split('T')[0];
+  // const date = new Date().toISOString().split('T')[0];
   // const date = "2024-01-21";
+  const date = new Date();
+  const utcDate = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Seoul' }));
+
+  // 연, 월, 일 추출
+  const year = utcDate.getFullYear();
+  const month = (utcDate.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 +1
+  const day = utcDate.getDate().toString().padStart(2, '0');
+
+  // yyyy-MM-dd 형식으로 날짜 구성
+  const formattedDate = `${year}-${month}-${day}`;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [renderedData, setRenderedData] = useState(null);
@@ -32,6 +42,7 @@ function TestResult() {
   };
 
   console.log(currentMealType);
+  console.log(formattedDate);
 
   const translateMealType = () => {
     if (!currentMealType) return '? ?';
@@ -59,7 +70,7 @@ function TestResult() {
       const response = await axios.get(`${BASE_URL}/checkup/report`, {
         params: {
           userId: userInfo.userId,
-          date: date,
+          date: formattedDate,
         },
       });
       setRenderedData(response.data);
