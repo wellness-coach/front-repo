@@ -118,12 +118,12 @@ function TestResult() {
               {renderedData.meals[currentMealType].some((meal) => meal.productResponse) ? (
                 <>
                   <ModalContent>
-                    {userInfo.userName}님의 {translateMealType()}식단 분석해본 결과,
+                    {userInfo.userName}님의 {translateMealType()}식단을 분석해본 결과,
                     <br />
                     {renderedData.meals[currentMealType].map((meal, index) =>
                       meal.productResponse ? (
                         <div key={index}>
-                          {meal.productResponse.targetProductName}에 대한 대체 제품으로
+                          <span>{meal.productResponse.targetProductName}</span>에 대한 대체 제품으로&nbsp;
                           <span>{meal.productResponse.productName}</span>을/를 추천드려요
                         </div>
                       ) : null,
@@ -135,7 +135,7 @@ function TestResult() {
                         <ModalItem key={index}>
                           <ModalItemText>
                             <p>{meal.productResponse.productName}</p>
-                            <a href={meal.productResponse.productLink}>제품 보러가기</a>
+                            <a href={meal.productResponse.productLink}>제품 보러가기 ❯ </a>
                           </ModalItemText>
 
                           <ItemScrapBtn
@@ -197,11 +197,11 @@ const ScrollSection = styled.div`
 
   &::-webkit-scrollbar {
     width: 1rem;
-}
+  }
 
   &::-webkit-scrollbar-thumb {
-    background: #bbbaba; 
-    border: 2px solid #efefef; 
+    background: #bbbaba;
+    border: 2px solid #efefef;
     border-radius: 12px 12px 12px 12px;
   }
 `;
@@ -234,6 +234,13 @@ const ModalContent = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  & div {
+    font-size: 1.5rem;
+  }
+  & span {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
 `;
 
 const ModalItem = styled.li`
@@ -245,18 +252,25 @@ const ModalItem = styled.li`
   padding: 0rem 6rem;
 
   & p {
+    font-size: 1.5rem;
   }
 
   & a {
-    color: blue;
   }
 `;
 
 const ModalItemText = styled.div`
-  max-width: 34rem;
-  min-width: 16rem;
+  /* max-width: 34rem;
+  min-width: 16rem; */
+  width: 34rem;
   display: flex;
   justify-content: space-between;
+
+  & a:link {
+    color: #78a55a;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
 `;
 
 const ModalItemContainer = styled.ul`
