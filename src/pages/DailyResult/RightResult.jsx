@@ -440,6 +440,7 @@ const DrinkResultContainer = styled.div`
 
 const DrinkDetailTopContainer = styled.div`
   width: 10rem;
+  height: 5rem;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
