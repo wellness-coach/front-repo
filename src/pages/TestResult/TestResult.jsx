@@ -6,7 +6,7 @@ import TestResultSpeedometer from './TestResultSpeedometer';
 import TestResultBody from './TestResultBody';
 import ResultDetailSection from './ResultDetailSection';
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import UserInfoContext from '../../store/UserInfoCtx';
 import axios from 'axios';
 import ResultModal from '../UI/ResultModal';
@@ -31,6 +31,7 @@ function TestResult() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [renderedData, setRenderedData] = useState(null);
   const [currentMealType, setCurrentMealType] = useState('');
+  const scrollSectionRef = useRef(null);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -40,6 +41,12 @@ function TestResult() {
     setIsModalOpen(true);
     setCurrentMealType(mealType);
   };
+
+  useEffect(() => {
+    if (isModalOpen && scrollSectionRef.current) {
+      scrollSectionRef.current.scrollTop = 0;
+    }
+  }, [isModalOpen]);
 
   console.log(currentMealType);
   console.log(formattedDate);
@@ -122,7 +129,7 @@ function TestResult() {
     <>
       {isModalOpen && renderedData && renderedData.meals && renderedData.meals[currentMealType] && (
         <ResultModal key={currentMealType} open={isModalOpen} onClose={handleCloseModal}>
-          <ScrollSection>
+          <ScrollSection ref={scrollSectionRef}>
             <ResultDetailSection data={renderedData} mealType={currentMealType} timeName={translateMealType()} />
             <RecommendationContainer>
               <ModalTitle>추천 더보기</ModalTitle>
@@ -146,7 +153,7 @@ function TestResult() {
                         <ModalItem key={index}>
                           <ModalItemText>
                             <p>{meal.productResponse.productName}</p>
-                            <a href={meal.productResponse.productLink}>제품 보러가기 ❯ </a>
+                            <a href={meal.productResponse.productLink} target="_blank">제품 보러가기 ❯ </a>
                           </ModalItemText>
 
                           <ItemScrapBtn
@@ -281,6 +288,10 @@ const ModalItemText = styled.div`
     color: #78a55a;
     font-size: 1.5rem;
     font-weight: 600;
+  }
+
+  & a:visited {
+    color: #78a55a; 
   }
 `;
 

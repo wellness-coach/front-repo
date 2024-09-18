@@ -41,7 +41,7 @@ function MainPage() {
     setCurrentTipIdx(id);
   };
 
-   useEffect(() => {
+  useEffect(() => {
     if (isModalOpen && modalBodyRef.current) {
       modalBodyRef.current.scrollTop = 0;
     }
