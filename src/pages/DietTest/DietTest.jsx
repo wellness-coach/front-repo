@@ -12,9 +12,18 @@ function DietTest() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { userInfo, updateUserTestInfo } = useContext(UserInfoContext);
   const navigate = useNavigate();
-  const date = new Date().toISOString().split('T')[0];
+  // const date = new Date().toISOString().split('T')[0];
   // const date = "2024-01-21";
+  const date = new Date();
+  const utcDate = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Seoul' }));
 
+  // 연, 월, 일 추출
+  const year = utcDate.getFullYear();
+  const month = (utcDate.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 +1
+  const day = utcDate.getDate().toString().padStart(2, '0');
+
+  // yyyy-MM-dd 형식으로 날짜 구성
+  const formattedDate = `${year}-${month}-${day}`;
   const [isLoading, setIsLoading] = useState(false);
   const [tempInputs, setTempInputs] = useState({ mealResponses: [], memo: '' });
 
@@ -54,7 +63,7 @@ function DietTest() {
     try {
       const response = await axios.post(`${BASE_URL}/checkup/save`, {
         userId: userInfo.userId,
-        date: date,
+        date: formattedDate,
         meals: filteredInputData,
         memo: memoValues,
       });
@@ -94,7 +103,7 @@ function DietTest() {
     try {
       const response = await axios.post(`${BASE_URL}/checkup/submit`, {
         userId: userInfo.userId,
-        date: date,
+        date: formattedDate,
         meals: filteredInputData,
         memo: memoValues,
       });
