@@ -7,7 +7,7 @@ import Tips from '../../assets/Tips.json';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import UserInfoContext from '../../store/UserInfoCtx';
 
 function MainPage() {
@@ -30,7 +30,8 @@ function MainPage() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentTipIdx, setCurrentTipIdx] = useState(0);
-
+  const modalBodyRef = useRef(null);
+  
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -38,6 +39,11 @@ function MainPage() {
   const handleOpenModal = (id) => {
     setIsModalOpen(true);
     setCurrentTipIdx(id);
+  };
+
+      if (modalBodyRef.current) {
+      modalBodyRef.current.scrollTop = 0;
+    }
   };
 
   // 줄바꿈을 <br>로 변환하는 함수
@@ -74,7 +80,7 @@ function MainPage() {
         <Modal key={Tips[currentTipIdx].id} open={isModalOpen} onClose={handleCloseModal}>
           <ModalCategory>{Tips[currentTipIdx].category}</ModalCategory>
           <ModalTitle>{Tips[currentTipIdx].title}</ModalTitle>
-          <ModalBody>
+          <ModalBody ref={modalBodyRef}>
             <ModalImg src={`${Tips[currentTipIdx].modalImgSrc}`} alt={Tips[currentTipIdx].title} />
             <ModalContent>{formatContent(Tips[currentTipIdx].content)}</ModalContent>
             {Tips[currentTipIdx].source ? (
