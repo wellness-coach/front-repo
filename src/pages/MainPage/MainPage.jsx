@@ -41,10 +41,11 @@ function MainPage() {
     setCurrentTipIdx(id);
   };
 
-      if (modalBodyRef.current) {
+   useEffect(() => {
+    if (isModalOpen && modalBodyRef.current) {
       modalBodyRef.current.scrollTop = 0;
     }
-  };
+  }, [isModalOpen]);
 
   // 줄바꿈을 <br>로 변환하는 함수
   const formatContent = (content) => {
