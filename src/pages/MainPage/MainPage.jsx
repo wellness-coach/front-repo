@@ -15,8 +15,16 @@ function MainPage() {
   const { userId } = useParams();
   const { updateUserDefaultInfo } = useContext(UserInfoContext);
   console.log(userId);
-  const date = new Date().toISOString().split('T')[0];
-  // const date = '2024-01-21';
+  const date = new Date();
+  const utcDate = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Seoul' }));
+
+  // 연, 월, 일 추출
+  const year = utcDate.getFullYear();
+  const month = (utcDate.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 +1
+  const day = utcDate.getDate().toString().padStart(2, '0');
+
+  // yyyy-MM-dd 형식으로 날짜 구성
+  const formattedDate = `${year}-${month}-${day}`; // const date = '2024-01-21';
 
   const [fetchedData, setFetchedData] = useState();
 
@@ -42,11 +50,11 @@ function MainPage() {
       const response = await axios.get(`${BASE_URL}/mainPage`, {
         params: {
           userId: userId,
-          date: date,
+          date: formattedDate,
         },
       });
 
-      console.log('responseData: ', response)
+      console.log('responseData: ', response);
       setFetchedData(response.data);
       updateUserDefaultInfo(userId, response.data.name);
     } catch (error) {
@@ -58,7 +66,6 @@ function MainPage() {
     getMainPageData();
   }, []);
 
-  
   console.log('fetchedData: ', fetchedData);
 
   return (
@@ -124,11 +131,11 @@ const ModalBody = styled.div`
 
   &::-webkit-scrollbar {
     width: 1rem;
-}
+  }
 
   &::-webkit-scrollbar-thumb {
-    background: #bbbaba; 
-    border: 2px solid #efefef; 
+    background: #bbbaba;
+    border: 2px solid #efefef;
     border-radius: 12px 12px 12px 12px;
   }
 `;
