@@ -19,7 +19,7 @@
    ![main](https://github.com/user-attachments/assets/91dfdc4f-a2e3-4b6f-ad80-0e78707b1c65)
 
 - 지난 주 평균 노화 속도계 -> 클릭 시 일별 리포트 페이지로 이동
-- 오늘의 식단 진단하기 / 오늘의 결과 보러가기 버튼 -> 검사 페이지 / 오늘 결과 페이지로 이동
+- 검사 진행도에 따른 UI & Flow의 변화(오늘의 식단 진단하기 => 검사페이지로 이동 / 오늘의 결과 보러가기 버튼 => 오늘 결과 페이지로 이동) 
 - 저속 노화 관련 소식
 - 제품 스크랩 목록
   <br/> <br/>
@@ -163,3 +163,9 @@ ex) add: 로그인 컴포넌트 추가, Chore: eslint extension 수정
   <br/>
   - 작업한 파일 이외의 파일에 수정을 했는지 확인하고 PR 날려주세요 
 </details>
+
+| 이시온 | 공윤호 |
+|:------:|:------:|
+| <img src="https://github.com/xionng.png" alt="이시온" width="100"> | <img src="https://github.com/Patrick-Gong.png" alt="공윤호" width="100"> |
+| FE | FE |
+| [xionng](https://github.com/xionng) | [Patrick-Gong](https://github.com/Patrick-Gong)
