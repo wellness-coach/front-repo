@@ -48,8 +48,8 @@
   <br/>
 
 6. **일별 리포트 페이지**
-   ![dailyresult](https://github.com/user-attachments/assets/483e865c-180f-4624-95f7-9ef46f3c5635)
    ![dailyresult](https://github.com/user-attachments/assets/55d15652-36fd-4d78-b53b-36d6007a1632)
+   ![dailyresult](https://github.com/user-attachments/assets/483e865c-180f-4624-95f7-9ef46f3c5635)
 
 - 지난 리포트 모아보기
   <br /> <br/>
