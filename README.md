@@ -4,16 +4,16 @@
 **생성형 AI 기반 저속노화 식단 관리 서비스, Wellness Coach 프론트엔드 레포지토리입니다.**
 
 - 배포 URL : https://wellness-coach.vercel.app
+  <br/>
+  <br/>
 
 ## 🍅 페이지/기능 상세
-
-  <br/>
 
 1. **로그인 페이지**
    ![login](https://github.com/user-attachments/assets/40c33a0a-9828-46ea-a072-f2f05e9f851b)
 
 - 구글 로그인 구현
-  <br/>
+  <br/> <br/>
 
 2. **메인 페이지**
    ![main](https://github.com/user-attachments/assets/91dfdc4f-a2e3-4b6f-ad80-0e78707b1c65)
@@ -22,7 +22,7 @@
 - 오늘의 식단 진단하기 / 오늘의 결과 보러가기 버튼 -> 검사 페이지 / 오늘 결과 페이지로 이동
 - 저속 노화 관련 소식
 - 제품 스크랩 목록
-  <br/>
+  <br/> <br/>
 
 3. **검사 페이지**
    ![test](https://github.com/user-attachments/assets/e70d4fba-b4c3-464f-b0f0-64403e1ac03b)
@@ -30,11 +30,11 @@
 - 식단 기록
 - 메뉴 추가 및 삭제
 - 임시저장 및 제출
-  <br/>
+  <br/> <br/>
 
 4. **로딩 페이지**
    ![loading](https://github.com/user-attachments/assets/be2d2b36-4d52-471b-83c3-78eabb0ecc71)
-   <br/>
+   <br/> <br/>
 
 5. **오늘 결과 페이지**
    ![resultmain](https://github.com/user-attachments/assets/84a760be-3e12-4b0d-8cb5-99077cfe0865)
@@ -45,13 +45,15 @@
 - 대체 재료 추천
 - '제품 보러가기' 클릭 시 네이버 쇼핑 페이지로 이동
   <br/>
+  <br/>
 
 6. **일별 리포트 페이지**
    ![dailyresult](https://github.com/user-attachments/assets/483e865c-180f-4624-95f7-9ef46f3c5635)
    ![dailyresult](https://github.com/user-attachments/assets/55d15652-36fd-4d78-b53b-36d6007a1632)
 
 - 지난 리포트 모아보기
-<br />
+  <br /> <br/>
+
 <!-- ## 기술 스택 -->
 
 <h2> 🛠 기술스택 </h2>
