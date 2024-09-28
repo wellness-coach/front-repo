@@ -32,7 +32,7 @@ function DietTest() {
       const response = await axios.get(`${BASE_URL}/checkup/get`, {
         params: {
           userId: userInfo.userId,
-          date: date,
+          date: formattedDate,
         },
       });
       console.log('임시저장 get하는거 테스트', response.data);

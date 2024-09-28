@@ -68,6 +68,7 @@ function MainHeader({ data, date, refreshData }) {
       console.log('Error deleting main page data:', error);
     }
   };
+  
   const handleDemoDelete = () => {
     navigate('/');
     updateUserTestInfo('NOT_STARTED');
