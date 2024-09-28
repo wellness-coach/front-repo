@@ -13,7 +13,7 @@ import UserInfoContext from '../../store/UserInfoCtx';
 
 function MainHeader({ data, date, refreshData }) {
   const navigate = useNavigate();
-  const { userInfo } = useContext(UserInfoContext);
+  const { userInfo, updateUserTestInfo } = useContext(UserInfoContext);
   const [isLeftHovered, setIsLeftHovered] = useState(false);
   const [isRightHovered, setIsRightHovered] = useState(false);
 
