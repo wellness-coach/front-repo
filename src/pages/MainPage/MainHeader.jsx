@@ -11,7 +11,7 @@ import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserInfoContext from '../../store/UserInfoCtx';
 
-function MainHeader({ data }) {
+function MainHeader({ data, date, refreshData }) {
   const navigate = useNavigate();
   const { userInfo } = useContext(UserInfoContext);
   const [isLeftHovered, setIsLeftHovered] = useState(false);
@@ -54,12 +54,32 @@ function MainHeader({ data }) {
   console.log(userInfo.userCheckupStatus);
   console.log(userInfo.userName);
 
+  const deleteDemoData = async () => {
+    try {
+      const response = await axios.delete(`${BASE_URL}/checkup/delete/report?userId=${userInfo.userId}&date=${date}`, {
+        params: {
+          userId: userInfo.userId,
+          date: date,
+        },
+      });
+      refreshData();
+      console.log('responseData: ', response);
+    } catch (error) {
+      console.log('Error deleting main page data:', error);
+    }
+  };
+  const handleDemoDelete = () => {
+    navigate('/');
+    updateUserTestInfo('NOT_STARTED');
+    deleteDemoData();
+  };
+
   return (
     <MainHeaderWrapper>
       <MainHeaderContainer>
         <TitleContainer>
           <MainLogoImg src={MainLogo} alt="메인페이지 로고" />
-          <LogoutBtn onClick={() => navigate('/')}>
+          <LogoutBtn onClick={handleDemoDelete}>
             <LogoutText>로그아웃</LogoutText>
             <LogoutImg src={Logout} alt="로그아웃" />
           </LogoutBtn>

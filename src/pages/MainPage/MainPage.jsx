@@ -91,7 +91,7 @@ function MainPage() {
         </Modal>
       )}
       <MainContainer>
-        <MainHeader data={fetchedData} />
+        <MainHeader data={fetchedData} date={formattedDate} refreshData={getMainPageData} />
         <MainFooter onOpenTip={handleOpenModal} data={fetchedData} refreshData={getMainPageData} />
       </MainContainer>
     </>
